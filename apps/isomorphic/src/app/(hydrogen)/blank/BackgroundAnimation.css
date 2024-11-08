@@ -1,0 +1,106 @@
+/* From Uiverse.io by kamehame-ha */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 40%;
+  /* border: 1px solid white;
+  border-radius: 5px; */
+  padding: 15px;
+}
+
+.cards .red {
+  background-color: #f43f5e;
+  height: 150px;
+}
+
+.cards .red:nth-child(2) {
+  background-color: #f43f5e;
+  height: 40px;
+}
+
+.cards .red:nth-child(3) {
+  background-color: #f43f5e;
+  height: 40px;
+}
+
+.cards .blue {
+  background-color: #3b82f6;
+  height: 80px;
+}
+
+.cards .green {
+  background-color: #22c55e;
+  height: 60px;
+}
+
+.cards .card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  /* width: 40%; */
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: 400ms;
+}
+
+.cards .card p.tip {
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.cards .card p.second-text {
+  font-size: 0.7em;
+}
+
+.cards .card:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.cards:hover > .card:not(:hover) {
+  filter: blur(10px);
+  transform: scale(0.9, 0.9);
+}
+
+/* components/BackgroundAnimation.css */
+
+/* Start Animations */
+@keyframes animate {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+
+/* Keyframes for Animation */
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Add any other required styles here */
