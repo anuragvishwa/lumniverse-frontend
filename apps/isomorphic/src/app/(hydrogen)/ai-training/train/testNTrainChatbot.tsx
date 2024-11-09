@@ -54,18 +54,35 @@ const TestNTrainChatbot = () => {
   >(() => {
     const savedMessages = localStorage.getItem('chatMessages');
 
-    return savedMessages
-      ? JSON.parse(savedMessages).map((message: any) => ({
-          ...message,
-          time: message.time || new Date().toISOString(),
-        }))
-      : ([] as {
+    // Check if savedMessages is non-null and parse it safely
+    if (savedMessages) {
+      try {
+        const parsedMessages = JSON.parse(savedMessages) as {
           text: string;
           sender: 'user' | 'bot';
           subData: string;
-          time: string;
-        }[]);
+          time?: string; // `time` is optional since it might not exist
+        }[];
+
+        // Return parsed messages with a fallback for missing `time`
+        return parsedMessages.map((message) => ({
+          ...message,
+          time: message.time || new Date().toISOString(),
+        }));
+      } catch (error) {
+        console.error('Error parsing saved messages from localStorage:', error);
+      }
+    }
+
+    // Return an empty array if there are no saved messages or an error occurs
+    return [] as {
+      text: string;
+      sender: 'user' | 'bot';
+      subData: string;
+      time: string;
+    }[];
   });
+
   const { openModal } = useModal();
   const [showColorPicker, setShowColorPicker] = useState(false);
 
@@ -92,9 +109,15 @@ const TestNTrainChatbot = () => {
       minute: '2-digit',
     });
 
+    // Add the user's message to the state
     setMessages((prev) => [
       ...prev,
-      { text: finalMessage, sender: 'user', time: timestamp },
+      {
+        text: finalMessage,
+        sender: 'user',
+        subData: '', // Add `subData`, can be an empty string or other relevant data
+        time: timestamp,
+      },
     ]);
 
     setInput(''); // Clear input if using direct message
@@ -110,9 +133,15 @@ const TestNTrainChatbot = () => {
           minute: '2-digit',
         });
 
+        // Add the bot's response to the state
         setMessages((prev) => [
           ...prev,
-          { text: botResponse, sender: 'bot', time: botTimestamp },
+          {
+            text: botResponse,
+            sender: 'bot',
+            subData: '', // Can be filled with relevant bot data
+            time: botTimestamp,
+          },
         ]);
       } else {
         throw new Error('Unexpected response structure');
@@ -124,6 +153,7 @@ const TestNTrainChatbot = () => {
         {
           text: 'Error: Could not get a response from the bot. Please try again later.',
           sender: 'bot',
+          subData: '', // Add subData for error message
           time: new Date().toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
@@ -135,52 +165,75 @@ const TestNTrainChatbot = () => {
     }
   };
 
-  const handleReset = async () => {
-    const resetTimestamp = new Date().toLocaleTimeString();
-    setMessages((prev) => [
-      ...prev,
-      { text: 'Resetting chat...', sender: 'user', time: resetTimestamp },
-    ]);
+  // const handleReset = async () => {
+  //   const resetTimestamp = new Date().toLocaleTimeString();
+  //   setMessages((prev) => [
+  //     ...prev,
+  //     { text: 'Resetting chat...', sender: 'user', time: resetTimestamp },
+  //   ]);
 
-    try {
-      const response = await axios.post('/api/chat', { message: 'reset' });
-      if (response.status === 200) {
-        const botTimestamp = new Date().toLocaleTimeString();
-        setMessages((prev) => [
-          ...prev,
-          { text: response.data.response, sender: 'bot', time: botTimestamp },
-        ]);
-      }
-    } catch (error) {
-      console.error('Error sending reset message:', error);
-    }
-  };
+  //   try {
+  //     const response = await axios.post('/api/chat', { message: 'reset' });
+  //     if (response.status === 200) {
+  //       const botTimestamp = new Date().toLocaleTimeString();
+  //       setMessages((prev) => [
+  //         ...prev,
+  //         { text: response.data.response, sender: 'bot', time: botTimestamp },
+  //       ]);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error sending reset message:', error);
+  //   }
+  // };
 
   const handleOffer = (offerType: string) => {
     const offerTimestamp = new Date().toLocaleTimeString();
+
+    // Add user message with subData (use empty string if not relevant)
     setMessages((prev) => [
       ...prev,
-      { text: offerType, sender: 'user', time: offerTimestamp },
+      { text: offerType, sender: 'user', time: offerTimestamp, subData: '' }, // Corrected sender to 'user'
     ]);
 
     const botResponse = `Sure, what are you interested in?`;
     const botTimestamp = new Date().toLocaleTimeString();
+
+    // Add bot response with subData (empty string if not relevant)
     setMessages((prev) => [
       ...prev,
-      { text: botResponse, sender: 'bot', time: botTimestamp },
+      { text: botResponse, sender: 'bot', time: botTimestamp, subData: '' }, // Corrected sender to 'bot'
     ]);
 
-    const accordionMessages = [
-      { subData: "Men's Fashions", sender: 'bot', time: botTimestamp },
+    // Accordion messages for bot with subData
+    const accordionMessages: {
+      subData: string;
+      sender: 'bot';
+      time: string;
+      text: string;
+    }[] = [
+      {
+        subData: "Men's Fashions",
+        sender: 'bot',
+        time: botTimestamp,
+        text: '',
+      },
       {
         subData: "Women's Special Fashions",
         sender: 'bot',
         time: botTimestamp,
+        text: '',
       },
-      { subData: 'Summer Special', sender: 'bot', time: botTimestamp },
+      {
+        subData: 'Summer Special',
+        sender: 'bot',
+        time: botTimestamp,
+        text: '',
+      },
     ];
 
+    // Append accordion messages
     setMessages((prev) => [...prev, ...accordionMessages]);
+
     setSelectedOffer(offerType);
   };
 

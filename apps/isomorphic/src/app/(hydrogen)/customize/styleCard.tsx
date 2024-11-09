@@ -538,10 +538,10 @@ export default function StyleCard({
               <select
                 id="font-picker"
                 className="w-24 rounded rounded-md border p-2 text-xs"
-                value={borderRadius}
+                value={buttonShape}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   toggleButtonShape(e.target.value)
-                } // Use onChange for select
+                }
               >
                 <option value="rounded" className="text-xs">
                   Rounded

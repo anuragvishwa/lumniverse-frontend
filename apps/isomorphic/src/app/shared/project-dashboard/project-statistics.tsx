@@ -58,7 +58,7 @@ export default function ProjectStatistics({
     >
       <ul className="mt-8 flex list-disc flex-col gap-2 border-b border-gray-300 pb-4 pl-4 font-semibold text-gray-400">
         <li>
-          Treat your AI like a new employee. If the content isn't
+          Treat your AI like a new employee. If the content isn&apos;t
           human-readable, the AI cannot understand it.
         </li>
         <li>

@@ -27,10 +27,7 @@ const pageHeader = {
 export default function CategoriesPage() {
   return (
     <>
-      <CategoryPageHeader
-        title={pageHeader.title}
-        breadcrumb={pageHeader.breadcrumb}
-      />
+      <CategoryPageHeader record={pageHeader.title} />
       <CategoryTable />
     </>
   );

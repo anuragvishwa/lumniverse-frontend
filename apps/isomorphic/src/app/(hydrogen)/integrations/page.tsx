@@ -45,7 +45,7 @@ const products: Product[] = [
   },
 ];
 
-export default function JobFeedCard({ data }: { data: JobType }) {
+export default function Page() {
   const { openDrawer } = useDrawer();
   const [isBookMark, setIsBookMark] = useState(false);
   const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, '-');

@@ -135,7 +135,7 @@ export default function CreateRole() {
                     Order Status
                   </span>
                   <span className="text-center text-xs font-semibold text-gray-400">
-                    When customer asks the AI "Where is my Order?"
+                    When customer asks the AI {'Where is my Order?'}
                   </span>
                   <div className="flex justify-center">
                     <Button
@@ -188,7 +188,7 @@ export default function CreateRole() {
                     className="mx-auto mt-8"
                   />
                   <span className="text-center text-sm font-bold text-gray-500">
-                    Can't find what you looking for?
+                    Can&apos;t find what you looking for?
                   </span>
                   <span className="text-center text-xs font-semibold text-gray-400">
                     You can request it here.
