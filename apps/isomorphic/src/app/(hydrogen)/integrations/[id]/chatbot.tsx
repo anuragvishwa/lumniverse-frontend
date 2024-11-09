@@ -243,6 +243,8 @@ const Chatbot = () => {
   //   }
   // };
 
+  console.log('abc');
+
   return (
     <div className="relative">
       {isOpen && (
