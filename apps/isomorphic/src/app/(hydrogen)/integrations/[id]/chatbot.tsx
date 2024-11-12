@@ -116,7 +116,10 @@ const Chatbot = () => {
     setLoading(true); // Set loading state to true
 
     try {
-      const response = await axios.post('/api/chat', { message: finalMessage });
+      const response = await axios.post(
+        'http://ec2-54-235-174-119.compute-1.amazonaws.com:5436/chat',
+        { message: finalMessage }
+      );
 
       if (response.status === 200 && response.data) {
         const botResponse = response.data; // Assuming response.data contains the bot's response
@@ -139,7 +142,7 @@ const Chatbot = () => {
         throw new Error('Unexpected response structure');
       }
     } catch (error) {
-      console.error(error); // Log the error for debugging
+      console.error(error, 'error from chatbot'); // Log the error for debugging
       setMessages((prev) => [
         ...prev,
         {
