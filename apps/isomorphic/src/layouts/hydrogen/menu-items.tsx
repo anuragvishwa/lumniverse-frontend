@@ -67,11 +67,11 @@ export const menuItems = [
     href: '/',
     icon: <BiCustomize />,
   },
-  {
-    name: 'Settings',
-    href: '/settings',
-    icon: <CogSolidIcon />,
-  },
+  // {
+  //   name: 'Settings',
+  //   href: '/settings',
+  //   icon: <CogSolidIcon />,
+  // },
   {
     name: 'Integrations',
     href: '/integrations',
@@ -172,6 +172,16 @@ export const menuItems = [
       {
         name: 'File Sources',
         href: '/ai-training/file-sources',
+        badge: '',
+      },
+      {
+        name: 'AI Personality',
+        href: '/ai-training/ai-personality',
+        badge: '',
+      },
+      {
+        name: 'Data Gaps',
+        href: '/ai-training/data-gaps',
         badge: '',
       },
     ],

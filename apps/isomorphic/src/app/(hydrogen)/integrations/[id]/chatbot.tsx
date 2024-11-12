@@ -229,19 +229,19 @@ const Chatbot = () => {
     setSelectedOffer(offerType);
   };
 
-  // const carouselRef = useRef<HTMLDivElement | null>(null);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
 
-  // const scrollLeft = () => {
-  //   if (carouselRef.current) {
-  //     carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-  //   }
-  // };
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+  };
 
-  // const scrollRight = () => {
-  //   if (carouselRef.current) {
-  //     carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-  //   }
-  // };
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+  };
 
   console.log('abc');
 
