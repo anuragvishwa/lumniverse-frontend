@@ -52,6 +52,8 @@ export default function CreateRole() {
     }, 3000); // 3 seconds
   };
 
+  console.log('change');
+
   return (
     <Form<CreateRoleInput>
       // resetValues={reset}
