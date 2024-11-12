@@ -71,7 +71,7 @@ export default function FormSummary({
               ''
             )
           }
-          type="email"
+          type="text" // Change to text for URLs
           placeholder="type here"
         />
       </article>

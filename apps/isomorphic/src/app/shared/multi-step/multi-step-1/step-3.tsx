@@ -35,7 +35,7 @@ const properties = [
   {
     name: 'shopify',
     label: 'Shopify',
-    icon: <Image src={shopify} className="h-8 w-8" alt="Megento" />,
+    icon: <Image src={shopify} className="h-8 w-8" alt="Shopify" />,
   },
   {
     name: 'megento',
@@ -44,13 +44,13 @@ const properties = [
   },
   {
     name: 'woo',
-    label: 'Woo',
-    icon: <Image src={woo} className="h-8 w-8" alt="Megento" />,
+    label: 'WooCommerce',
+    icon: <Image src={woo} className="h-8 w-8" alt="WooCommerce" />,
   },
   {
     name: 'salesforce',
     label: 'Salesforce',
-    icon: <Image src={salesforce} className="h-8 w-8" alt="Megento" />,
+    icon: <Image src={salesforce} className="h-8 w-8" alt="Salesforce" />,
   },
   {
     name: 'bigCommerce',
@@ -72,7 +72,7 @@ export default function StepThree() {
   } = useForm<PropertyTypeSchema>({
     resolver: zodResolver(propertyTypeSchema),
     defaultValues: {
-      propertyType: formData.companyType,
+      propertyType: 'shopify', // Set Shopify as the default value
     },
   });
 
@@ -83,9 +83,7 @@ export default function StepThree() {
   }, [errors]);
 
   const onSubmit: SubmitHandler<PropertyTypeSchema> = (data) => {
-    dispatch(
-      updateFormField({ field: 'companyType', value: data.propertyType })
-    );
+    dispatch(updateFormField({ field: 'companyType', value: 'shopify' }));
 
     gotoNextStep();
   };
@@ -131,8 +129,14 @@ export default function StepThree() {
                   <AdvancedRadio
                     key={property.name}
                     value={property.name}
-                    className="[&_.rizzui-advanced-radio]:px-6 [&_.rizzui-advanced-radio]:py-6"
+                    className={cn(
+                      '[&_.rizzui-advanced-radio]:px-6 [&_.rizzui-advanced-radio]:py-6',
+                      property.name !== 'shopify'
+                        ? 'cursor-not-allowed opacity-50'
+                        : ''
+                    )}
                     inputClassName="[&~span]:border-0 [&~span]:ring-1 [&~span]:ring-gray-200 [&~span:hover]:ring-primary [&:checked~span:hover]:ring-primary [&:checked~span]:border-1 [&:checked~.rizzui-advanced-radio]:ring-2 [&~span_.icon]:opacity-0 [&:checked~span_.icon]:opacity-100"
+                    disabled={property.name !== 'shopify'} // Disable non-Shopify options
                   >
                     <span className="mb-4 block h-8 w-8 [&_svg]:w-8">
                       {property.icon}

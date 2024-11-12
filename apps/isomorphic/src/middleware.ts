@@ -12,6 +12,11 @@ export const config = {
   matcher: [
     '/',
     '/executive',
+    '/ai-training/:path*',
+    '/multi-step',
+    '/sales',
+    '/integrations',
+    '/settings',
     '/financial',
     '/analytics',
     '/logistics/:path*',

@@ -88,7 +88,7 @@ export default function Footer({ isLoading, className }: FooterProps) {
         variant="solid"
         {...buttonAttr()}
         type={'submit'}
-        onClick={() => route.push('/')}
+        // onClick={() => route.push('/')}
         className="ml-auto gap-1"
       >
         {buttonLabel(step)}

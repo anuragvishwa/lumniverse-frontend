@@ -24,6 +24,7 @@ export default function StepOne() {
     e: React.ChangeEvent<HTMLInputElement>,
     field: keyof typeof formData
   ) => {
+    e.preventDefault(); // Prevents default form behavior
     dispatch(updateFormField({ field, value: e.target.value }));
   };
 

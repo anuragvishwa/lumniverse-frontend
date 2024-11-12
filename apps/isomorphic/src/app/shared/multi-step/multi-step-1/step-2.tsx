@@ -30,9 +30,10 @@ import { BiSolidMessageRounded } from 'react-icons/bi';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFormField } from '@/redux/slices/stepSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
+
 const projects = [
   {
     id: 1,
@@ -66,37 +67,62 @@ export default function StepTwo() {
   const formData = useSelector((state: RootState) => state.form);
   const [urlError, setURLError] = useState<string | null>(null);
   const { data: session } = useSession();
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     field: keyof typeof formData
   ) => {
+    console.log(
+      `Handling input change for field: ${field}, value: ${e.target.value}`
+    );
+    e.preventDefault(); // Prevents default form behavior
     dispatch(updateFormField({ field, value: e.target.value }));
   };
 
   const { handleSubmit } = useForm();
 
-  const validateURL = (url: string): boolean => {
-    const urlPattern = new RegExp(
-      '^(https?:\\/\\/)?' + // protocol (http or https)
-        '((([a-zA-Z\\d]([a-zA-Z\\d-]*[a-zA-Z\\d])*)\\.?)+[a-zA-Z]{2,}|localhost)' + // domain name or localhost
-        '(\\:\\d+)?(\\/[-a-zA-Z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-zA-Z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-zA-Z\\d_]*)?$',
-      'i'
-    );
-    return !!urlPattern.test(url);
+  // Function to fetch data from the constructed URL
+  const fetchData = async () => {
+    try {
+      let companyURL = formData.companyURL;
+
+      // Check if the URL starts with "https://"
+      if (!companyURL.startsWith('https://')) {
+        companyURL = `https://${companyURL}`;
+      }
+
+      const response = await fetch(`${companyURL}/collections.json`);
+
+      if (!response.ok) {
+        throw new Error('Not a valid Shopify URL');
+      }
+
+      // Attempt to parse the response as JSON
+      const data = await response.json();
+
+      // If data is successfully parsed, proceed to route to the next page (use your routing method here)
+      console.log(data, 'fetch');
+      gotoNextStep();
+    } catch (error) {
+      // Show a toast error message if the response is not valid JSON or there is another error
+      toast.error('Not a valid Shopify URL');
+      console.error('Error fetching data:', error);
+    }
   };
 
+  // onSubmit function that checks the URL before fetching
   const onSubmit = () => {
+    console.log('Form submitted');
+
     if (!formData.companyURL) {
       setURLError('URL is required');
       toast.error('URL is required');
-    } else if (!validateURL(formData.companyURL)) {
-      setURLError('Please enter a valid URL');
-      toast.error('Please enter a valid URL');
+      console.log('URL is required');
     } else {
       setURLError(null);
-      gotoNextStep(); // Go to the next step if the URL is valid
+
+      console.log('URL is valid, fetching data...');
+      fetchData(); // Call fetchData if URL is valid
     }
   };
 
@@ -117,7 +143,6 @@ export default function StepTwo() {
             <div className="content">
               <div className="flex flex-col items-center justify-center gap-4 text-center">
                 <BiSolidMessageRounded className="h-4 w-4" />
-
                 <p className="underline">{formData.companyURL}</p>
               </div>
               <div className="mb-4 mt-4 flex items-center justify-between border-b border-muted pb-4 last:mb-0 last:border-0 last:pb-0">
