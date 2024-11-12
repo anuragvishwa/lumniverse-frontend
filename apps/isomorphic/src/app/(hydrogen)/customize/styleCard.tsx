@@ -190,6 +190,8 @@ export default function StyleCard({
     setIsToggle(false);
   };
 
+  console.log('check');
+
   return (
     <WidgetCard
       title={
