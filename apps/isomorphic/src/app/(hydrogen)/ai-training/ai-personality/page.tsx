@@ -50,11 +50,10 @@ export default function AIPersonality() {
         Configure your AI&apos;s persona and give it instructions on how to
         behave.
       </Text>
-      <div className="mt-6 @container">
-        <div className="grid grid-cols-12 gap-6 3xl:gap-8">
-          <LoadingWorkflow className="col-span-full @3xl:col-span-6 @[1429px]:col-span-4" />
-
-          <FleetStatus className="col-span-full @3xl:col-span-6 @[1429px]:col-span-4" />
+      <div className="mt-6">
+        <div className="grid grid-cols-6 gap-6 @container">
+          <LoadingWorkflow className="col-span-full @[59rem]:col-span-4 @[80rem]:col-span-4" />
+          <FleetStatus className="col-span-full @[59rem]:col-span-2 @[80rem]:col-span-2" />
         </div>
       </div>
     </div>

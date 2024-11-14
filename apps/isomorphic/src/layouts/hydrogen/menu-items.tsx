@@ -139,10 +139,32 @@ export const menuItems = [
   //   icon: <PiShoppingCartDuotone />,
   // },
   // {
-  //   name: 'Analytics',
+  //   name: '',
   //   href: routes.analytics,
   //   icon: <PiChartBarDuotone />,
   // },
+  {
+    name: 'Analytics',
+    href: '/analytics/sales',
+    icon: <PiChartBarDuotone />,
+    dropdownItems: [
+      {
+        name: 'Support',
+        href: '/analytics/support',
+        badge: '',
+      },
+      {
+        name: 'Sales',
+        href: '/analytics/sales',
+        badge: '',
+      },
+      {
+        name: 'Engagement',
+        href: '/analytics/engagement',
+        badge: '',
+      },
+    ],
+  },
   // {
   //   name: 'Support',
   //   href: routes.support.dashboard,

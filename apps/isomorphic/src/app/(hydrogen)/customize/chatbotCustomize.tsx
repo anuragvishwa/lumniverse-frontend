@@ -96,6 +96,127 @@ const ChatbotCustomize = ({
   const [selectedOffer, setSelectedOffer] = useState<string | null>(null); // Track selected offer
   const [loading, setLoading] = useState(false);
 
+  const handleSend = async (message: string) => {
+    // If message is not provided, use the current input state
+    const finalMessage = message || input;
+
+    if (finalMessage.trim() === '') return;
+
+    // Format timestamp to exclude seconds
+    const timestamp = new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    // Add the user's message to the state
+    setMessages((prev) => [
+      ...prev,
+      {
+        text: finalMessage,
+        sender: 'user',
+        subData: '', // Add `subData`, can be an empty string or other relevant data
+        time: timestamp,
+      },
+    ]);
+
+    setInput(''); // Clear input if using direct message
+    setLoading(true); // Set loading state to true
+
+    try {
+      const response = await axios.post('/api/chat', {
+        message: finalMessage,
+      });
+
+      if (response.status === 200 && response.data) {
+        const botResponse = response.data; // Assuming response.data contains the bot's response
+        const botTimestamp = new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+
+        // Add the bot's response to the state
+        setMessages((prev) => [
+          ...prev,
+          {
+            text: botResponse,
+            sender: 'bot',
+            subData: '', // Can be filled with relevant bot data
+            time: botTimestamp,
+          },
+        ]);
+      } else {
+        throw new Error('Unexpected response structure');
+      }
+    } catch (error) {
+      console.error(error); // Log the error for debugging
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: 'Error: Could not get a response from the bot. Please try again later.',
+          sender: 'bot',
+          subData: '', // Add subData for error message
+          time: new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          }),
+        },
+      ]);
+    } finally {
+      setLoading(false); // Reset loading state
+    }
+  };
+
+  const handleOffer = (offerType: string) => {
+    const offerTimestamp = new Date().toLocaleTimeString();
+
+    // Add user message with subData (use empty string if not relevant)
+    setMessages((prev) => [
+      ...prev,
+      { text: offerType, sender: 'user', time: offerTimestamp, subData: '' }, // Corrected sender to 'user'
+    ]);
+
+    const botResponse = `Sure, what are you interested in?`;
+    const botTimestamp = new Date().toLocaleTimeString();
+
+    // Add bot response with subData (empty string if not relevant)
+    setMessages((prev) => [
+      ...prev,
+      { text: botResponse, sender: 'bot', time: botTimestamp, subData: '' }, // Corrected sender to 'bot'
+    ]);
+
+    // Accordion messages for bot with subData
+    const accordionMessages: {
+      subData: string;
+      sender: 'bot';
+      time: string;
+      text: string;
+    }[] = [
+      {
+        subData: "Men's Fashions",
+        sender: 'bot',
+        time: botTimestamp,
+        text: '',
+      },
+      {
+        subData: "Women's Special Fashions",
+        sender: 'bot',
+        time: botTimestamp,
+        text: '',
+      },
+      {
+        subData: 'Summer Special',
+        sender: 'bot',
+        time: botTimestamp,
+        text: '',
+      },
+    ];
+
+    // Append accordion messages
+    setMessages((prev) => [...prev, ...accordionMessages]);
+
+    setSelectedOffer(offerType);
+  };
+
   // const carouselRef = useRef<HTMLDivElement | null>(null);
 
   // const scrollLeft = () => {
@@ -258,6 +379,7 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
+                            onClick={() => handleOffer('Special Offers')}
                           >
                             Special Offer
                           </Button>
@@ -289,6 +411,7 @@ const ChatbotCustomize = ({
                                 : '',
                             }}
                             size="sm"
+                            onClick={() => handleOffer('Summer Outfits')}
                           >
                             Summer Outfits
                           </Button>
@@ -319,6 +442,7 @@ const ChatbotCustomize = ({
                                 : '',
                             }}
                             size="sm"
+                            onClick={() => handleOffer('Buy a Giftcard')}
                           >
                             Buy a Giftcard
                           </Button>
@@ -348,6 +472,7 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
+                            onClick={() => handleOffer('New Collection')}
                             size="sm"
                           >
                             New Collection
@@ -399,7 +524,7 @@ const ChatbotCustomize = ({
                                   </div>
 
                                   <div className="mt-2 bg-white text-xs text-gray-500">
-                                    10:03AM
+                                    {msg.time}
                                   </div>
                                 </div>
                               )}
@@ -410,6 +535,7 @@ const ChatbotCustomize = ({
                                     rounded="pill"
                                     className="mt-2 border-2 border-blue-200 bg-white bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text px-3 py-1.5 text-transparent"
                                     size="sm"
+                                    onClick={() => handleSend(msg.subData)}
                                   >
                                     {msg.subData}
                                   </Button>

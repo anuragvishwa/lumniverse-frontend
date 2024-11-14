@@ -237,7 +237,7 @@ const PersonalityChatbot = () => {
   };
 
   return (
-    <div className={`col-span-full @[59rem]:col-span-2 @[80rem]:col-span-1`}>
+    <div className={`col-span-full`}>
       <AnimatePresence>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
