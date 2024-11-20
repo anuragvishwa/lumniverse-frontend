@@ -209,7 +209,6 @@ export const flowOnDevicesStatisticsData = [
     value: 50,
     color: '#FD8050',
   },
-  { icon: PiLaptopDuotone, name: 'Laptop', value: 25, color: '#34C759' },
 ];
 
 export const trafficAnalyticsData = [

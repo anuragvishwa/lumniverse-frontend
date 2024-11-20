@@ -38,8 +38,6 @@ export default function Customize() {
 
   const [textColor, setTextColor] = useState('text-white');
 
-  const [selectedFont, setSelectedFont] = useState('');
-
   const [imageSrc, setImageSrc] = useState(
     'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp'
   );
@@ -57,6 +55,27 @@ export default function Customize() {
   const [badgeBottom, setBadgeBottom] = useState('to-indigo-600');
   const [height, setHeight] = useState('450');
   const [borderRadius, setBorderRadius] = useState('0.5rem');
+  const [inputRadius, setInputRadius] = useState('full');
+
+  const fonts = [
+    'Arial',
+    'Courier New',
+    'Georgia',
+    'Times New Roman',
+    'Verdana',
+    'Tahoma',
+    'Trebuchet MS',
+    'Lucida Console',
+    'Comic Sans MS',
+    'Impact',
+  ];
+
+  const [selectedFont, setSelectedFont] = useState(fonts[0]);
+
+  // Handle font change
+  const handleFontChange = (event: any) => {
+    setSelectedFont(event.target.value);
+  };
   return (
     <div>
       <motion.div
@@ -89,6 +108,8 @@ export default function Customize() {
             height={height}
             borderRadius={borderRadius}
             setBorderRadius={setBorderRadius}
+            inputRadius={inputRadius}
+            setInputRadius={setInputRadius}
           />
           <ChatbotCustomize
             bgColor={bgColor}
@@ -103,6 +124,7 @@ export default function Customize() {
             selectedFont={selectedFont}
             height={height}
             borderRadius={borderRadius}
+            inputRadius={inputRadius}
           />
         </div>
       </motion.div>

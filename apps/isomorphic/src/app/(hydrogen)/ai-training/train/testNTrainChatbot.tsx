@@ -237,6 +237,13 @@ const TestNTrainChatbot = () => {
     setSelectedOffer(offerType);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend(input);
+    }
+  };
+
   return (
     <div className={`col-span-full @[59rem]:col-span-2 @[80rem]:col-span-1`}>
       <AnimatePresence>
@@ -500,12 +507,22 @@ const TestNTrainChatbot = () => {
                           type="text"
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
+                          onKeyDown={handleKeyDown}
                         />
                         <button
                           onClick={() => handleSend(input)}
-                          className="rounded-full border-2 px-3 py-1.5 text-sm font-bold text-indigo-600 transition duration-300 ease-in-out hover:border-transparent hover:bg-gradient-to-r hover:from-violet-600 hover:to-indigo-600 hover:text-white"
+                          className="rounded-full border-2 border-transparent bg-gradient-to-r from-violet-600 to-indigo-600 px-2 py-1.5 text-sm font-bold text-white transition duration-300 ease-in-out"
                         >
-                          <BsArrowUpShort className="h-5 w-5" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="white"
+                            className="bi bi-arrow-up-circle-fill"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
+                          </svg>
                         </button>
                       </div>
                     </div>

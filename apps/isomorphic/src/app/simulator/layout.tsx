@@ -1,4 +1,4 @@
-import Header from '@/app/multi-step/header';
+import Header from '@/app/simulator/header';
 
 export default function MultiStepLayoutTwo({
   children,

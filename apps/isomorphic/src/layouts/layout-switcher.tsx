@@ -21,22 +21,22 @@ const layoutOptions = [
     icon: HeliumIcon,
     value: LAYOUT_OPTIONS.HELIUM,
   },
-  {
-    icon: LithiumIcon,
-    value: LAYOUT_OPTIONS.LITHIUM,
-  },
-  {
-    icon: BerylliumIcon,
-    value: LAYOUT_OPTIONS.BERYLLIUM,
-  },
-  {
-    icon: BoronIcon,
-    value: LAYOUT_OPTIONS.BORON,
-  },
-  {
-    icon: CarbonIcon,
-    value: LAYOUT_OPTIONS.CARBON,
-  },
+  // {
+  //   icon: LithiumIcon,
+  //   value: LAYOUT_OPTIONS.LITHIUM,
+  // },
+  // {
+  //   icon: BerylliumIcon,
+  //   value: LAYOUT_OPTIONS.BERYLLIUM,
+  // },
+  // {
+  //   icon: BoronIcon,
+  //   value: LAYOUT_OPTIONS.BORON,
+  // },
+  // {
+  //   icon: CarbonIcon,
+  //   value: LAYOUT_OPTIONS.CARBON,
+  // },
 ];
 
 export default function LayoutSwitcher() {

@@ -69,14 +69,7 @@ export default function AnalyticsPage() {
 
       <div className="@container">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:gap-8">
-          {/* First card */}
           <SalesGraphCard className="col-span-1" title="Conversation Rate" />
-
-          {/* Second card */}
-          <SalesGraphCard className="col-span-1" title="AI-generated Sales" />
-
-          {/* Third card */}
-          <SalesGraphCard className="col-span-1" title="AI-generated Orders" />
         </div>
       </div>
     </>

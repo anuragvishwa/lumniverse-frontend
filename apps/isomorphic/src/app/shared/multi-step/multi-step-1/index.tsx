@@ -3,7 +3,7 @@
 import { useAtom } from 'jotai';
 import { atomWithReset, atomWithStorage } from 'jotai/utils';
 import cn from '@core/utils/class-names';
-import Footer from '@/app/multi-step/footer';
+import Footer from '@/app/simulator/footer';
 import StepOne from '@/app/shared/multi-step/multi-step-1/step-1';
 import StepTwo from '@/app/shared/multi-step/multi-step-1/step-2';
 import StepThree from '@/app/shared/multi-step/multi-step-1/step-3';

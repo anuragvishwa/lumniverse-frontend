@@ -58,8 +58,12 @@ export default function StyleCard({
   height,
   setHeight,
   borderRadius,
+
+  setInputRadius,
   setBorderRadius,
+  inputRadius,
 }: {
+  inputRadius: string;
   bgColor: string;
   className?: string;
   textColor: string;
@@ -82,6 +86,7 @@ export default function StyleCard({
   setHeight: Dispatch<SetStateAction<string>>;
   borderRadius: string;
   setBorderRadius: Dispatch<SetStateAction<string>>;
+  setInputRadius: Dispatch<SetStateAction<string>>;
 }) {
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
 
@@ -122,7 +127,8 @@ export default function StyleCard({
   const [chatBotHeight, setChatbotHeight] = useState(height);
 
   const handleBadgeTopChange = (color: string) => {
-    setInputBadgeTop(color);
+    setBadgeTop(color);
+    setIsToggle(false);
   };
 
   const handleHeight = (color: string) => {
@@ -133,9 +139,7 @@ export default function StyleCard({
     setInputBadgeBottom(color);
   };
 
-  const applyCustomBadgeTopInputChange = () => {
-    setBadgeTop(inputBadgeTop);
-  };
+  const applyCustomBadgeTopInputChange = () => {};
 
   const applyChatbotHeight = () => {
     setHeight(chatBotHeight);
@@ -190,7 +194,18 @@ export default function StyleCard({
     setIsToggle(false);
   };
 
-  console.log('check');
+  const fonts = [
+    'Arial',
+    'Courier New',
+    'Georgia',
+    'Times New Roman',
+    'Verdana',
+    'Tahoma',
+    'Trebuchet MS',
+    'Lucida Console',
+    'Comic Sans MS',
+    'Impact',
+  ];
 
   return (
     <WidgetCard
@@ -280,7 +295,8 @@ export default function StyleCard({
                     color={bgColor.startsWith('bg-') ? '#ffffff' : bgColor}
                     onChange={(e) => {
                       handleColorChange(e);
-                      handleBadgeTopChange(e);
+                      applyCustomColor();
+                      setBadgeTop(bgColor);
                     }}
                   />
                   <div className="mt-4 flex items-center">
@@ -295,16 +311,6 @@ export default function StyleCard({
                       placeholder="#FFFFFF"
                       className="rounded"
                     />
-                    <Button
-                      size="sm"
-                      className="ml-2"
-                      onClick={() => {
-                        applyCustomColor();
-                        applyCustomBadgeTopInputChange();
-                      }}
-                    >
-                      Apply
-                    </Button>
                   </div>
                 </div>
               </Popover.Content>
@@ -346,7 +352,10 @@ export default function StyleCard({
                 <div>
                   <HexColorPicker
                     color={textColor}
-                    onChange={handleInputTextColorChange}
+                    onChange={(e) => {
+                      handleInputTextColorChange(e);
+                      applyCustomTextColor();
+                    }}
                   />
 
                   <div className="mt-4 flex items-center">
@@ -358,13 +367,6 @@ export default function StyleCard({
                       placeholder="#FFFFFF"
                       className="rounded"
                     />
-                    <Button
-                      size="sm"
-                      className="ml-2"
-                      onClick={applyCustomTextColor}
-                    >
-                      Apply
-                    </Button>
                   </div>
                 </div>
               </Popover.Content>
@@ -384,36 +386,11 @@ export default function StyleCard({
                 className="rounded rounded-md border p-2 text-xs"
                 onChange={(e) => setSelectedFont(e.target.value)} // Add your font change handler here
               >
-                <option value="roboto" className="text-xs">
-                  Roboto
-                </option>
-                <option value="lato" className="text-xs">
-                  Lato
-                </option>
-                <option value="montserrat" className="text-xs">
-                  Montserrat
-                </option>
-                <option value="poppins" className="text-xs">
-                  Poppins
-                </option>
-                <option value="inter" className="text-xs">
-                  Inter
-                </option>
-                <option value="custom" className="text-xs">
-                  CustomFont
-                </option>
-                <option value="nunito" className="text-xs">
-                  Nunito
-                </option>
-                <option value="playfair" className="text-xs">
-                  Playfair Display
-                </option>
-                <option value="raleway" className="text-xs">
-                  Raleway
-                </option>
-                <option value="openSans" className="text-xs">
-                  Open Sans
-                </option>
+                {fonts.map((font, index) => (
+                  <option key={index} value={font} className="text-xs">
+                    {font}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -447,13 +424,6 @@ export default function StyleCard({
                       placeholder="#FFFFFF"
                       className="rounded"
                     />
-                    <Button
-                      size="sm"
-                      className="ml-2"
-                      onClick={applyCustomBadgeTopInputChange}
-                    >
-                      Apply
-                    </Button>
                   </div>
                 </div>
               </Popover.Content>
@@ -563,6 +533,42 @@ export default function StyleCard({
             >
               {buttonShape === 'rounded' ? 'Rectangle' : 'Rounded'}
             </Button> */}
+          </div>
+          <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
+            <Text
+              as="span"
+              className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-gray-700"
+            >
+              <span className="h-2.5 w-2.5 rounded-full" />
+              Input Radius
+            </Text>
+            <div className="flex items-center">
+              <select
+                id="font-picker"
+                className="w-24 rounded rounded-md border p-2 text-xs"
+                value={inputRadius}
+                onChange={(e) => setInputRadius(e.target.value)}
+              >
+                <option value="sm" className="text-xs">
+                  Small
+                </option>
+                <option value="md" className="text-xs">
+                  Medium
+                </option>
+                <option value="lg" className="text-xs">
+                  Large
+                </option>
+                <option value="full" className="text-xs">
+                  Rounded
+                </option>
+                {/* <option value="1.5rem" className="text-xs">
+                  2XL
+                </option>
+                <option value="2rem" className="text-xs">
+                  3XL
+                </option> */}
+              </select>
+            </div>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ import {
   BiSend,
 } from 'react-icons/bi';
 import { BsArrowUpShort, BsQuestion, BsSendArrowUp } from 'react-icons/bs';
-import { MdChat, MdFormatQuote } from 'react-icons/md';
+import { MdCancel, MdChat, MdFormatQuote } from 'react-icons/md';
 import { SiChatbot, SiHelpdesk } from 'react-icons/si';
 import axios from 'axios';
 import { PiFinnTheHuman, PiFinnTheHumanBold } from 'react-icons/pi';
@@ -160,26 +160,12 @@ const Chatbot = () => {
     }
   };
 
-  // const handleReset = async () => {
-  //   const resetTimestamp = new Date().toLocaleTimeString();
-  //   setMessages((prev) => [
-  //     ...prev,
-  //     { text: 'Resetting chat...', sender: 'user', time: resetTimestamp },
-  //   ]);
-
-  //   try {
-  //     const response = await axios.post('/api/chat', { message: 'reset' });
-  //     if (response.status === 200) {
-  //       const botTimestamp = new Date().toLocaleTimeString();
-  //       setMessages((prev) => [
-  //         ...prev,
-  //         { text: response.data.response, sender: 'bot', time: botTimestamp },
-  //       ]);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error sending reset message:', error);
-  //   }
-  // };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend(input);
+    }
+  };
 
   const handleOffer = (offerType: string) => {
     const offerTimestamp = new Date().toLocaleTimeString();
@@ -232,22 +218,6 @@ const Chatbot = () => {
     setSelectedOffer(offerType);
   };
 
-  const carouselRef = useRef<HTMLDivElement | null>(null);
-
-  const scrollLeft = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-    }
-  };
-
-  console.log('abc');
-
   return (
     <div className="relative">
       {isOpen && (
@@ -257,7 +227,7 @@ const Chatbot = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.4 }}
-            className="fixed bottom-0 right-0 z-[9999] mb-0 h-screen w-full rounded-2xl border border-gray-300 bg-white bg-opacity-30 shadow-lg backdrop-blur-lg @2xl:bottom-16 @2xl:right-8 @2xl:mb-96 @2xl:w-96 sm:bottom-16 sm:right-8 sm:mb-96 sm:h-[150px] sm:w-96"
+            className="fixed bottom-0 right-0 z-[9999] mb-0 h-screen w-full rounded-2xl border border-gray-300 bg-white bg-opacity-30 shadow-lg backdrop-blur-lg @2xl:bottom-16 @2xl:right-8 @2xl:mb-96 @2xl:w-96 sm:bottom-16 sm:right-8 sm:mb-96 sm:h-[180px] sm:w-96"
             // className="fixed bottom-0 right-0 z-[9999] mb-0 h-screen w-full rounded-2xl border border-gray-300 bg-white bg-opacity-30 shadow-lg backdrop-blur-lg"
           >
             <TabGroup>
@@ -296,7 +266,7 @@ const Chatbot = () => {
                     exit={{ opacity: 0, y: 50 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <div className="flex h-screen flex-col rounded-md sm:h-[400px]">
+                    <div className="flex h-screen flex-col rounded-md sm:h-[450px]">
                       <div className="flex flex-1 flex-col space-y-2 overflow-y-auto p-3">
                         <div
                           className={`chat-message flex max-w-xs items-end gap-2 self-start rounded-lg`}
@@ -499,13 +469,31 @@ const Chatbot = () => {
                             className="flex-1 rounded-full border-none text-xs text-gray-500 outline-none focus:ring-0"
                             type="text"
                             value={input}
+                            onKeyDown={handleKeyDown}
                             onChange={(e) => setInput(e.target.value)}
                           />
                           <button
                             onClick={() => handleSend(input)}
-                            className="rounded-full border-2 px-3 py-1.5 text-sm font-bold text-indigo-600 transition duration-300 ease-in-out hover:border-transparent hover:bg-gradient-to-r hover:from-violet-600 hover:to-indigo-600 hover:text-white"
+                            className="rounded-full border-2 border-transparent bg-gradient-to-r from-violet-600 to-indigo-600 px-2 py-1.5 text-sm font-bold text-white transition duration-300 ease-in-out"
+                            // className={`${
+                            //   bgColor.startsWith('bg-') ? bgColor : ''
+                            // } rounded-full px-2 py-1.5 text-sm font-bold text-white transition duration-300 ease-in-out`}
+                            // style={{
+                            //   backgroundColor: !bgColor.startsWith('bg-')
+                            //     ? bgColor
+                            //     : '',
+                            // }}
                           >
-                            <BsArrowUpShort className="h-5 w-5" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="white"
+                              className="bi bi-arrow-up-circle-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
+                            </svg>
                           </button>
                         </div>
                       </div>
@@ -525,7 +513,7 @@ const Chatbot = () => {
                     exit={{ opacity: 0, y: 50 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <div className="flex h-[400px] flex-col overflow-hidden rounded-t-md">
+                    <div className="flex h-[500px] flex-col overflow-hidden rounded-t-md">
                       <div className="flex-1 space-y-2 overflow-y-auto p-5">
                         {[
                           'Get Started with help of',
@@ -591,9 +579,13 @@ const Chatbot = () => {
 
       <button
         className="fixed bottom-6 right-8 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 p-4 text-white shadow-lg transition-transform hover:scale-105"
-        onClick={() => setIsOpen((prev) => !prev)} // Toggle chat visibility
+        onClick={() => setIsOpen((prev) => !prev)}
       >
-        <MdChat className="h-6 w-6" />
+        {isOpen ? (
+          <MdCancel className="h-8 w-8" />
+        ) : (
+          <MdChat className="h-6 w-6" />
+        )}
       </button>
     </div>
   );

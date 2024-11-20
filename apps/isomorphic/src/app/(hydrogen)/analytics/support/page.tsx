@@ -8,6 +8,7 @@ import { ActionIcon, Badge, Button, Switch, Text, Title } from 'rizzui';
 import SalesGraphCard from '../sales/salesGraphCards';
 import { DatePicker } from '@core/ui/datepicker';
 import { useState } from 'react';
+import SupportGraphCard from './supportGraph';
 
 // export const metadata = {
 //   ...metaObject('Analytics'),
@@ -69,14 +70,7 @@ export default function Support() {
 
       <div className="@container">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:gap-8">
-          {/* First card */}
-          <SalesGraphCard className="col-span-1" title="Conversation Rate" />
-
-          {/* Second card */}
-          <SalesGraphCard className="col-span-1" title="AI-generated Sales" />
-
-          {/* Third card */}
-          <SalesGraphCard className="col-span-1" title="AI-generated Orders" />
+          <SupportGraphCard className="col-span-1" title="Conversation Rate" />
         </div>
       </div>
     </>

@@ -14,13 +14,13 @@ export default function SettingsDrawer() {
       <SimpleBar className="h-[calc(100%-138px)]">
         <div className="px-5 py-6">
           <ThemeSwitcher />
-          <AppDirection />
+          {/* <AppDirection /> */}
           <LayoutSwitcher />
           <ColorOptions />
         </div>
       </SimpleBar>
 
-      <SettingsFooterButton />
+      {/* <SettingsFooterButton /> */}
     </>
   );
 }

@@ -5,9 +5,9 @@ import RingBellSolidIcon from '@core/components/icons/ring-bell-solid';
 import { BiBell, BiToggleLeft } from 'react-icons/bi';
 import { MdOutlineHelp } from 'react-icons/md';
 import { ActionIcon, Badge, Button, Switch, Text, Title } from 'rizzui';
-import SalesGraphCard from '../sales/salesGraphCards';
 import { DatePicker } from '@core/ui/datepicker';
 import { useState } from 'react';
+import EngageMentGraphCard from './engageMentGraph';
 
 // export const metadata = {
 //   ...metaObject('Analytics'),
@@ -69,14 +69,10 @@ export default function Engagement() {
 
       <div className="@container">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:gap-8">
-          {/* First card */}
-          <SalesGraphCard className="col-span-1" title="Conversation Rate" />
-
-          {/* Second card */}
-          <SalesGraphCard className="col-span-1" title="AI-generated Sales" />
-
-          {/* Third card */}
-          <SalesGraphCard className="col-span-1" title="AI-generated Orders" />
+          <EngageMentGraphCard
+            className="col-span-1"
+            title="Conversation Rate"
+          />
         </div>
       </div>
     </>

@@ -6,8 +6,13 @@ import {
   BiReset,
   BiSend,
 } from 'react-icons/bi';
-import { BsArrowUpShort, BsQuestion, BsSendArrowUp } from 'react-icons/bs';
-import { MdChat } from 'react-icons/md';
+import {
+  BsArrowUpCircleFill,
+  BsArrowUpShort,
+  BsQuestion,
+  BsSendArrowUp,
+} from 'react-icons/bs';
+import { MdChat, MdOutlineSearch } from 'react-icons/md';
 import { SiChatbot, SiHelpdesk } from 'react-icons/si';
 import axios from 'axios';
 import { PiFinnTheHuman, PiFinnTheHumanBold } from 'react-icons/pi';
@@ -22,12 +27,17 @@ import {
   TabPanel,
   TabPanels,
 } from '@headlessui/react';
-import { IoChevronDownCircleOutline } from 'react-icons/io5';
+import {
+  IoChevronDownCircleOutline,
+  IoSearchCircleOutline,
+} from 'react-icons/io5';
 import cn from '@core/utils/class-names';
 import '../integrations/[id]/chatbot.css';
 import { HexColorPicker } from 'react-colorful';
 import ChatSolidIcon from '@core/components/icons/chat-solid';
 import './chatbot.css';
+import SearchTrigger from './search/search-trigger';
+import SearchWidget from './search/search';
 
 // Define a type for the products
 interface Product {
@@ -44,6 +54,7 @@ const accordionVariants = {
 const ChatbotCustomize = ({
   bgColor,
   setBgColor,
+  inputRadius,
   textColor,
   setTextColor,
   imageSrc,
@@ -55,6 +66,7 @@ const ChatbotCustomize = ({
   height,
   borderRadius,
 }: {
+  inputRadius: string;
   bgColor: string;
   setBgColor: Dispatch<SetStateAction<string>>;
   textColor: string;
@@ -216,30 +228,22 @@ const ChatbotCustomize = ({
 
     setSelectedOffer(offerType);
   };
-
-  // const carouselRef = useRef<HTMLDivElement | null>(null);
-
-  // const scrollLeft = () => {
-  //   if (carouselRef.current) {
-  //     carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-  //   }
-  // };
-
-  // const scrollRight = () => {
-  //   if (carouselRef.current) {
-  //     carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-  //   }
-  // };
-
-  console.log(height, borderRadius, 'bgColor');
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend(input);
+    }
+  };
 
   const [isHovered, setIsHovered] = useState(false);
   const [isHovered2, setIsHovered2] = useState(false);
   const [isHovered3, setIsHovered3] = useState(false);
   const [isHovered4, setIsHovered4] = useState(false);
+
   return (
     <div
-      className={`${selectedFont} col-span-full @[59rem]:col-span-2 @[80rem]:col-span-1`}
+      style={{ fontFamily: selectedFont }}
+      className={`col-span-full @[59rem]:col-span-2 @[80rem]:col-span-1`}
     >
       {isOpen && (
         <AnimatePresence>
@@ -263,11 +267,6 @@ const ChatbotCustomize = ({
               >
                 <div className="flex flex-col gap-2">
                   <Tab
-                    // className={({ selected }) =>
-                    //   selected
-                    //     ? 'text-md flex items-center gap-2 rounded-lg px-4 py-0 font-semibold text-gray-500'
-                    //     : 'text-md flex items-center gap-2 rounded-lg px-4 py-2 font-semibold text-white'
-                    // }
                     className="flex items-center gap-2 rounded-xl px-6 py-1 font-semibold text-white"
                     style={{ color: textColor }}
                   >
@@ -285,23 +284,14 @@ const ChatbotCustomize = ({
                     </span>
                   </Tab>
                 </div>
-                {/* <Tab
-                  className={({ selected }) =>
-                    selected
-                      ? 'flex items-center gap-2 rounded-full bg-[rgba(0,0,0,0.21)] px-6 py-1 font-semibold text-white shadow-lg backdrop-blur-md' // Glass effect with custom rgba color
-                      : 'flex items-center gap-2 rounded-lg px-6 py-2 font-semibold text-white'
-                  }
-                  style={{ color: textColor }}
-                >
-                  <BsQuestion className="h-6 w-6 rounded-full bg-white p-1 text-gray-900" />
-                  FAQ
-                </Tab> */}
+                <div className="absolute right-12 top-[14px] text-2xl text-white hover:text-gray-200">
+                  <SearchWidget />
+                </div>
                 <button
                   className="absolute right-6 top-3 text-2xl text-white hover:text-gray-200"
                   onClick={() => setIsOpen(false)}
                 >
                   &times;
-                  {/* This is the 'X' symbol, you can also use an icon here */}
                 </button>
               </TabList>
 
@@ -570,19 +560,7 @@ const ChatbotCustomize = ({
                           </div>
                         )}
                         <div className="relative mt-4">
-                          {/* Left Scroll Button */}
-                          {/* <button
-                  onClick={scrollLeft}
-                  className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-gray-300 p-2"
-                >
-                  &#10094;
-                </button> */}
-
-                          {/* Carousel Container */}
-                          <div
-                            // ref={carouselRef}
-                            className="scrollbar-hide flex overflow-x-auto"
-                          >
+                          <div className="scrollbar-hide flex overflow-x-auto">
                             {products.length > 0 &&
                               products.map((product) => (
                                 <div
@@ -601,28 +579,16 @@ const ChatbotCustomize = ({
                                 </div>
                               ))}
                           </div>
-
-                          {/* Right Scroll Button */}
-                          {/* <button
-                  onClick={scrollRight}
-                  className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-gray-300 p-2"
-                >
-                  &#10095;
-                </button> */}
                         </div>
                       </div>
                       <div
-                        className={`mt-2 rounded-full border-2 ${bgColor.startsWith('bg-') ? bgColor.replace('bg-', 'border-') : 'border-blue-200'} bg-gray-200 bg-clip-text px-3 py-1 text-transparent`}
-
-                        // className="rounded-full border-2 border-zinc-700 px-3 py-2 dark:border-zinc-700"
+                        className={`mt-2 rounded-${inputRadius} border-2 ${bgColor.startsWith('bg-') ? bgColor.replace('bg-', 'border-') : 'border-blue-200'} bg-gray-200 bg-clip-text px-3 py-1 text-transparent`}
                       >
                         <div className="flex gap-2">
                           <input
-                            // rounded="pill"
-                            // variant="text"
-
+                            onKeyDown={handleKeyDown}
                             placeholder="Type your message..."
-                            className="flex-1 rounded-full border-none text-xs text-gray-500 outline-none focus:ring-0"
+                            className={`flex-1 rounded-full border-none text-xs text-gray-500 outline-none focus:ring-0`}
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
@@ -631,14 +597,25 @@ const ChatbotCustomize = ({
                           <button
                             className={`${
                               bgColor.startsWith('bg-') ? bgColor : ''
-                            } rounded-full px-2 py-1.5 text-sm font-bold text-white transition duration-300 ease-in-out hover:bg-transparent hover:text-gray-900`}
+                            } rounded-full px-2 py-1.5 text-sm font-bold text-white transition duration-300 ease-in-out`}
                             style={{
                               backgroundColor: !bgColor.startsWith('bg-')
                                 ? bgColor
                                 : '',
                             }}
+                            onClick={() => handleSend(input)}
                           >
-                            <BsArrowUpShort className="h-5 w-5" />
+                            {/* <BsArrowUpShort className="h-5 w-5" /> */}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="white"
+                              className="bi bi-arrow-up-circle-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
+                            </svg>
                           </button>
                         </div>
                       </div>
@@ -719,14 +696,6 @@ const ChatbotCustomize = ({
               </TabPanels>
             </TabGroup>
           </motion.div>
-          {/* <div className="mt-4 flex items-center gap-2">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="rounded border px-2 py-1 text-sm"
-          />
-        </div> */}
         </AnimatePresence>
       )}
     </div>

@@ -54,6 +54,7 @@ import { MdIntegrationInstructions } from 'react-icons/md';
 import { BiCustomize, BiSupport } from 'react-icons/bi';
 import SalesIcon from '@core/components/icons/sales';
 import { SiChatbot } from 'react-icons/si';
+import { BsFunnel } from 'react-icons/bs';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -138,11 +139,12 @@ export const menuItems = [
   //   href: routes.eCommerce.dashboard,
   //   icon: <PiShoppingCartDuotone />,
   // },
-  // {
-  //   name: '',
-  //   href: routes.analytics,
-  //   icon: <PiChartBarDuotone />,
-  // },
+  {
+    name: 'Funnel',
+    href: '/funnel',
+    icon: <BsFunnel />,
+  },
+
   {
     name: 'Analytics',
     href: '/analytics/sales',

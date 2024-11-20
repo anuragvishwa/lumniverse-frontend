@@ -83,83 +83,76 @@ const data = [
 
 const metricsData = [
   {
-    title: 'Conversion rate',
-    value: '13.03%',
-    lift: '3X',
+    title: 'Customer requests fulfilled',
+    value: '6181',
+    description: 'Requests that were fulfilled by the AI Concierge',
+
+    previousPeriod: '29 Jul 2024-11 Aug 2024',
+    chartData: [
+      { date: '05 Aug', value: 1000 },
+      { date: '07 Aug', value: 1200 },
+      { date: '09 Aug', value: 1400 },
+      { date: '11 Aug', value: 1600 },
+    ],
+  },
+  {
+    title: 'Resolved by AI',
+    value: '99.97%',
     description:
-      'Conversations with the AI Concierge that resulted in an order',
-    chartData: [
-      { date: '05 Aug', value: 13 },
-      { date: '07 Aug', value: 14 },
-      { date: '09 Aug', value: 13.5 },
-      { date: '11 Aug', value: 13.03 },
-    ],
-  },
-  {
-    title: 'AI-generated sales',
-    value: '$84,403.28',
-    lift: '10%',
-    description: 'Revenue that was rescued by the AI Concierge',
-    chartData: [
-      { date: '05 Aug', value: 15 },
-      { date: '07 Aug', value: 14.5 },
-      { date: '09 Aug', value: 13.8 },
-      { date: '11 Aug', value: 14 },
-    ],
-  },
-  {
-    title: 'AI-generated orders',
-    value: '833',
-    lift: '9%',
-    description: 'Orders that were rescued by the AI concierge',
-    chartData: [
-      { date: '05 Aug', value: 180 },
-      { date: '07 Aug', value: 200 },
-      { date: '09 Aug', value: 190 },
-      { date: '11 Aug', value: 170 },
-    ],
-  },
-  {
-    title: 'AOV',
-    value: '$101.32',
-    lift: '6%',
-    description: 'Orders that were rescued by the AI concierge',
+      'Visitors that interacted with the AI Concierge and did not require human assistance',
+
+    previousPeriod: '29 Jul 2024-11 Aug 2024',
     chartData: [
       { date: '05 Aug', value: 100 },
-      { date: '07 Aug', value: 102 },
-      { date: '09 Aug', value: 101 },
-      { date: '11 Aug', value: 101.32 },
+      { date: '07 Aug', value: 120 },
+      { date: '09 Aug', value: 140 },
+      { date: '11 Aug', value: 160 },
     ],
   },
   {
-    title: 'Redirects to PDP',
-    value: '563',
-    lift: '18%',
-    description:
-      'Visitors that were navigated to a product page by the AI Concierge',
+    title: 'Handled by humans',
+    value: '0.03%',
+    description: 'Visitors that were handed off to a human agent',
+
+    previousPeriod: '29 Jul 2024-11 Aug 2024',
     chartData: [
-      { date: '05 Aug', value: 550 },
-      { date: '07 Aug', value: 560 },
-      { date: '09 Aug', value: 570 },
-      { date: '11 Aug', value: 563 },
+      { date: '05 Aug', value: 0 },
+      { date: '07 Aug', value: 20 },
+      { date: '09 Aug', value: 15 },
+      { date: '11 Aug', value: 25 },
     ],
   },
   {
-    title: 'Add to cart',
-    value: '464',
-    lift: '23%',
+    title: 'Unanswered questions',
+    value: '448',
     description:
-      'Visitors that asked the AI Concierge to add products to their cart',
+      "Questions asked by visitors which your AI wasn't able to answer",
+
+    previousPeriod: '29 Jul 2024-11 Aug 2024',
     chartData: [
-      { date: '05 Aug', value: 450 },
-      { date: '07 Aug', value: 460 },
-      { date: '09 Aug', value: 470 },
-      { date: '11 Aug', value: 464 },
+      { date: '05 Aug', value: 100 },
+      { date: '07 Aug', value: 120 },
+      { date: '09 Aug', value: 140 },
+      { date: '11 Aug', value: 160 },
+    ],
+  },
+  {
+    title: '',
+    value: '',
+    description:
+      'Customers that explicitly said the AI Concierge provided them with assistance or requested an add-to-cart',
+
+    previousPeriod: '29 Jul 2024-11 Aug 2024',
+    chartData: [
+      { date: '05 Aug', value: 1000 },
+      { date: '07 Aug', value: 1100 },
+      { date: '09 Aug', value: 1200 },
+      { date: '11 Aug', value: 1300 },
     ],
   },
 ];
 
-export default function SalesGraphCard({
+export default function SupportGraphCard({
   className,
   title,
 }: {
@@ -183,23 +176,20 @@ export default function SalesGraphCard({
             title={
               <div className="flex items-center justify-between">
                 <Title as="h6">{metric.title}</Title>
-                <Text className="text-xs font-semibold text-gray-600">
+                {/* <Text className="text-xs font-semibold text-gray-600">
                   Lift
-                </Text>
+                </Text> */}
               </div>
             }
             description={
-              <div className="flex items-center justify-between">
+              <div className="w-full">
                 <Text as="span">{metric.value}</Text>
-                <Text className="text-xs font-semibold text-gray-600">
-                  {metric.lift}
-                </Text>
               </div>
             }
             descriptionClassName="text-gray-500 mt-1.5"
           >
             <div className="mb-2 mt-5 flex items-start">
-              <div className="mr-9 flex items-start">
+              <div className="flex items-start">
                 <div>
                   <Text className="text-gray-500">{metric.description}</Text>
                 </div>

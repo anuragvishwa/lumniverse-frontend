@@ -13,7 +13,7 @@ export const config = {
     '/',
     '/executive',
     '/customize',
-
+    '/funnel',
     '/ai-training/:path*',
     '/multi-step',
     '/sales',
