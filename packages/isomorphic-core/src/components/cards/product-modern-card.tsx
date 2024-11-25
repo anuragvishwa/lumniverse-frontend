@@ -1,24 +1,53 @@
-'use client';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Title, Text } from 'rizzui';
-import cn from '../../utils/class-names';
-import WishlistButton from '../wishlist-button';
-import { generateSlug } from '../../utils/generate-slug';
-import ColorSwatch from '../../utils/color-swatch';
-import { Product } from '../../types';
-import { toCurrency } from '../../utils/to-currency';
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { Title, Text, Button } from "rizzui";
+import cn from "../../utils/class-names";
+import WishlistButton from "../wishlist-button";
+import { generateSlug } from "../../utils/generate-slug";
+import ColorSwatch from "../../utils/color-swatch";
+import { Product } from "../../types";
+import { toCurrency } from "../../utils/to-currency";
+import { Dispatch, SetStateAction, useState } from "react";
 
 interface ProductProps {
   product: Product;
   className?: string;
   routes: any;
+  inputRadius: string;
+  bgColor: string;
+  setBgColor: Dispatch<SetStateAction<string>>;
+  textColor: string;
+  setTextColor: Dispatch<SetStateAction<string>>;
+  changeContentBgColor: string;
+  imageSrc: string;
+  contentTextColor: string;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  selectedFont: string;
+  height: string;
+  borderRadius: string;
+  pageHeader: string;
 }
 
 export default function ProductModernCard({
   product,
+  pageHeader,
   className,
   routes,
+  bgColor,
+  setBgColor,
+  inputRadius,
+  textColor,
+  setTextColor,
+  imageSrc,
+  contentTextColor,
+  changeContentBgColor,
+  isOpen,
+  setIsOpen,
+  selectedFont,
+  height,
+  borderRadius,
 }: ProductProps) {
   const {
     title,
@@ -29,9 +58,14 @@ export default function ProductModernCard({
     sale_price,
     colors = [],
   } = product;
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className={cn(className)}>
-      <div className="relative">
+    <div
+      className={cn(className)}
+      style={{ fontFamily: selectedFont, color: textColor }}
+    >
+      <div className="relative ">
         <div className="relative mx-auto aspect-[4/5.06] w-full overflow-hidden rounded-lg bg-gray-100">
           <Image
             alt={title}
@@ -53,6 +87,7 @@ export default function ProductModernCard({
           )}
         >
           <Title
+            style={{ fontFamily: selectedFont, color: textColor }}
             as="h6"
             className="mb-1 truncate font-semibold transition-colors hover:text-primary"
           >
@@ -60,10 +95,17 @@ export default function ProductModernCard({
           </Title>
         </Link>
 
-        <Text as="p" className="truncate">
+        <Text
+          as="p"
+          className="truncate"
+          style={{ fontFamily: selectedFont, color: textColor }}
+        >
           {description}
         </Text>
-        <div className="mt-2 flex items-center font-semibold text-gray-900">
+        <div
+          className="mt-2 flex items-center font-semibold text-gray-900"
+          style={{ fontFamily: selectedFont, color: textColor }}
+        >
           {toCurrency(Number(price))}
           {sale_price && (
             <del className="ps-1.5 text-[13px] font-normal text-gray-500">
@@ -71,8 +113,20 @@ export default function ProductModernCard({
             </del>
           )}
         </div>
+        {pageHeader === "Personalize Cards" && (
+          <Button
+            className={`${
+              bgColor.startsWith("bg-") ? bgColor : ""
+            } w-full mt-2 text-sm font-bold text-white transition duration-300 ease-in-out rounded-${borderRadius}`}
+            style={{
+              backgroundColor: !bgColor.startsWith("bg-") ? bgColor : "",
+            }}
+          >
+            Add to Card
+          </Button>
+        )}
 
-        {colors?.length ? <ColorSwatch colors={product?.colors} /> : null}
+        {/* {colors?.length ? <ColorSwatch colors={product?.colors} /> : null} */}
       </div>
     </div>
   );

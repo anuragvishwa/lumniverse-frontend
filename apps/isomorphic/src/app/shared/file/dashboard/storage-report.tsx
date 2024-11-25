@@ -21,6 +21,9 @@ import SocialFollowers from '@/app/shared/executive/social-followers';
 import StyleCard from '@/app/(hydrogen)/customize/styleCard';
 import { MdChat, MdKeyboardArrowUp } from 'react-icons/md';
 import '@/app/(hydrogen)/customize/chatbot.css';
+import PageHeader from '../../page-header';
+import { Text, Title } from 'rizzui';
+import CardsPage from '@/app/(hydrogen)/widgets/cards/page';
 
 export default function Customize() {
   const [isVisible, setIsVisible] = useState(true); // Control visibility
@@ -77,14 +80,21 @@ export default function Customize() {
     setSelectedFont(event.target.value);
   };
   return (
-    <div>
+    <>
+      <div className="mb-3 flex items-center justify-between">
+        <Title as="h4">Style Palette</Title>
+      </div>
+      <Text as="span" className="font-semibold text-gray-400">
+        Easily personalize your chatbot&apos;s look in just a few clicks.
+      </Text>
+
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.4 }}
       >
-        <div className="grid grid-cols-6 gap-6 @container">
+        <div className="mt-6 grid grid-cols-6 gap-6 @container">
           <StyleCard
             className="col-span-full @[59rem]:col-span-4 @[80rem]:col-span-3"
             bgColor={bgColor}
@@ -163,6 +173,9 @@ export default function Customize() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
             className={`fixed bottom-0 right-8 flex h-8 w-24 items-center justify-center rounded-t-md bg-gradient-to-r from-${badgeTop} to-${badgeBottom} text-white shadow-lg`}
+            style={{
+              backgroundColor: !badgeTop.startsWith('bg-') ? badgeTop : '',
+            }}
             onClick={() => {
               setIsOpen((prev) => !prev);
             }}
@@ -183,6 +196,9 @@ export default function Customize() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
             className={`fixed bottom-0 right-8 flex h-10 w-24 items-center justify-center bg-gradient-to-r from-${badgeTop} to-${badgeBottom} rounded-t-full text-white shadow-lg`} // Semi-circle shape
+            style={{
+              backgroundColor: !badgeTop.startsWith('bg-') ? badgeTop : '',
+            }}
             onClick={() => {
               setIsOpen((prev) => !prev);
             }}
@@ -194,6 +210,6 @@ export default function Customize() {
         ) : // Render nothing if both buttons should not be visible
         null}
       </AnimatePresence>
-    </div>
+    </>
   );
 }

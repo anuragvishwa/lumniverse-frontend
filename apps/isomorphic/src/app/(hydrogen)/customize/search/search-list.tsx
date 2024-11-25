@@ -23,6 +23,20 @@ import { SiChatbot } from 'react-icons/si';
 import logo from '@public/address.svg';
 import Image from 'next/image';
 import { AiOutlineArrowLeft, AiOutlineStar } from 'react-icons/ai';
+import ShopFilters from '@/app/shared/ecommerce/shop/shop-filters';
+import { useDrawer } from '@/app/shared/drawer-views/use-drawer';
+import RatingFilter from '@/app/shared/ecommerce/shop/shop-filters/rating-filter';
+import PriceFilter from '@/app/shared/ecommerce/shop/shop-filters/price-filter';
+import GenderSpecificFilter from '@/app/shared/ecommerce/shop/shop-filters/gender-specific-filter';
+import { useFilterControls } from '@core/hooks/use-filter-control';
+import {
+  initialState,
+  categoriesData,
+  brandsData,
+  colorsData,
+} from '@/app/shared/ecommerce/shop/shop-filters/filter-utils';
+import FilterWithSearch from '@core/components/filter-with-search';
+import hasSearchedParams from '@core/utils/has-searched-params';
 
 export default function SearchList({ onClose }: { onClose?: () => void }) {
   const inputRef = useRef(null);
@@ -70,6 +84,13 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
 
   const [recentSearches, setRecentSearches] = useState(initialRecentSearches);
 
+  const { state, applyFilter, clearFilter, reset } = useFilterControls<
+    typeof initialState,
+    any
+  >(initialState);
+
+  const { closeDrawer } = useDrawer();
+
   const handleSearchClick = (search: string) => {
     setSearchText(search); // Update the input field with the selected search term
     setRecentSearches((prevSearches) => {
@@ -106,7 +127,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
     <>
       <div className="flex h-[600px] w-full">
         {/* Sidebar */}
-        <div className="glass-card w-[30%] max-w-sm overflow-y-auto rounded-md border-r border-gray-200 p-4 backdrop-blur-lg">
+        <div className="w-[30%] max-w-sm overflow-y-auto rounded-md border-r border-gray-200 p-4">
           <svg
             width="120"
             height="50"
@@ -128,8 +149,55 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
               </g>
             </g>
           </svg>
+          <div className="space-y-9 overflow-y-auto px-5 py-6">
+            <GenderSpecificFilter state={state} applyFilter={applyFilter} />
+            <FilterWithSearch
+              title="Category"
+              name="categories"
+              data={categoriesData}
+              state={state}
+              applyFilter={applyFilter}
+              clearFilter={clearFilter}
+            />
+            <FilterWithSearch
+              title="Brand"
+              name="brands"
+              data={brandsData}
+              state={state}
+              applyFilter={applyFilter}
+              clearFilter={clearFilter}
+            />
+            <FilterWithSearch
+              title="Color"
+              name="colors"
+              data={colorsData}
+              state={state}
+              applyFilter={applyFilter}
+              clearFilter={clearFilter}
+            />
+            <PriceFilter state={state} applyFilter={applyFilter} />
+            <RatingFilter state={state} applyFilter={applyFilter} />
+          </div>
 
-          <div className="mb-6">
+          <div className="flex h-16 flex-shrink-0 items-center justify-center gap-3 bg-white px-5 py-3 dark:bg-gray-100">
+            {hasSearchedParams() ? (
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  reset();
+                  closeDrawer();
+                }}
+              >
+                Reset All
+              </Button>
+            ) : null}
+            <Button size="lg" onClick={() => closeDrawer()} className="w-full">
+              Show results
+            </Button>
+          </div>
+          {/* <div className="mb-6">
             <h3 className="mb-2 text-xs font-semibold text-gray-700">
               Recent searches
             </h3>
@@ -163,9 +231,9 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
-          <div className="mt-6 text-center text-xs text-gray-500">
+          {/* <div className="mt-6 text-center text-xs text-gray-500">
             <p>
               Answers by
               <span className="flex items-center justify-center">
@@ -202,7 +270,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
             <button className="mt-1 rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-600">
               Get yours
             </button>
-          </div>
+          </div> */}
         </div>
 
         <div className="w-[70%] p-4">

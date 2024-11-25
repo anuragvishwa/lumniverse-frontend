@@ -1,5 +1,8 @@
 {
   "extends": "typescript-config/react-library.json",
-  "include": ["."],
+  "include": [
+    ".",
+    "../../apps/isomorphic/src/app/(hydrogen)/personalize-cards/StyleCard.tsx"
+  ],
   "exclude": ["dist", "build", "node_modules"]
 }

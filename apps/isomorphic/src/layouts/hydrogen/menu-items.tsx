@@ -46,6 +46,8 @@ import {
   PiNewspaperClippingDuotone,
   PiCodesandboxLogoDuotone,
   PiSparkleDuotone,
+  PiCardsDuotone,
+  PiMagnifyingGlassDuotone,
 } from 'react-icons/pi';
 import ProjectWriteIcon from '@core/components/icons/project-write';
 import CrmDashIcon from '@core/components/icons/crm-icon';
@@ -134,11 +136,21 @@ export const menuItems = [
   //   href: routes.logistics.dashboard,
   //   icon: <PiPackageDuotone />,
   // },
-  // {
-  //   name: 'E-Commerce',
-  //   href: routes.eCommerce.dashboard,
-  //   icon: <PiShoppingCartDuotone />,
-  // },
+  {
+    name: 'Personalize Cards',
+    href: '/personalize-cards',
+    icon: <PiShoppingCartDuotone />,
+  },
+  {
+    name: 'Recent Cards',
+    href: '/recent-cards',
+    icon: <PiCardsDuotone />,
+  },
+  {
+    name: 'Search Cards',
+    href: '/search-cards',
+    icon: <PiMagnifyingGlassDuotone />,
+  },
   {
     name: 'Funnel',
     href: '/funnel',
