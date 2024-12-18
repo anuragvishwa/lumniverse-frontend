@@ -82,11 +82,10 @@ export default function Customize() {
   return (
     <>
       <div className="mb-3 flex items-center justify-between">
-        <Title as="h4">Style Palettessssssssssssssss</Title>
+        <Title as="h4">Style Palette</Title>
       </div>
       <Text as="span" className="font-semibold text-gray-400">
-        Easily personalize your chatbot&apos;s look in just a few clicks. Adding
-        new changes.
+        Easily personalize your chatbot&apos;s look in just a few clicks.
       </Text>
 
       <motion.div
