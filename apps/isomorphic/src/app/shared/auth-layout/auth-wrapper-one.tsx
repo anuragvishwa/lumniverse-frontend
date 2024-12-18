@@ -87,6 +87,7 @@ export default function AuthWrapperOne({
           permission: 'default',
           googleId: authProvider === 'google' ? uniqueId : 'default',
           githubId: authProvider === 'github' ? uniqueId : 'default',
+          shopifyId: authProvider === 'shopify' ? uniqueId : 'default',
           access_token: 'default',
         });
         const response = createUserRes.data;
