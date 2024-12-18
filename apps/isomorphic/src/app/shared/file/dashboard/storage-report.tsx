@@ -85,7 +85,8 @@ export default function Customize() {
         <Title as="h4">Style Palettessssssssssssssss</Title>
       </div>
       <Text as="span" className="font-semibold text-gray-400">
-        Easily personalize your chatbot&apos;s look in just a few clicks.
+        Easily personalize your chatbot&apos;s look in just a few clicks. Adding
+        new changes.
       </Text>
 
       <motion.div
