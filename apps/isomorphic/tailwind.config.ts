@@ -10,6 +10,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'rgb-gradient':
+          '0 4px 15px rgba(255, 0, 0, 0.6), 0 4px 15px rgba(0, 255, 0, 0.6), 0 4px 15px rgba(0, 0, 255, 0.6)',
+      },
       animation: {
         border: 'border 4s ease infinite',
       },

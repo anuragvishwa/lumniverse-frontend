@@ -160,14 +160,14 @@ export default function AuthWrapperOne({
             {isSocialLoginActive && (
               <>
                 <div className="grid grid-cols-1 gap-4 pb-5 md:grid-cols-1 md:pb-6 xl:gap-5 xl:pb-7">
-                  <Button
+                  {/* <Button
                     variant="outline"
                     onClick={() => handleSignIn('github')}
                     className="h-11 w-full"
                   >
                     <GithubIcon className="me-2 h-4 w-4 shrink-0" />
                     <span className="truncate">Signin With Github</span>
-                  </Button>
+                  </Button> */}
                   {/* <Button
                     variant="outline"
                     onClick={() => signIn('gitlab')}

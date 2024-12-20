@@ -271,6 +271,19 @@ export default function StyleCard({
             <span className="h-3 w-3 rounded-full bg-green-500"></span>
             Green
           </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            rounded="pill"
+            onClick={() => {
+              setBgColor('bg-black');
+              setBadgeTop('bg-black');
+            }}
+            className="flex items-center gap-2 border hover:border-gray-900 hover:text-gray-900"
+          >
+            <span className="h-3 w-3 rounded-full bg-gray-900"></span>
+            Gradient
+          </Button>
         </div>
 
         <div className="mb-4 mt-4 grid grid-cols-2 items-center justify-between gap-6 border-b border-muted pb-4 last:mb-0 last:border-0 last:pb-0">
