@@ -7,8 +7,7 @@ import CreateCategory from '@/app/shared/ecommerce/category/create-category';
 import { PiPlusBold, PiXBold } from 'react-icons/pi';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 
-export default function CreateCategoryModalView({ record }: { record: any }) {
-  console.log(record, 'record');
+export default function CreateCategoryModalView() {
   const { closeModal } = useModal();
   return (
     <div className="m-auto px-5 pb-8 pt-5 @lg:pt-6 @2xl:px-7">

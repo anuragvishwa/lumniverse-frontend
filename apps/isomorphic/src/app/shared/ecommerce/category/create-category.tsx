@@ -13,7 +13,8 @@ import {
   categoryFormSchema,
 } from '@/validators/create-category.schema';
 import UploadZone from '@core/ui/file-upload/upload-zone';
-import { BiPlus } from 'react-icons/bi';
+import { BiDollarCircle, BiPlus } from 'react-icons/bi';
+import { useModal } from '../../modal-views/use-modal';
 const Select = dynamic(() => import('rizzui').then((mod) => mod.Select), {
   ssr: false,
   loading: () => <SelectLoader />,
@@ -129,145 +130,84 @@ export default function CreateCategory({
       });
     }, 600);
   };
+  const [isOpen, setIsOpen] = useState(true);
+  const { closeModal } = useModal();
 
   return (
-    <Form<CategoryFormInput>
-      validationSchema={categoryFormSchema}
-      resetValues={reset}
-      onSubmit={onSubmit}
-      useFormProps={{
-        mode: 'onChange',
-        defaultValues: category,
-      }}
-      className="isomorphic-form flex flex-grow flex-col @container"
-    >
-      {({ register, control, getValues, setValue, formState: { errors } }) => (
-        <>
-          <div className="flex-grow pb-10">
-            <div
-              className={cn(
-                'grid grid-cols-1',
-                isModalView
-                  ? 'grid grid-cols-1 gap-8 divide-y divide-dashed divide-gray-200 @2xl:gap-10 @3xl:gap-12 [&>div]:pt-7 first:[&>div]:pt-0 @2xl:[&>div]:pt-9 @3xl:[&>div]:pt-11'
-                  : 'gap-5'
-              )}
-            >
-              <HorizontalFormBlockWrapper
-                title={'Add new category:'}
-                description={'Edit your category information from here'}
-                isModalView={isModalView}
-              >
-                {/* <Input
-                  label="Category Name"
-                  placeholder="category name"
-                  {...register('name')}
-                  error={errors.name?.message}
-                />
-                <Input
-                  label="Slug"
-                  placeholder="slug"
-                  {...register('slug')}
-                  error={errors.slug?.message}
-                />
-                <Controller
-                  name="parentCategory"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Select
-                      dropdownClassName="!z-0"
-                      options={parentCategoryOption}
-                      value={value}
-                      onChange={onChange}
-                      label="Parent Category"
-                      error={errors?.parentCategory?.message as string}
-                      getOptionValue={(option) => option.label}
-                    />
-                  )}
-                />
-                <Controller
-                  name="type"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Select
-                      dropdownClassName="!z-0"
-                      options={typeOption}
-                      value={value}
-                      onChange={onChange}
-                      label="Display Type"
-                      error={errors?.type?.message as string}
-                      getOptionValue={(option) => option.label}
-                    />
-                  )}
-                /> */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="relative h-[600px] w-full max-w-4xl rounded-lg bg-white shadow-lg">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b p-4">
+          <h2 className="text-xl font-bold">Product recommendation</h2>
+          <button
+            onClick={() => closeModal()}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            &times;
+          </button>
+        </div>
 
-                <div className="col-span-2">
-                  <Controller
-                    control={control}
-                    name="description"
-                    render={({ field: { onChange, value } }) => (
-                      <Textarea
-                        value={value}
-                        onChange={onChange}
-                        label="Further AI Instructions"
-                        className="font-bold [&>.ql-container_.ql-editor]:min-h-[100px]"
-                        labelClassName="font-medium text-gray-700 dark:text-gray-600 mb-1.5"
-                      />
-                    )}
-                  />
-                </div>
-              </HorizontalFormBlockWrapper>
-              <div className="mb-7 flex flex-col gap-2">
-                <Title as="h4" className="font-semibold">
-                  Additional Chips
-                </Title>
-                <Text className="text-xs">
-                  Your AI will come with a suggestions on how to continue, but
-                  you can add in your own, which will always shows when this
-                  sales scenario initiated.
-                </Text>
-              </div>
-              <div className="flex h-20 items-center justify-between rounded-sm bg-gray-100 p-4">
-                <Button size="sm" variant="flat">
-                  Subscribe and get a discount
-                </Button>
-
-                <div className="flex flex-1 items-center justify-end">
-                  <Button
-                    size="sm"
-                    className="border-gradient-to-r flex items-center gap-2 border-2 bg-white from-violet-600 to-indigo-600 px-3 py-1.5 text-indigo-600 transition-all duration-300 ease-in-out hover:border-transparent hover:bg-gradient-to-r hover:from-violet-600 hover:to-indigo-600 hover:text-white"
-                  >
-                    <BiPlus className="h-5 w-5" />
-                    Add suggestions chips
-                  </Button>
-                </div>
-              </div>
+        {/* Body */}
+        <div className="flex space-x-6 p-6">
+          {/* Left Section */}
+          <div className="flex-1">
+            <div className="mb-4">
+              <span className="text-body flex items-center gap-1">
+                {' '}
+                <BiDollarCircle /> Upskills
+              </span>
+            </div>
+            <div className="mb-4 flex space-x-4">
+              <button className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+                Use Template
+              </button>
+              <button className="rounded-lg border px-4 py-2 text-blue-600 hover:bg-blue-100">
+                Test it out
+              </button>
+            </div>
+            <div className="mb-4 flex space-x-2">
+              <span className="rounded bg-green-100 px-2 py-1 text-xs text-green-600">
+                Pre-Sale
+              </span>
+              <span className="rounded bg-yellow-100 px-2 py-1 text-xs text-yellow-600">
+                Smart Popups
+              </span>
+            </div>
+            <p className="mb-4 text-gray-700">
+              Sell more by recommending hot deals and cross-sell offers.
+            </p>
+            <h3 className="mb-2 font-semibold">Key features:</h3>
+            <ul className="list-inside list-disc space-y-4 text-gray-700">
+              <li>
+                Starts when a Visitor opens a specific page e.g. product page;
+              </li>
+              <li>Showcases hot deals & promotions;</li>
+              <li>Convinces to the purchase.</li>
+            </ul>
+            <div className="absolute bottom-4 left-4 mt-4 text-sm text-gray-400">
+              11.1K uses
             </div>
           </div>
 
-          <div
-            className={cn(
-              'sticky bottom-0 z-40 flex items-center justify-between gap-3 bg-gray-0/10 backdrop-blur @lg:gap-4 @xl:grid @xl:auto-cols-max @xl:grid-flow-col',
-              isModalView ? '-mx-10 -mb-7 px-10 py-5' : 'py-1'
-            )}
-          >
-            <Button
-              size="sm"
-              variant="outline"
-              className="border-gradient-to-r flex w-full items-center gap-2 border-2 bg-white from-violet-600 to-indigo-600 px-3 py-1.5 text-indigo-600 transition-all duration-300 ease-in-out hover:border-transparent hover:bg-gradient-to-r hover:from-violet-600 hover:to-indigo-600 hover:text-white @xl:w-auto"
-            >
-              Preview
-            </Button>
-            <Button
-              size="sm"
-              type="submit"
-              isLoading={isLoading}
-              className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 p-4 text-white shadow-lg transition-transform hover:scale-105 @xl:w-auto"
-            >
-              Save
-            </Button>
+          <div className="relative flex-1 rounded-lg bg-blue-50">
+            <div className="absolute right-4 top-4">
+              <button className="flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-sm hover:bg-gray-100">
+                &times;
+              </button>
+            </div>
+            <div className="flex flex-col items-center">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Polaroid"
+                className="mb-4 h-32 w-32"
+              />
+              <h4 className="mb-2 font-semibold text-gray-800">
+                Special offer for Polaroid!
+              </h4>
+            </div>
           </div>
-        </>
-      )}
-    </Form>
+        </div>
+      </div>
+    </div>
   );
 }

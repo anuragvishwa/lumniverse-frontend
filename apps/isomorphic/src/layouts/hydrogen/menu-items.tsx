@@ -57,6 +57,7 @@ import { BiCustomize, BiSupport } from 'react-icons/bi';
 import SalesIcon from '@core/components/icons/sales';
 import { SiChatbot } from 'react-icons/si';
 import { BsFunnel } from 'react-icons/bs';
+import { RiRobot2Fill } from 'react-icons/ri';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -79,6 +80,11 @@ export const menuItems = [
     name: 'Integrations',
     href: '/integrations',
     icon: <MdIntegrationInstructions />,
+  },
+  {
+    name: 'Playground',
+    href: '/playground',
+    icon: <RiRobot2Fill />,
   },
   // {
   //   name: 'Customize',

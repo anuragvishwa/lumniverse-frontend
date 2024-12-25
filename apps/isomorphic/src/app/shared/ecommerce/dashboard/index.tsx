@@ -21,14 +21,9 @@ export default function EcommerceDashboard() {
     <div className="@container">
       <div className="grid grid-cols-1 gap-6 @4xl:grid-cols-2 @7xl:grid-cols-12 3xl:gap-8">
         <WelcomeBanner
-          title={
-            <>
-              Good Morning, <br /> Cameron{' '}
-              <HandWaveIcon className="inline-flex h-8 w-8" />
-            </>
-          }
+          title={<>Dynamic product recommendations</>}
           description={
-            'Here’s What happening on your store today. See the statistics at once.'
+            'Boost sales by suggesting related products to items recently added to the cart.'
           }
           media={
             <div className="absolute -bottom-6 end-4 hidden w-[300px] @2xl:block lg:w-[320px] 2xl:-bottom-7 2xl:w-[330px]">
@@ -45,13 +40,13 @@ export default function EcommerceDashboard() {
           className="border border-muted bg-gray-0 pb-8 @4xl:col-span-2 @7xl:col-span-8 dark:bg-gray-100/30 lg:pb-9"
         >
           <Link href={routes.eCommerce.createProduct} className="inline-flex">
-            <Button as="span" className="h-[38px] shadow md:h-10">
-              <PiPlusBold className="me-1 h-4 w-4" /> Add Product
+            <Button as="span" size="sm">
+              Learn More
             </Button>
           </Link>
         </WelcomeBanner>
 
-        <StatCards className="@2xl:grid-cols-3 @3xl:gap-6 @4xl:col-span-2 @7xl:col-span-8" />
+        {/* <StatCards className="@2xl:grid-cols-3 @3xl:gap-6 @4xl:col-span-2 @7xl:col-span-8" />
         <ProfitWidget className="h-[464px] @sm:h-[520px] @7xl:col-span-4 @7xl:col-start-9 @7xl:row-start-1 @7xl:row-end-3 @7xl:h-full" />
 
         <SalesReport className="@4xl:col-span-2 @7xl:col-span-8" />
@@ -66,7 +61,7 @@ export default function EcommerceDashboard() {
 
         <UserLocation className="@7xl:col-span-6 @[90rem]:col-span-5 @[112rem]:col-span-4" />
 
-        <StockReport className="@4xl:col-span-2 @7xl:col-span-12 @[90rem]:col-span-7 @[112rem]:col-span-8" />
+        <StockReport className="@4xl:col-span-2 @7xl:col-span-12 @[90rem]:col-span-7 @[112rem]:col-span-8" /> */}
       </div>
     </div>
   );
