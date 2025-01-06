@@ -25,6 +25,7 @@ import { MdAnalytics } from 'react-icons/md';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import CreateCategoryModalView from '../../ai-training/faq/faqModal';
 import Bundle from './bundle';
+import { useRouter } from 'next/navigation';
 
 const pageHeader = {
   title: 'Predictive bundles',
@@ -41,21 +42,13 @@ const pageHeader = {
 };
 
 export default function PredictiveBundle() {
-  const { openModal } = useModal();
+  const route = useRouter();
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <div className="mt-4 flex items-center gap-3 @lg:mt-0">
           <Button className="inline-flex">
-            <Button
-              as="span"
-              onClick={() => {
-                openModal({
-                  view: <CreateCategoryModalView />,
-                  customSize: '720px',
-                });
-              }}
-            >
+            <Button as="span" onClick={() => route.push('/multi-step')}>
               {' '}
               Add new bundle
             </Button>
@@ -64,7 +57,6 @@ export default function PredictiveBundle() {
       </PageHeader>
       <div className="my-4 mt-8">
         <ProductCard />
-        <Bundle />
       </div>
 
       <div className="rounded-md border-2 border-gray-100 shadow-lg">
