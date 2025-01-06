@@ -7,6 +7,7 @@ import {
   Input,
   Select,
   Text,
+  Textarea,
   Title,
 } from 'rizzui';
 import WidgetCard from '@core/components/cards/widget-card';
@@ -58,10 +59,13 @@ export default function StyleCard({
   height,
   setHeight,
   borderRadius,
-
   setInputRadius,
   setBorderRadius,
   inputRadius,
+  chatbotTitle,
+  chatbotDescription,
+  setChatbotTitle,
+  setChatbotDescription,
 }: {
   inputRadius: string;
   bgColor: string;
@@ -87,6 +91,10 @@ export default function StyleCard({
   borderRadius: string;
   setBorderRadius: Dispatch<SetStateAction<string>>;
   setInputRadius: Dispatch<SetStateAction<string>>;
+  chatbotTitle: string;
+  chatbotDescription: string;
+  setChatbotTitle: Dispatch<SetStateAction<string>>;
+  setChatbotDescription: Dispatch<SetStateAction<string>>;
 }) {
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
 
@@ -271,21 +279,101 @@ export default function StyleCard({
             <span className="h-3 w-3 rounded-full bg-green-500"></span>
             Green
           </Button>
-          <Button
+          {/* <Button
             variant="outline"
             size="sm"
             rounded="pill"
             onClick={() => {
-              setBgColor('bg-black');
-              setBadgeTop('bg-black');
+              setBgColor('bg-gradient-to-r from-blue-400 to-purple-600');
+              setBadgeTop('bg-gradient-to-r from-blue-400 to-purple-600');
             }}
             className="flex items-center gap-2 border hover:border-gray-900 hover:text-gray-900"
           >
             <span className="h-3 w-3 rounded-full bg-gray-900"></span>
             Gradient
-          </Button>
-        </div>
+          </Button> */}
 
+          <div className="flex flex-col items-center gap-8">
+            <select
+              id="font-picker"
+              className="w-24 rounded-full p-2 text-xs"
+              value={badgeTop}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setBgColor(e.target.value);
+                setBadgeTop(e.target.value);
+              }}
+            >
+              <option
+                value="bg-gradient-to-r from-blue-400 to-purple-600"
+                className="text-xs"
+              >
+                Gradient 1
+              </option>
+              <option
+                value="bg-gradient-to-r from-pink-500 to-yellow-500"
+                className="text-xs"
+              >
+                Gradient 2
+              </option>
+              <option
+                value="bg-gradient-to-r from-green-400 to-blue-500"
+                className="text-xs"
+              >
+                Gradient 3
+              </option>
+              <option
+                value="bg-gradient-to-r from-red-500 to-orange-500"
+                className="text-xs"
+              >
+                Gradient 4
+              </option>
+              <option
+                value="bg-gradient-to-r from-indigo-500 to-purple-700"
+                className="text-xs"
+              >
+                Gradient 5
+              </option>
+              <option
+                value="bg-gradient-to-r from-teal-400 to-cyan-500"
+                className="text-xs"
+              >
+                Gradient 6
+              </option>
+              <option
+                value="bg-gradient-to-r from-yellow-400 to-red-500"
+                className="text-xs"
+              >
+                Gradient 7
+              </option>
+              <option
+                value="bg-gradient-to-r from-lime-500 to-green-500"
+                className="text-xs"
+              >
+                Gradient 8
+              </option>
+              <option
+                value="bg-gradient-to-r from-rose-400 to-pink-500"
+                className="text-xs"
+              >
+                Gradient 9
+              </option>
+              <option
+                value="bg-gradient-to-r from-sky-400 to-indigo-500"
+                className="text-xs"
+              >
+                Gradient 10
+              </option>
+            </select>
+          </div>
+
+          {/* <Button
+              size="sm"
+              variant="outline"
+              className={`ml-2 ${buttonShape === 'rounded' ? 'rounded-md' : 'rounded-full'}`}
+            >
+              {buttonShape === 'rounded' ? 'Rectangle' : 'Rounded'}
+            </Button> */}
+        </div>
         <div className="mb-4 mt-4 grid grid-cols-2 items-center justify-between gap-6 border-b border-muted pb-4 last:mb-0 last:border-0 last:pb-0">
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
@@ -537,6 +625,9 @@ export default function StyleCard({
                 <option value="semiCircle" className="text-xs">
                   Semi circle
                 </option>
+                <option value="sidebar" className="text-xs">
+                  Sidebar
+                </option>
               </select>
             </div>
             {/* <Button
@@ -582,6 +673,28 @@ export default function StyleCard({
                 </option> */}
               </select>
             </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-6">
+          <div className="flex items-start gap-6">
+            <Text className="mt-2 w-32 flex-shrink-0 font-semibold">
+              Header
+            </Text>
+            <Textarea
+              className="flex-1"
+              value={chatbotTitle}
+              onChange={(e) => setChatbotTitle(e.target.value)}
+            />
+          </div>
+          <div className="flex items-start gap-6">
+            <Text className="mt-2 w-32 flex-shrink-0 font-semibold">
+              Message
+            </Text>
+            <Textarea
+              className="flex-1"
+              value={chatbotDescription}
+              onChange={(e) => setChatbotDescription(e.target.value)}
+            />
           </div>
         </div>
       </div>

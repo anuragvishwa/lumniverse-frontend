@@ -16,7 +16,7 @@ import { PiPlusBold } from 'react-icons/pi';
 import welcomeImg from '@public/shop-illustration.png';
 import HandWaveIcon from '@core/components/icons/hand-wave';
 import CreateCategoryModalView from '@/app/(hydrogen)/sales/learn-modal';
-import { useModal } from '../../modal-views/use-modal';
+import { useModal } from '@/app/shared/modal-views/use-modal';
 
 export default function EcommerceDashboard() {
   const { openModal } = useModal();
@@ -24,10 +24,8 @@ export default function EcommerceDashboard() {
     <div className="@container">
       <div className="grid grid-cols-1 gap-6 @4xl:grid-cols-2 @7xl:grid-cols-12 3xl:gap-8">
         <WelcomeBanner
-          title={<>Dynamic product recommendations</>}
-          description={
-            'Boost sales by suggesting related products to items recently added to the cart.'
-          }
+          title={<>Your insights will be available soon</>}
+          description={`We are still gathering conversion data for you. Come back in a few days to start tracking conversions on your website. We’ll show you actionable insights, so you'll see what’s working and what’s not.`}
           media={
             <div className="absolute -bottom-6 end-4 hidden w-[300px] @2xl:block lg:w-[320px] 2xl:-bottom-7 2xl:w-[330px]">
               <div className="relative">
@@ -41,21 +39,7 @@ export default function EcommerceDashboard() {
           }
           contentClassName="@2xl:max-w-[calc(100%-340px)]"
           className="border border-muted bg-gray-0 pb-8 @4xl:col-span-2 @7xl:col-span-8 dark:bg-gray-100/30 lg:pb-9"
-        >
-          <Button
-            onClick={() => {
-              openModal({
-                view: <CreateCategoryModalView />,
-                customSize: '720px',
-              });
-            }}
-            className="inline-flex"
-          >
-            <Button as="span" size="sm">
-              Learn More
-            </Button>
-          </Button>
-        </WelcomeBanner>
+        ></WelcomeBanner>
 
         {/* <StatCards className="@2xl:grid-cols-3 @3xl:gap-6 @4xl:col-span-2 @7xl:col-span-8" />
         <ProfitWidget className="h-[464px] @sm:h-[520px] @7xl:col-span-4 @7xl:col-start-9 @7xl:row-start-1 @7xl:row-end-3 @7xl:h-full" />

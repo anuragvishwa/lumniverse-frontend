@@ -65,6 +65,8 @@ const ChatbotCustomize = ({
   selectedFont,
   height,
   borderRadius,
+  chatbotTitle,
+  chatbotDescription,
 }: {
   inputRadius: string;
   bgColor: string;
@@ -79,6 +81,8 @@ const ChatbotCustomize = ({
   selectedFont: string;
   height: string;
   borderRadius: string;
+  chatbotTitle: string;
+  chatbotDescription: string;
 }) => {
   const [messages, setMessages] = useState<
     { text: string; sender: 'user' | 'bot'; subData: string }[]
@@ -265,7 +269,7 @@ const ChatbotCustomize = ({
                   borderTopRightRadius: borderRadius,
                 }}
               >
-                <div className="flex flex-col gap-2">
+                <div className="flex h-16 flex-col gap-2">
                   <Tab
                     className="flex items-center gap-2 rounded-xl px-6 py-1 font-semibold text-white"
                     style={{ color: textColor }}
@@ -277,9 +281,9 @@ const ChatbotCustomize = ({
                     />
 
                     <span className="flex flex-col items-start justify-center px-2">
-                      <span className="text-[0.9rem]">Lumi</span>
+                      <span className="text-[0.9rem]">{chatbotTitle}</span>
                       <span className="text-[0.7rem] font-normal">
-                        You can ask me anything.
+                        {chatbotDescription}
                       </span>
                     </span>
                   </Tab>

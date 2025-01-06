@@ -1,10 +1,10 @@
-import { Title } from 'rizzui';
+import { Button, Text, Title } from 'rizzui';
 import cn from '@core/utils/class-names';
 import Breadcrumb from '@core/ui/breadcrumb';
 
 export type PageHeaderTypes = {
-  title: string;
-  breadcrumb?: { name: string; href?: string }[];
+  title: React.ReactNode;
+  breadcrumb?: { name: string; href?: string; icon?: React.ReactNode }[];
   className?: string;
 };
 
@@ -35,7 +35,7 @@ export default function PageHeader({
                 key={item.name}
                 {...(item?.href && { href: item?.href })}
               >
-                {item.name}
+                {item?.icon} {item.name}
               </Breadcrumb.Item>
             ))}
           </Breadcrumb>

@@ -11,7 +11,6 @@ import { ActionIcon, Button, Checkbox, Title } from 'rizzui';
 import '../sales/sales.css';
 import {
   BiAlarmExclamation,
-  BiBookmarkAlt,
   BiCart,
   BiDollar,
   BiDollarCircle,
@@ -20,17 +19,21 @@ import CreateCategoryModalView from '../sales/learn-modal';
 
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import CargoPallet from '@core/components/icons/cargo-pallet';
-import { BsBack, BsSquareFill, BsTree, BsTriangle } from 'react-icons/bs';
+import {
+  BsBack,
+  BsPersonBadgeFill,
+  BsSquareFill,
+  BsTree,
+} from 'react-icons/bs';
 import { useState } from 'react';
 import SquareBoxIcon from '@core/components/icons/square-box';
-import { PiHandWavingBold, PiSquareBold, PiTextColumns } from 'react-icons/pi';
-import { MdBorderAll } from 'react-icons/md';
+import { PiHandHeartBold, PiSquareBold, PiTextColumns } from 'react-icons/pi';
+import { MdBorderAll, MdHighQuality } from 'react-icons/md';
 import Popover from '@core/ui/carbon-menu/popover/popover';
 import EcommerceDashboard from '@/app/shared/ecommerce/dashboard';
-import { FcSelfServiceKiosk, FcServiceMark } from 'react-icons/fc';
 
 const pageHeader = {
-  title: 'Support  Flows',
+  title: 'Leads Flow',
   breadcrumb: [
     {
       href: routes.eCommerce.dashboard,
@@ -48,139 +51,124 @@ const pageHeader = {
 const cardData = [
   {
     id: 1,
-    category: 'Triage',
-    icon: <BsTriangle />,
-    title: 'Handle missed conversations',
+    category: 'Gather',
+    icon: <BsPersonBadgeFill />,
+    title: 'Lead Magnet / Subscribe Form',
     description:
-      'Never leave anyone without a reply. Build trust, and your mailing list.',
-    uses: '48.6K',
-    sampleMessage:
-      "Sorry for keeping you waiting, we'll get back to you as soon as possible. Thank you for your patience.",
+      "Automate your lead generation and collect Visitors' contact information.",
+    uses: '29.3K',
   },
   {
     id: 2,
-    category: 'Self-service',
-    icon: <FcServiceMark />,
-    title: 'AI Responder',
+    category: 'Gather',
+    icon: <BsPersonBadgeFill />,
+    title: 'Lead generation bot',
     description:
-      'Automate up to 75% repetitive questions like "hi", "where can I ..." to save time.',
-    uses: '31.3K',
+      'Engage and generate more leads. Collect e-mail addresses or phone numbers.',
+    uses: '96.7K',
   },
   {
     id: 3,
-    category: 'Triage',
-    icon: <BsTriangle />,
-    title: 'Respond to greetings (AI)',
-    description: 'Set up automatic greeting messages & say hello to everyone.',
-    uses: '15.7K',
+    category: 'Nurture',
+    icon: <PiHandHeartBold />,
+    title: 'News & Updates',
+    description:
+      'Keep your visitors up to date with your new offers and upcoming events.',
+    uses: '3.1K',
   },
   {
     id: 4,
-    category: 'Self-service',
-    icon: <FcServiceMark />,
-    title: 'Automate Repetitive Answers',
-    description: null,
+    category: 'Gather',
+    icon: <BsPersonBadgeFill />,
+    title: 'Order a phone call',
+    description:
+      'Collect phone numbers to reach your customers by phone call or SMS.',
+    uses: '24.8K',
   },
   {
     id: 5,
-    category: 'Initiate',
-    icon: <PiHandWavingBold />,
-    title: 'Reactive Welcome Message',
+    category: 'Gather',
+    icon: <BsPersonBadgeFill />,
+    title: 'Appointment booking',
     description: null,
   },
   {
     id: 6,
-    category: 'Initiate',
-    icon: <PiHandWavingBold />,
-    title: 'Leaving the page',
-    description:
-      'Be sure your buyers gets the answers they need before leaving.',
-  },
-  {
-    id: 7,
-    category: 'Deflect',
-    icon: <BiBookmarkAlt />,
-    title: 'FAQ for Online Store',
-    description: 'Provide answers to frequently asked questions.',
-  },
-  {
-    id: 8,
-    category: 'Triage',
-    icon: <BsTriangle />,
-    title: 'Handle missed conversations',
-    description:
-      'Never leave anyone without a reply. Build trust, and your mailing list.',
-    uses: '48.6K',
-    sampleMessage:
-      "Sorry for keeping you waiting, we'll get back to you as soon as possible. Thank you for your patience.",
-  },
-  {
-    id: 9,
-    category: 'Triage',
-    icon: <BsTriangle />,
-    title: 'Handle missed conversations',
-    description:
-      'Never leave anyone without a reply. Build trust, and your mailing list.',
-    uses: '48.6K',
-    sampleMessage:
-      "Sorry for keeping you waiting, we'll get back to you as soon as possible. Thank you for your patience.",
-  },
-  {
-    id: 10,
-    category: 'Self-service',
-    icon: <FcServiceMark />,
-    title: 'AI Responder',
-    description:
-      'Automate up to 75% repetitive questions like "hi", "where can I ..." to save time.',
-    uses: '31.3K',
-  },
-  {
-    id: 11,
-    category: 'Triage',
-    icon: <BsTriangle />,
-    title: 'Respond to greetings (AI)',
-    description: 'Set up automatic greeting messages & say hello to everyone.',
-    uses: '15.7K',
-  },
-  {
-    id: 12,
-    category: 'Self-service',
-    icon: <FcServiceMark />,
-    title: 'Automate Repetitive Answers',
+    category: 'Nurture',
+    icon: <PiHandHeartBold />,
+    title: 'Boost Social Media',
     description: null,
   },
   {
+    id: 7,
+    category: 'Qualify',
+    icon: <MdHighQuality />,
+    title: 'Lead Gen for Agency',
+    description: null,
+  },
+  {
+    id: 8,
+    category: 'Qualify',
+    icon: <MdHighQuality />,
+    title: 'Lead Gen For Beauty',
+    description: null,
+  },
+  {
+    id: 9,
+    category: 'Gather',
+    icon: <BsPersonBadgeFill />,
+    title: 'Lead Magnet / Subscribe Form',
+    description:
+      "Automate your lead generation and collect Visitors' contact information.",
+    uses: '29.3K',
+  },
+  {
+    id: 10,
+    category: 'Gather',
+    icon: <BsPersonBadgeFill />,
+    title: 'Lead generation bot',
+    description:
+      'Engage and generate more leads. Collect e-mail addresses or phone numbers.',
+    uses: '96.7K',
+  },
+  {
+    id: 11,
+    category: 'Nurture',
+    icon: <PiHandHeartBold />,
+    title: 'News & Updates',
+    description:
+      'Keep your visitors up to date with your new offers and upcoming events.',
+    uses: '3.1K',
+  },
+  {
+    id: 12,
+    category: 'Gather',
+    icon: <BsPersonBadgeFill />,
+    title: 'Order a phone call',
+    description:
+      'Collect phone numbers to reach your customers by phone call or SMS.',
+    uses: '24.8K',
+  },
+  {
     id: 13,
-    category: 'Initiate',
-    icon: <PiHandWavingBold />,
-    title: 'Reactive Welcome Message',
+    category: 'Gather',
+    icon: <BsPersonBadgeFill />,
+    title: 'Appointment booking',
     description: null,
   },
   {
     id: 14,
-    category: 'Initiate',
-    icon: <PiHandWavingBold />,
-    title: 'Leaving the page',
-    description:
-      'Be sure your buyers gets the answers they need before leaving.',
+    category: 'Nurture',
+    icon: <PiHandHeartBold />,
+    title: 'Boost Social Media',
+    description: null,
   },
   {
     id: 15,
-    category: 'Deflect',
-    icon: <BiBookmarkAlt />,
-    title: 'FAQ for Online Store',
-    description: 'Provide answers to frequently asked questions.',
-  },
-  {
-    id: 16,
-    category: 'Triage',
-    icon: <BsTriangle />,
-    title: 'Handle missed conversations',
-    description:
-      'Never leave anyone without a reply. Build trust, and your mailing list.',
-    uses: '48.6K',
-    sampleMessage:
-      "Sorry for keeping you waiting, we'll get back to you as soon as possible. Thank you for your patience.",
+    category: 'Qualify',
+    icon: <MdHighQuality />,
+    title: 'Lead Gen for Agency',
+    description: null,
   },
 ];
 
@@ -210,10 +198,9 @@ export default function SearchTablePage() {
         <div className="flex justify-center space-x-4">
           {[
             { name: 'All', icon: <MdBorderAll /> },
-            { name: 'Deflect', icon: <BiBookmarkAlt /> },
-            { name: 'Initiate', icon: <PiHandWavingBold /> },
-            { name: 'Triage', icon: <BsTriangle /> },
-            { name: 'Self-service', icon: <FcServiceMark /> },
+            { name: 'Gather', icon: <BsPersonBadgeFill /> },
+            { name: 'Nurture', icon: <PiHandHeartBold /> },
+            { name: 'Qualify', icon: <MdHighQuality /> },
           ].map((category) => (
             <Button
               size="sm"
@@ -248,10 +235,9 @@ export default function SearchTablePage() {
               <div className="grid grid-cols-2 gap-6">
                 {[
                   { name: 'All', icon: <MdBorderAll /> },
-                  { name: 'Deflect', icon: <BiBookmarkAlt /> },
-                  { name: 'Initiate', icon: <PiHandWavingBold /> },
-                  { name: 'Triage', icon: <BsTriangle /> },
-                  { name: 'Self-service', icon: <FcServiceMark /> },
+                  { name: 'Gather', icon: <BsPersonBadgeFill /> },
+                  { name: 'Nurture', icon: <PiHandHeartBold /> },
+                  { name: 'Qualify', icon: <MdHighQuality /> },
                 ].map((category) => (
                   <Checkbox
                     key={category.name}

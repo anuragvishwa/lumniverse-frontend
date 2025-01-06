@@ -48,16 +48,18 @@ import {
   PiSparkleDuotone,
   PiCardsDuotone,
   PiMagnifyingGlassDuotone,
+  PiStar,
 } from 'react-icons/pi';
 import ProjectWriteIcon from '@core/components/icons/project-write';
 import CrmDashIcon from '@core/components/icons/crm-icon';
 import CogSolidIcon from '@core/components/icons/cog-solid';
-import { MdIntegrationInstructions } from 'react-icons/md';
+import { MdIntegrationInstructions, MdRecommend } from 'react-icons/md';
 import { BiCustomize, BiSupport } from 'react-icons/bi';
 import SalesIcon from '@core/components/icons/sales';
 import { SiChatbot } from 'react-icons/si';
-import { BsFunnel } from 'react-icons/bs';
+import { BsFunnel, BsPerson } from 'react-icons/bs';
 import { RiRobot2Fill } from 'react-icons/ri';
+import TicketIcon from '@core/components/icons/ticket';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -67,7 +69,7 @@ export const menuItems = [
   },
   // label end
   {
-    name: 'Customize',
+    name: 'Appearance',
     href: '/',
     icon: <BiCustomize />,
   },
@@ -86,6 +88,11 @@ export const menuItems = [
     href: '/playground',
     icon: <RiRobot2Fill />,
   },
+  {
+    name: 'AI Powered Search',
+    href: '/ai-powered-search',
+    icon: <PiStar />,
+  },
   // {
   //   name: 'Customize',
   //   href: '/customize',
@@ -97,9 +104,79 @@ export const menuItems = [
     icon: <SalesIcon />,
   },
   {
+    name: 'Leads',
+    href: '/leads',
+    icon: <BsPerson />,
+  },
+  {
     name: 'Support',
     href: '/support',
     icon: <BiSupport />,
+  },
+  {
+    name: 'Personalize Cards',
+    href: '/personalize-cards',
+    icon: <PiShoppingCartDuotone />,
+  },
+  {
+    name: 'Recent Cards',
+    href: '/recent-cards',
+    icon: <PiCardsDuotone />,
+  },
+  {
+    name: 'Search Cards',
+    href: '/search-cards',
+    icon: <PiMagnifyingGlassDuotone />,
+  },
+  {
+    name: 'Funnel',
+    href: '/funnel',
+    icon: <BsFunnel />,
+  },
+  {
+    name: 'Tickets',
+    href: '/tickets',
+    icon: <TicketIcon />,
+    dropdownItems: [
+      {
+        name: 'Tickets',
+        href: '/tickets/tickets',
+        badge: '',
+      },
+      {
+        name: 'Sales',
+        href: '/tickets/sales',
+        badge: '',
+      },
+      {
+        name: 'Leads',
+        href: '/tickets/leads',
+        badge: '',
+      },
+    ],
+  },
+
+  {
+    name: 'Recommendation',
+    href: '/recommendation',
+    icon: <MdRecommend />,
+    dropdownItems: [
+      {
+        name: 'Recommendation Widget',
+        href: '/recommendation/recommendation-widgets',
+        badge: '',
+      },
+      {
+        name: 'Predictive Bundle',
+        href: '/recommendation/predictive-bundle',
+        badge: '',
+      },
+      {
+        name: 'General Settings',
+        href: '/recommendation/recommendation-general',
+        badge: '',
+      },
+    ],
   },
   // {
   //   name: 'Appointment',
@@ -142,26 +219,6 @@ export const menuItems = [
   //   href: routes.logistics.dashboard,
   //   icon: <PiPackageDuotone />,
   // },
-  {
-    name: 'Personalize Cards',
-    href: '/personalize-cards',
-    icon: <PiShoppingCartDuotone />,
-  },
-  {
-    name: 'Recent Cards',
-    href: '/recent-cards',
-    icon: <PiCardsDuotone />,
-  },
-  {
-    name: 'Search Cards',
-    href: '/search-cards',
-    icon: <PiMagnifyingGlassDuotone />,
-  },
-  {
-    name: 'Funnel',
-    href: '/funnel',
-    icon: <BsFunnel />,
-  },
 
   {
     name: 'Analytics',

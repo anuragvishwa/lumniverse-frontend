@@ -35,6 +35,9 @@
   background-size: 400% 400%;
   animation: rgb-animation 6s ease infinite;
 }
+.clip-bottom-polygon {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 95%, 0% 85%);
+}
 
 /* .ashref {
   position: relative;

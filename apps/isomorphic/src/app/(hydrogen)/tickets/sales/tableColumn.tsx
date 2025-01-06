@@ -151,7 +151,7 @@ export const getColumns = ({
   //   ),
   // },
   {
-    title: <HeaderCell title="Flow" />,
+    title: <HeaderCell title="Operator" />,
     dataIndex: 'product',
     key: 'product',
     width: 300,
@@ -169,7 +169,7 @@ export const getColumns = ({
     ),
   },
   {
-    title: <HeaderCell title="Executed" />,
+    title: <HeaderCell title="Live conversations" />,
     dataIndex: 'sku',
     key: 'sku',
     width: 150,
@@ -178,7 +178,7 @@ export const getColumns = ({
   {
     title: (
       <HeaderCell
-        title="Stock"
+        title="Live conversations with sales"
         sortable
         ascending={
           sortConfig?.direction === 'asc' && sortConfig?.key === 'stock'
@@ -194,7 +194,7 @@ export const getColumns = ({
   {
     title: (
       <HeaderCell
-        title="Coupons used/sent"
+        title="Sales assisted"
         sortable
         ascending={
           sortConfig?.direction === 'asc' && sortConfig?.key === 'price'
@@ -217,7 +217,6 @@ export const getColumns = ({
     render: (rating: number[]) => getRating(rating),
   },
   {
-    // Need to avoid this issue -> <td> elements in a large <table> do not have table headers.
     title: (
       <HeaderCell
         title={
@@ -225,44 +224,67 @@ export const getColumns = ({
             AOV <PiQuestionMarkThin />{' '}
           </div>
         }
-        className="opacity-0"
       />
     ),
-    dataIndex: 'action',
-    key: 'action',
+    dataIndex: 'status',
+    key: 'status',
     width: 120,
-    render: (_: string, row: ProductType) => (
-      <div className="flex items-center justify-end gap-3 pe-4">
-        <Tooltip
-          size="sm"
-          content={'Edit Product'}
-          placement="top"
-          color="invert"
-        >
-          <Link href={routes.eCommerce.ediProduct(row.id)}>
-            <ActionIcon size="sm" variant="outline" aria-label={'Edit Product'}>
-              <PencilIcon className="h-4 w-4" />
-            </ActionIcon>
-          </Link>
-        </Tooltip>
-        <Tooltip
-          size="sm"
-          content={'View Product'}
-          placement="top"
-          color="invert"
-        >
-          <Link href={routes.eCommerce.productDetails(row.id)}>
-            <ActionIcon size="sm" variant="outline" aria-label={'View Product'}>
-              <EyeIcon className="h-4 w-4" />
-            </ActionIcon>
-          </Link>
-        </Tooltip>
-        <DeletePopover
-          title={`Delete the product`}
-          description={`Are you sure you want to delete this #${row.id} product?`}
-          onDelete={() => onDeleteItem(row.id)}
-        />
-      </div>
-    ),
+    render: (value: string) => getStatusBadge(value),
   },
+  {
+    title: <HeaderCell title="Orders" />,
+    dataIndex: 'status',
+    key: 'status',
+    width: 120,
+    render: (value: string) => getStatusBadge(value),
+  },
+  //   {
+  //     // Need to avoid this issue -> <td> elements in a large <table> do not have table headers.
+  //     title: (
+  //       <HeaderCell
+  //         title={
+  //           <div className="flex items-center gap-2">
+  //             AOV <PiQuestionMarkThin />{' '}
+  //           </div>
+  //         }
+  //         className="opacity-0"
+  //       />
+  //     ),
+  //     dataIndex: 'action',
+  //     key: 'action',
+  //     width: 120,
+  //     render: (_: string, row: ProductType) => (
+  //       <div className="flex items-center justify-end gap-3 pe-4">
+  //         <Tooltip
+  //           size="sm"
+  //           content={'Edit Product'}
+  //           placement="top"
+  //           color="invert"
+  //         >
+  //           <Link href={routes.eCommerce.ediProduct(row.id)}>
+  //             <ActionIcon size="sm" variant="outline" aria-label={'Edit Product'}>
+  //               <PencilIcon className="h-4 w-4" />
+  //             </ActionIcon>
+  //           </Link>
+  //         </Tooltip>
+  //         <Tooltip
+  //           size="sm"
+  //           content={'View Product'}
+  //           placement="top"
+  //           color="invert"
+  //         >
+  //           <Link href={routes.eCommerce.productDetails(row.id)}>
+  //             <ActionIcon size="sm" variant="outline" aria-label={'View Product'}>
+  //               <EyeIcon className="h-4 w-4" />
+  //             </ActionIcon>
+  //           </Link>
+  //         </Tooltip>
+  //         <DeletePopover
+  //           title={`Delete the product`}
+  //           description={`Are you sure you want to delete this #${row.id} product?`}
+  //           onDelete={() => onDeleteItem(row.id)}
+  //         />
+  //       </div>
+  //     ),
+  //   },
 ];

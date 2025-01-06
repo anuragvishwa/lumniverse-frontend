@@ -27,6 +27,10 @@ import CardsPage from '@/app/(hydrogen)/widgets/cards/page';
 
 export default function Customize() {
   const [isVisible, setIsVisible] = useState(true); // Control visibility
+  const [chatbotTitle, setChatbotTitle] = useState('Lumi');
+  const [chatbotDescription, setChatbotDescription] = useState(
+    'You can ask me anything.'
+  );
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
@@ -134,6 +138,10 @@ export default function Customize() {
             setBorderRadius={setBorderRadius}
             inputRadius={inputRadius}
             setInputRadius={setInputRadius}
+            chatbotTitle={chatbotTitle}
+            chatbotDescription={chatbotDescription}
+            setChatbotTitle={setChatbotTitle}
+            setChatbotDescription={setChatbotDescription}
           />
           <ChatbotCustomize
             bgColor={bgColor}
@@ -149,6 +157,8 @@ export default function Customize() {
             height={height}
             borderRadius={borderRadius}
             inputRadius={inputRadius}
+            chatbotTitle={chatbotTitle}
+            chatbotDescription={chatbotDescription}
           />
         </div>
       </motion.div>
@@ -243,8 +253,42 @@ export default function Customize() {
               </motion.button>
             </div>
           </div>
-        ) : // Render nothing if both buttons should not be visible
-        null}
+        ) : buttonShape === 'sidebar' ? (
+          <div className="relative flex h-screen items-center justify-center bg-gray-50">
+            <div
+              className={`fixed bottom-8 right-0 h-14 w-8 rounded-l-lg ${
+                badgeTop.startsWith('bg-') ? badgeTop : ''
+              } shadow-lg`}
+            ></div>
+
+            <div className="fixed bottom-2 right-0">
+              <div className="relative rounded-full p-2">
+                {badgeTop === 'bg-black' ? (
+                  <div className="animate-rgb-background absolute inset-0 rounded-full blur-lg"></div>
+                ) : null}
+
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                  transition={{ duration: 0.4 }}
+                  className={`relative h-12 w-12 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 p-4 text-white shadow-md`}
+                  // style={{
+                  //   backgroundColor: !badgeTop.startsWith('bg-')
+                  //     ? badgeTop
+                  //     : '',
+                  //   backdropFilter: badgeTop === 'bg-black' ? 'blur(10px)' : '',
+                  // }}
+                  onClick={() => setIsOpen((prev) => !prev)}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <MdChat className="h-4 w-4" />
+                </motion.button>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </AnimatePresence>
     </>
   );
