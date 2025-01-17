@@ -19,6 +19,16 @@ export interface Address {
   street?: string;
 }
 
+export interface Collection {
+  id: number;
+  title: string;
+  handle: string;
+  description: string;
+  published_at: string;
+  updated_at: string;
+  products_count: number;
+}
+
 export interface GoogleMapLocation {
   lat?: number;
   lng?: number;

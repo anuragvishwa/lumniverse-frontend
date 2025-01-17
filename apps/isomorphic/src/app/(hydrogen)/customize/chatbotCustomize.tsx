@@ -11,14 +11,21 @@ import {
   BsArrowUpShort,
   BsQuestion,
   BsSendArrowUp,
+  BsX,
+  BsXLg,
 } from 'react-icons/bs';
-import { MdChat, MdOutlineSearch } from 'react-icons/md';
+import {
+  MdCancel,
+  MdChat,
+  MdOutlineCancel,
+  MdOutlineSearch,
+} from 'react-icons/md';
 import { SiChatbot, SiHelpdesk } from 'react-icons/si';
 import axios from 'axios';
 import { PiFinnTheHuman, PiFinnTheHumanBold } from 'react-icons/pi';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Accordion, Button, Input, Text } from 'rizzui';
+import { Accordion, ActionIcon, Button, Input, Text } from 'rizzui';
 import {
   Disclosure,
   Tab,
@@ -38,6 +45,10 @@ import ChatSolidIcon from '@core/components/icons/chat-solid';
 import './chatbot.css';
 import SearchTrigger from './search/search-trigger';
 import SearchWidget from './search/search';
+import { FaCommentDots } from 'react-icons/fa';
+import Carousel from './carousel';
+import { recommendationProducts } from '@/data/shop-products';
+import ProductCarousel from './product-carousel';
 
 // Define a type for the products
 interface Product {
@@ -50,6 +61,8 @@ const accordionVariants = {
   open: { height: 'auto', opacity: 1 },
   closed: { height: 0, opacity: 0 },
 };
+
+// This will print your states in JSON format
 
 const ChatbotCustomize = ({
   bgColor,
@@ -84,6 +97,22 @@ const ChatbotCustomize = ({
   chatbotTitle: string;
   chatbotDescription: string;
 }) => {
+  const jsonData = {
+    chatbotTitle,
+    chatbotDescription,
+    bgColor,
+    textColor,
+    imageSrc,
+    changeContentBgColor,
+    contentTextColor,
+    isOpen,
+    height,
+    borderRadius,
+    inputRadius,
+    selectedFont,
+  };
+
+  console.log(jsonData);
   const [messages, setMessages] = useState<
     { text: string; sender: 'user' | 'bot'; subData: string }[]
   >(() => {
@@ -244,6 +273,8 @@ const ChatbotCustomize = ({
   const [isHovered3, setIsHovered3] = useState(false);
   const [isHovered4, setIsHovered4] = useState(false);
 
+  console.log(bgColor, 'bgcolor');
+
   return (
     <div
       style={{ fontFamily: selectedFont }}
@@ -260,7 +291,7 @@ const ChatbotCustomize = ({
           >
             <TabGroup>
               <TabList
-                className={`relative flex rounded-t-[${borderRadius}] items-start py-1 ${
+                className={`relative flex justify-between rounded-t-[${borderRadius}] items-center py-2 ${
                   bgColor.startsWith('bg-') ? bgColor : ''
                 }`}
                 style={{
@@ -269,34 +300,38 @@ const ChatbotCustomize = ({
                   borderTopRightRadius: borderRadius,
                 }}
               >
-                <div className="flex h-16 flex-col gap-2">
+                <div className="flex flex-col items-center gap-2">
                   <Tab
-                    className="flex items-center gap-2 rounded-xl px-6 py-1 font-semibold text-white"
+                    className="flex items-center gap-2 rounded-xl px-6 py-1 text-white"
                     style={{ color: textColor }}
                   >
-                    <img
+                    <Image
+                      height={11}
+                      width={11}
                       src={imageSrc}
-                      className="h-9 w-9 rounded-full bg-white p-1 text-gray-900"
+                      className="h-11 w-11 rounded-full bg-white p-1 text-gray-900"
                       alt="Bot Avatar"
                     />
 
-                    <span className="flex flex-col items-start justify-center px-2">
-                      <span className="text-[0.9rem]">{chatbotTitle}</span>
-                      <span className="text-[0.7rem] font-normal">
+                    <span className="flex flex-col items-start justify-center gap-1 px-2">
+                      <span className="text-[1.2rem]">{chatbotTitle}</span>
+                      <span className="text-[0.8rem] text-white opacity-70">
                         {chatbotDescription}
                       </span>
                     </span>
                   </Tab>
                 </div>
-                <div className="absolute right-12 top-[14px] text-2xl text-white hover:text-gray-200">
+                <div className="flex items-center gap-1 pr-4 text-white">
                   <SearchWidget />
+                  <ActionIcon
+                    variant="text"
+                    aria-label="Search"
+                    className="font-bold text-white"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <BsXLg className="me-2 h-[18px] w-[18px] font-bold" />
+                  </ActionIcon>
                 </div>
-                <button
-                  className="absolute right-6 top-3 text-2xl text-white hover:text-gray-200"
-                  onClick={() => setIsOpen(false)}
-                >
-                  &times;
-                </button>
               </TabList>
 
               <TabPanels
@@ -472,6 +507,24 @@ const ChatbotCustomize = ({
                             New Collection
                           </Button>
                         </div>
+                        <Carousel />
+                        {/* <ProductCarousel
+                          title={''}
+                          data={recommendationProducts}
+                          bgColor={bgColor}
+                          setBgColor={setBgColor}
+                          textColor={textColor}
+                          setTextColor={setTextColor}
+                          imageSrc={imageSrc}
+                          changeContentBgColor={changeContentBgColor}
+                          contentTextColor={contentTextColor}
+                          isOpen={isOpen}
+                          setIsOpen={setIsOpen}
+                          selectedFont={selectedFont}
+                          height={height}
+                          borderRadius={borderRadius}
+                          inputRadius={inputRadius}
+                        /> */}
 
                         {messages.map((msg: any, index: number) => {
                           const isAccordionTitle = [

@@ -8,7 +8,7 @@ import AvatarCard from '@core/ui/avatar-card';
 import DeletePopover from '@/app/shared/delete-popover';
 import { createColumnHelper } from '@tanstack/react-table';
 import { ActionIcon, Badge, Checkbox, Switch, Text, Tooltip } from 'rizzui';
-import { RowDragHandleCell } from '../custom-table-components';
+import { RowDragHandleCell } from '@/app/shared/tan-table/custom-table-components';
 
 function getStatusBadge(status: string) {
   switch (status?.toLowerCase()) {
@@ -60,7 +60,7 @@ export const defaultColumns = [
   columnHelper.accessor('name', {
     id: 'name',
     size: 240,
-    header: 'Filter Tree',
+    header: 'Label',
     cell: ({ row }) => (
       <AvatarCard
         src={row.original.avatar}
@@ -73,7 +73,19 @@ export const defaultColumns = [
   columnHelper.accessor('email', {
     id: 'email',
     size: 240,
-    header: 'Collections',
+    header: 'Type',
+    cell: (info) => info.renderValue()?.toLowerCase(),
+  }),
+  columnHelper.accessor('email', {
+    id: 'email',
+    size: 240,
+    header: 'Display Type',
+    cell: (info) => info.renderValue()?.toLowerCase(),
+  }),
+  columnHelper.accessor('email', {
+    id: 'email',
+    size: 240,
+    header: 'Value',
     cell: (info) => info.renderValue()?.toLowerCase(),
   }),
   columnHelper.accessor('userName', {
@@ -106,26 +118,6 @@ export const defaultColumns = [
                 className="hover:!border-gray-900 hover:text-gray-700"
               >
                 <PencilIcon className="h-4 w-4" />
-              </ActionIcon>
-            </Link>
-          </Tooltip>
-          <Tooltip
-            size="sm"
-            content={'View Invoice'}
-            placement="top"
-            color="invert"
-          >
-            <Link
-              href={routes.invoice.details(row.original.id)}
-              aria-label="View Invoice"
-            >
-              <ActionIcon
-                as="span"
-                size="sm"
-                variant="outline"
-                className="hover:!border-gray-900 hover:text-gray-700"
-              >
-                <EyeIcon className="h-4 w-4" />
               </ActionIcon>
             </Link>
           </Tooltip>

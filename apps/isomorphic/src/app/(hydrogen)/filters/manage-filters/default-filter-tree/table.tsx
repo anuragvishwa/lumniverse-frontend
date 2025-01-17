@@ -11,6 +11,8 @@ import { DragAbleRowWrapper } from '@/app/shared/tan-table/custom-table-componen
 import { useTanStackTable } from '@/app/shared/tan-table/custom-table-components/use-TanStack-Table';
 import { Button, Input } from 'rizzui';
 import { BiPlus } from 'react-icons/bi';
+import CreateCategoryModalView from './createOptionModal';
+import { useModal } from '@/app/shared/modal-views/use-modal';
 
 export default function TableRowDnd() {
   const { table, sensors, dataIds, setData, columnOrder, handleDragEndRow } =
@@ -34,16 +36,28 @@ export default function TableRowDnd() {
       },
     });
 
+  const { openModal } = useModal();
+
   return (
     <>
-      <WidgetCard title={'Custom filter trees'} className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          {' '}
-          <Input size="md" placeholder="search here" />
-          <Button size="md" className="flex items-center gap-1">
-            <BiPlus className="h-5 w-5" /> Add new filter tree
+      <WidgetCard
+        title={'Filter options'}
+        action={
+          <Button
+            onClick={() => {
+              openModal({
+                view: <CreateCategoryModalView />,
+                customSize: '540px',
+              });
+            }}
+            size="md"
+            className="flex items-center gap-1"
+          >
+            <BiPlus className="h-5 w-5" /> Add filter option
           </Button>
-        </div>
+        }
+        className="flex flex-col gap-4"
+      >
         <DndContext
           collisionDetection={closestCenter}
           modifiers={[restrictToVerticalAxis]}

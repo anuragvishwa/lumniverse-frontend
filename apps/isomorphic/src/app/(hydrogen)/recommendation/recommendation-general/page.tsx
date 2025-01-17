@@ -5,6 +5,7 @@ import { Button, Switch, Text, Title } from 'rizzui';
 import { PiBookBold, PiStarBold } from 'react-icons/pi';
 import ProductCard from './product-card';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const pageHeader = {
   title: 'General settings',
@@ -21,15 +22,16 @@ const pageHeader = {
 };
 
 export default function GeneralSettings() {
-  const [excludeViewed, setExcludeViewed] = useState(true);
-  const [excludeOutOfStock, setExcludeOutOfStock] = useState(true);
+  const route = useRouter();
 
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <div className="mt-4 flex items-center gap-3 @lg:mt-0">
           <Button className="inline-flex">
-            <Button as="span">Save Settings</Button>
+            <Button as="span" onClick={() => route.push('/new')}>
+              Save Settings
+            </Button>
           </Button>
         </div>
       </PageHeader>

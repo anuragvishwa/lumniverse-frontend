@@ -36,6 +36,7 @@ import { HexColorPicker } from 'react-colorful';
 import { Dispatch, SetStateAction, useState } from 'react';
 import Popover from '@core/ui/carbon-menu/popover/popover';
 import { BiDotsVertical } from 'react-icons/bi';
+import Header from './header';
 
 export default function StyleCard({
   bgColor,
@@ -365,14 +366,6 @@ export default function StyleCard({
               </option>
             </select>
           </div>
-
-          {/* <Button
-              size="sm"
-              variant="outline"
-              className={`ml-2 ${buttonShape === 'rounded' ? 'rounded-md' : 'rounded-full'}`}
-            >
-              {buttonShape === 'rounded' ? 'Rectangle' : 'Rounded'}
-            </Button> */}
         </div>
         <div className="mb-4 mt-4 grid grid-cols-2 items-center justify-between gap-6 border-b border-muted pb-4 last:mb-0 last:border-0 last:pb-0">
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
@@ -387,7 +380,12 @@ export default function StyleCard({
               <Popover.Trigger>
                 <Button
                   variant="outline"
-                  className="h-7 w-16 bg-blue-500"
+                  className={`h-7 w-16 ${
+                    bgColor.startsWith('bg-') ? bgColor : ''
+                  }`}
+                  style={{
+                    backgroundColor: !bgColor.startsWith('bg-') ? bgColor : '',
+                  }}
                 ></Button>
               </Popover.Trigger>
               <Popover.Content>
@@ -446,7 +444,9 @@ export default function StyleCard({
               <Popover.Trigger>
                 <Button
                   variant="outline"
-                  className="h-7 w-16 bg-white"
+                  // className="h-7 w-16 bg-white"
+                  className={`h-7 w-16`}
+                  style={{ background: textColor }}
                 ></Button>
               </Popover.Trigger>
               <Popover.Content>
@@ -507,7 +507,8 @@ export default function StyleCard({
               <Popover.Trigger>
                 <Button
                   variant="outline"
-                  className="h-7 w-16 bg-orange-500"
+                  className="h-7 w-16"
+                  style={{ background: badgeTop }}
                 ></Button>
               </Popover.Trigger>
               <Popover.Content>
@@ -680,7 +681,7 @@ export default function StyleCard({
             <Text className="mt-2 w-32 flex-shrink-0 font-semibold">
               Header
             </Text>
-            <Textarea
+            <Input
               className="flex-1"
               value={chatbotTitle}
               onChange={(e) => setChatbotTitle(e.target.value)}
@@ -690,7 +691,7 @@ export default function StyleCard({
             <Text className="mt-2 w-32 flex-shrink-0 font-semibold">
               Message
             </Text>
-            <Textarea
+            <Input
               className="flex-1"
               value={chatbotDescription}
               onChange={(e) => setChatbotDescription(e.target.value)}

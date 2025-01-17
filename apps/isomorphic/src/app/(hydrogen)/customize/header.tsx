@@ -1,48 +1,52 @@
-import {
-  FaChevronDown,
-  FaChevronLeft,
-  FaEllipsisV,
-  FaHandPaper,
-} from 'react-icons/fa';
-import './chatbot.css';
+// components/Header.tsx
+import React from 'react';
+import { FaSearch, FaQuestionCircle, FaCommentDots } from 'react-icons/fa';
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
-    <div className="relative">
-      {/* Header content */}
-      <div
-        className="relative w-80 overflow-hidden rounded-t-xl bg-blue-600 p-4 pr-8 text-white shadow-md"
-        style={{
-          clipPath: 'path("M 0 0 H 300 V 70 Q 150 100 0 70 Z")',
-        }}
-      >
-        {/* Icons and Title */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            {/* Left Arrow Icon */}
-            <FaChevronLeft className="text-white" />
-
-            {/* Title with Wave Icon */}
-            <h2 className="flex items-center font-bold">
-              Hi there!
-              <FaHandPaper className="ml-1" />
-            </h2>
-          </div>
-
-          {/* Options Icon */}
-          <FaEllipsisV />
+    <header className="flex items-center justify-between rounded-t-lg bg-blue-600 p-4 text-white shadow-lg">
+      <div className="flex items-center gap-4">
+        {/* Icons Section */}
+        <div className="flex items-center space-x-4">
+          <button className="rounded-full p-2 hover:bg-blue-500">
+            <FaCommentDots className="text-xl" />
+          </button>
+          <button className="rounded-full p-2 hover:bg-blue-500">
+            <FaQuestionCircle className="text-xl" />
+          </button>
+          <button className="rounded-full p-2 hover:bg-blue-500">
+            <FaSearch className="text-xl" />
+          </button>
         </div>
 
-        {/* Body Content */}
-        <p className="mt-2">
-          Lyro AI is here to help while our CS team is offline. We’ll follow up
-          via email.
-        </p>
-
-        {/* Dropdown Arrow */}
-        <FaChevronDown className="absolute bottom-2 right-4" />
+        {/* Profile Pictures */}
+        <div className="flex items-center space-x-2">
+          <img
+            src="/avatar1.jpg"
+            alt="Avatar 1"
+            className="h-8 w-8 rounded-full border-2 border-white"
+          />
+          <img
+            src="/avatar2.jpg"
+            alt="Avatar 2"
+            className="h-8 w-8 rounded-full border-2 border-white"
+          />
+          <img
+            src="/avatar3.jpg"
+            alt="Avatar 3"
+            className="h-8 w-8 rounded-full border-2 border-white"
+          />
+        </div>
       </div>
-    </div>
+
+      {/* Status and Response Time */}
+      <div className="flex flex-col items-start">
+        <span className="text-sm font-semibold">Questions? Chat with us!</span>
+        <span className="text-xs text-green-300">
+          Typically replies under an hour
+        </span>
+      </div>
+    </header>
   );
 };
 

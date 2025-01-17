@@ -53,13 +53,18 @@ import {
 import ProjectWriteIcon from '@core/components/icons/project-write';
 import CrmDashIcon from '@core/components/icons/crm-icon';
 import CogSolidIcon from '@core/components/icons/cog-solid';
-import { MdIntegrationInstructions, MdRecommend } from 'react-icons/md';
+import {
+  MdFilter,
+  MdIntegrationInstructions,
+  MdRecommend,
+} from 'react-icons/md';
 import { BiCustomize, BiSupport } from 'react-icons/bi';
 import SalesIcon from '@core/components/icons/sales';
 import { SiChatbot } from 'react-icons/si';
 import { BsFunnel, BsPerson } from 'react-icons/bs';
 import { RiRobot2Fill } from 'react-icons/ri';
 import TicketIcon from '@core/components/icons/ticket';
+import { FaFilter } from 'react-icons/fa';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -132,6 +137,28 @@ export const menuItems = [
     name: 'Funnel',
     href: '/funnel',
     icon: <BsFunnel />,
+  },
+  {
+    name: 'Filters',
+    href: '/fickets',
+    icon: <FaFilter />,
+    dropdownItems: [
+      {
+        name: 'Merchandising',
+        href: '/filters/merchandising',
+        badge: '',
+      },
+      {
+        name: 'Manage Filters',
+        href: '/filters/manage-filters',
+        badge: '',
+      },
+      // {
+      //   name: 'Leads',
+      //   href: '/tickets/leads',
+      //   badge: '',
+      // },
+    ],
   },
   {
     name: 'Tickets',

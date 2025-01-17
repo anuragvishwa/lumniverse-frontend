@@ -22,6 +22,7 @@ import BasicTableWidget from './table';
 import { orderData } from '@/data/order-data';
 import { getColumns as getOrderColumns } from './getColumns';
 import ProductCard from './product-card';
+import { useRouter } from 'next/navigation';
 
 const pageHeader = {
   title: 'Recommendation widgets',
@@ -97,12 +98,16 @@ const data = [
 ];
 
 export default function RecommendationWidgets() {
+  const route = useRouter();
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <div className="mt-4 flex items-center gap-3 @lg:mt-0">
           <Button className="inline-flex">
-            <Button as="span"> Add new widget</Button>
+            <Button as="span" onClick={() => route.push('/new')}>
+              {' '}
+              Add new widget
+            </Button>
           </Button>
         </div>
       </PageHeader>
