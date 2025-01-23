@@ -62,6 +62,15 @@ const accordionVariants = {
   closed: { height: 0, opacity: 0 },
 };
 
+interface ButtonData {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  bgColor: string;
+  handleOffer: (value: string) => void;
+}
 // This will print your states in JSON format
 
 const ChatbotCustomize = ({
@@ -168,8 +177,9 @@ const ChatbotCustomize = ({
     setLoading(true); // Set loading state to true
 
     try {
-      const response = await axios.post('/api/chat', {
-        message: finalMessage,
+      const response = await axios.post('/api/query', {
+        query: finalMessage,
+        user_id: '66096695',
       });
 
       if (response.status === 200 && response.data) {
@@ -272,14 +282,46 @@ const ChatbotCustomize = ({
   const [isHovered2, setIsHovered2] = useState(false);
   const [isHovered3, setIsHovered3] = useState(false);
   const [isHovered4, setIsHovered4] = useState(false);
+  const [isHovered5, setIsHovered5] = useState(false);
 
-  console.log(bgColor, 'bgcolor');
+  const [hoverStates, setHoverStates] = useState<Record<number, boolean>>({});
+
+  const buttonData: ButtonData[] = [
+    { label: 'Track my order', value: 'track_my_order' },
+    { label: 'Request, Return & Exchange', value: 'request_return' },
+    { label: 'Return & Refund Status', value: 'return_status' },
+    { label: 'Cancel Order', value: 'cancel_order' },
+    { label: 'Check warranty', value: 'check_warranty' },
+  ];
+
+  const handleMouseEnter = (index: number) => {
+    setHoverStates((prev) => ({ ...prev, [index]: true }));
+  };
+
+  const handleMouseLeave = (index: number) => {
+    setHoverStates((prev) => ({ ...prev, [index]: false }));
+  };
+
+  const [showMore, setShowMore] = useState(false); // State to track the visibility of the button group
+  // const [hoverStates, setHoverStates] = useState(
+  //   new Array(buttonData.length).fill(false)
+  // );
+
+  // Handle mouse enter and leave for hover effect
+  // const handleMouseEnter = (index) => {
+  //   const newHoverStates = [...hoverStates];
+  //   newHoverStates[index] = true;
+  //   setHoverStates(newHoverStates);
+  // };
+
+  // const handleMouseLeave = (index) => {
+  //   const newHoverStates = [...hoverStates];
+  //   newHoverStates[index] = false;
+  //   setHoverStates(newHoverStates);
+  // };
 
   return (
-    <div
-      style={{ fontFamily: selectedFont }}
-      className={`col-span-full @[59rem]:col-span-2 @[80rem]:col-span-1`}
-    >
+    <div style={{ fontFamily: selectedFont }} className={`col-span-2.5 w-full`}>
       {isOpen && (
         <AnimatePresence>
           <motion.div
@@ -291,7 +333,7 @@ const ChatbotCustomize = ({
           >
             <TabGroup>
               <TabList
-                className={`relative flex justify-between rounded-t-[${borderRadius}] items-center py-2 ${
+                className={`relative flex rounded-t-[${borderRadius}] items-start py-1 ${
                   bgColor.startsWith('bg-') ? bgColor : ''
                 }`}
                 style={{
@@ -300,38 +342,46 @@ const ChatbotCustomize = ({
                   borderTopRightRadius: borderRadius,
                 }}
               >
-                <div className="flex flex-col items-center gap-2">
+                <div className="flex flex-col gap-2">
                   <Tab
-                    className="flex items-center gap-2 rounded-xl px-6 py-1 text-white"
+                    className="flex items-start gap-2 rounded-xl px-6 py-1 text-white"
                     style={{ color: textColor }}
                   >
-                    <Image
-                      height={11}
-                      width={11}
-                      src={imageSrc}
-                      className="h-11 w-11 rounded-full bg-white p-1 text-gray-900"
+                    <img
+                      src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp"
+                      className="h-9 w-9 rounded-full bg-white p-1 text-gray-900"
                       alt="Bot Avatar"
                     />
 
-                    <span className="flex flex-col items-start justify-center gap-1 px-2">
-                      <span className="text-[1.2rem]">{chatbotTitle}</span>
-                      <span className="text-[0.8rem] text-white opacity-70">
+                    <span className="flex flex-col items-start justify-center px-2">
+                      <span className="text-[0.9rem]">{chatbotTitle}</span>
+                      <span className="text-[0.7rem] font-normal">
                         {chatbotDescription}
                       </span>
                     </span>
                   </Tab>
                 </div>
-                <div className="flex items-center gap-1 pr-4 text-white">
-                  <SearchWidget />
-                  <ActionIcon
-                    variant="text"
-                    aria-label="Search"
-                    className="font-bold text-white"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <BsXLg className="me-2 h-[18px] w-[18px] font-bold" />
-                  </ActionIcon>
+                <div className="absolute right-0 top-3">
+                  <div className="flex items-center justify-end gap-1 pr-2 text-white">
+                    <SearchWidget />
+                    <ActionIcon
+                      variant="text"
+                      aria-label="Search"
+                      className="font-bold text-white"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <BsXLg className="me-2 h-[18px] w-[18px] font-bold" />
+                    </ActionIcon>
+                  </div>
                 </div>
+
+                {/* <button
+                  className="absolute right-6 top-3 text-2xl text-white hover:text-gray-200"
+                  onClick={() => setIsOpen(false)}
+                >
+                  &times;
+           
+                </button> */}
               </TabList>
 
               <TabPanels
@@ -506,8 +556,88 @@ const ChatbotCustomize = ({
                           >
                             New Collection
                           </Button>
+
+                          <Button
+                            rounded="pill"
+                            size="sm"
+                            onClick={() => setShowMore(!showMore)}
+                            onMouseEnter={() => {
+                              setIsHovered5(true);
+                            }}
+                            onMouseLeave={() => {
+                              setIsHovered5(false);
+                            }}
+                            className={`mt-2 px-3 py-1.5 transition-all duration-300 ${
+                              bgColor === 'bg-orange-500' && isHovered5
+                                ? 'btn-hover-orange'
+                                : bgColor === 'bg-green-500' && isHovered5
+                                  ? 'btn-hover-green'
+                                  : bgColor === 'bg-blue-500' && isHovered5
+                                    ? 'btn-hover-blue'
+                                    : bgColor === 'bg-gray-500' && isHovered5
+                                      ? 'btn-hover-gray'
+                                      : isHovered5
+                                        ? `${bgColor.startsWith('bg-') ? bgColor : ''} text-white`
+                                        : `border-2 border-blue-200 ${bgColor.startsWith('bg-') ? bgColor : ''} bg-clip-text text-transparent`
+                            }`}
+                            style={{
+                              backgroundColor: !bgColor.startsWith('bg-')
+                                ? bgColor
+                                : '',
+                            }}
+                          >
+                            {showMore ? 'Show Less' : 'Show More'}
+                          </Button>
                         </div>
-                        <Carousel />
+
+                        <div>
+                          {showMore && (
+                            <div className="ml-8 mt-2 flex flex-col gap-2">
+                              {' '}
+                              {/* Use flex-col for vertical stacking */}
+                              {buttonData.map((button, index) => (
+                                <Button
+                                  key={index}
+                                  rounded="pill"
+                                  size="sm"
+                                  onMouseEnter={() => handleMouseEnter(index)}
+                                  onMouseLeave={() => handleMouseLeave(index)}
+                                  className={`mt-2 px-3 py-1.5 transition-all duration-300 ${
+                                    bgColor === 'bg-orange-500' &&
+                                    hoverStates[index]
+                                      ? 'btn-hover-orange'
+                                      : bgColor === 'bg-green-500' &&
+                                          hoverStates[index]
+                                        ? 'btn-hover-green'
+                                        : bgColor === 'bg-blue-500' &&
+                                            hoverStates[index]
+                                          ? 'btn-hover-blue'
+                                          : bgColor === 'bg-gray-500' &&
+                                              hoverStates[index]
+                                            ? 'btn-hover-gray'
+                                            : hoverStates[index]
+                                              ? `${bgColor.startsWith('bg-') ? bgColor : ''} text-white`
+                                              : `border-2 border-blue-200 ${
+                                                  bgColor.startsWith('bg-')
+                                                    ? bgColor
+                                                    : ''
+                                                } bg-clip-text text-transparent`
+                                  }`}
+                                  style={{
+                                    backgroundColor: !bgColor.startsWith('bg-')
+                                      ? bgColor
+                                      : '',
+                                    width: 'auto', // Ensure button width is auto (adjust based on content)
+                                  }}
+                                  onClick={() => handleOffer(button.value)}
+                                >
+                                  {button.label}
+                                </Button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
                         {/* <ProductCarousel
                           title={''}
                           data={recommendationProducts}
@@ -535,16 +665,8 @@ const ChatbotCustomize = ({
                           return (
                             <div
                               key={index}
-                              className={`chat-message ${msg.sender === 'user' ? 'self-end text-white' : 'flex items-end gap-2 self-start'} max-w-xs rounded-lg`}
+                              className={`chat-message ${msg.sender === 'user' ? 'self-end text-white' : ''} max-w-xs rounded-lg`}
                             >
-                              {msg.sender === 'bot' && !isAccordionTitle && (
-                                <div className="flex-shrink-0">
-                                  <img
-                                    src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp"
-                                    className="h-7 w-7 rounded-full bg-white p-1 text-gray-900"
-                                  />
-                                </div>
-                              )}
                               {!isAccordionTitle && (
                                 <div>
                                   <div
@@ -555,8 +677,8 @@ const ChatbotCustomize = ({
                                               ? bgColor // Apply Tailwind background color class if it's prefixed with "bg-"
                                               : 'bg-indigo-600' // Fallback Tailwind class for when bgColor is a hex code
                                           } text-white`
-                                        : 'bg-gray-100 text-gray-900'
-                                    } rounded-lg px-3 py-1.5 text-sm`}
+                                        : ''
+                                    } ml-6 rounded-lg px-3 py-1.5 text-sm`}
                                     style={{
                                       backgroundColor:
                                         msg.sender === 'user' &&
@@ -565,13 +687,11 @@ const ChatbotCustomize = ({
                                           : '',
                                     }}
                                   >
-                                    {typeof msg.text === 'string'
-                                      ? msg.text
-                                      : msg?.text?.response}
-                                  </div>
-
-                                  <div className="mt-2 bg-white text-xs text-gray-500">
-                                    {msg.time}
+                                    {typeof msg.text === 'string' ? (
+                                      msg.text
+                                    ) : (
+                                      <Carousel message={msg} />
+                                    )}
                                   </div>
                                 </div>
                               )}
@@ -588,34 +708,133 @@ const ChatbotCustomize = ({
                                   </Button>
                                 </div>
                               )}
+
+                              {msg.sender === 'bot' && !isAccordionTitle && (
+                                <div className="flex items-start gap-2">
+                                  <img
+                                    src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp"
+                                    className="h-7 w-7 rounded-full bg-white p-1 text-gray-900"
+                                  />
+                                  <div className="mt-2 bg-white text-xs text-gray-500">
+                                    {msg.time}
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           );
                         })}
-                        {loading && (
-                          <div
-                            className={`chat-message flex max-w-xs items-start gap-2 rounded-lg`}
-                          >
-                            <div className="flex-shrink-0">
-                              <img
-                                src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp"
-                                className="h-7 w-7 rounded-full bg-white p-1 text-gray-900"
-                              />
+
+                        {/* {messages.map((msg: any, index: number) => {
+                          const isAccordionTitle = [
+                            "Men's Fashions",
+                            "Women's Special Fashions",
+                            'Summer Special',
+                          ].includes(msg.subData);
+                          return (
+                            <div
+                              key={index}
+                              className={`chat-message ${msg.sender === 'user' ? 'self-end text-white' : ''} max-w-xs rounded-lg`}
+                            >
+                              {!isAccordionTitle && (
+                                <div>
+                                  <div
+                                    className={`${
+                                      msg.sender === 'user'
+                                        ? `${
+                                            bgColor.startsWith('bg-')
+                                              ? bgColor // Apply Tailwind background color class if it's prefixed with "bg-"
+                                              : '' // Fallback Tailwind class for when bgColor is a hex code
+                                          } text-white`
+                                        : ''
+                                    } rounded-lg px-3 py-1.5 text-sm`}
+                                  >
+                                    {typeof msg.text === 'string' ? (
+                                      msg.text
+                                    ) : (
+                                      <Carousel message={msg} />
+                                    )}
+                                  </div>
+
+                                  <div className="mt-2 bg-white text-xs text-gray-500">
+                                    {msg.time}
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                            <div className="flex items-start">
-                              <div className="flex space-x-2">
-                                <div className="animate-bounce bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text px-1 text-2xl text-transparent">
-                                  .
-                                </div>
-                                <div className="animate-bounce bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text px-1 text-2xl text-transparent">
-                                  .
-                                </div>
-                                <div className="animate-bounce bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text px-1 text-2xl text-transparent">
-                                  .
-                                </div>
+                          );
+                        })} */}
+                        {loading && (
+                          <div className="chat-message flex items-center gap-2 rounded-lg">
+                            <div className="flex-shrink-0">
+                              <div className="icon rounded-md bg-gradient-to-r from-violet-600 to-indigo-600 p-2 text-white">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={1.5}
+                                  stroke="currentColor"
+                                  className="h-6 w-6 animate-pulse"
+                                >
+                                  <rect
+                                    x="5"
+                                    y="5"
+                                    width="3"
+                                    height="10"
+                                    className="fill-current"
+                                  >
+                                    <animate
+                                      attributeName="height"
+                                      values="10; 15; 10"
+                                      dur="1s"
+                                      repeatCount="indefinite"
+                                    />
+                                  </rect>
+                                  <rect
+                                    x="10"
+                                    y="5"
+                                    width="3"
+                                    height="10"
+                                    className="fill-current"
+                                  >
+                                    <animate
+                                      attributeName="height"
+                                      values="10; 15; 10"
+                                      dur="1s"
+                                      repeatCount="indefinite"
+                                      begin="0.2s"
+                                    />
+                                  </rect>
+                                  <rect
+                                    x="15"
+                                    y="5"
+                                    width="3"
+                                    height="10"
+                                    className="fill-current"
+                                  >
+                                    <animate
+                                      attributeName="height"
+                                      values="10; 15; 10"
+                                      dur="1s"
+                                      repeatCount="indefinite"
+                                      begin="0.4s"
+                                    />
+                                  </rect>
+                                </svg>
                               </div>
+                            </div>
+                            <div className="flex items-center space-x-1 text-gray-500">
+                              <span>Thinking</span>
+                              <span className="dot1 animate-bounce">.</span>
+                              <span className="dot2 animate-bounce delay-200">
+                                .
+                              </span>
+                              <span className="dot3 delay-400 animate-bounce">
+                                .
+                              </span>
                             </div>
                           </div>
                         )}
+
                         <div className="relative mt-4">
                           <div className="scrollbar-hide flex overflow-x-auto">
                             {products.length > 0 &&

@@ -48,6 +48,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'isomorphic-furyroad.vercel.app',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.shopify.com',
+        pathname: '/**', // Allow all paths under this domain
+      },
     ],
   },
   reactStrictMode: true,
@@ -56,9 +61,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/chat',
-        destination:
-          'http://ec2-54-235-174-119.compute-1.amazonaws.com:5436/chat',
+        source: '/api/query', // The new proxy route
+        destination: 'https://api.lumniverse.com/query', // Actual endpoint to forward to
       },
     ];
   },

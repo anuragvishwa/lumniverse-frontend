@@ -1,12 +1,13 @@
 import type { Config } from "tailwindcss";
-import sharedConfig from "tailwind-config";
+import sharedConfig from "tailwind-config"; // Import shared configuration
 
-const config: Pick<Config, "prefix" | "presets" | "content"> = {
+const config: Pick<Config, "prefix" | "presets" | "content" | "plugins"> = {
   content: [
     "./src/**/*.tsx",
-    "./node_modules/rizzui/dist/*.{js,ts,jsx,tsx}", // must use this line to compile and generate our RizzUI components style
+    "./node_modules/rizzui/dist/*.{js,ts,jsx,tsx}", // Ensures RizzUI components are styled
   ],
-  presets: [sharedConfig],
+  plugins: [require("@tailwindcss/typography")], // Adds the Typography plugin
+  presets: [sharedConfig], // Using shared config for common settings
 };
 
 export default config;

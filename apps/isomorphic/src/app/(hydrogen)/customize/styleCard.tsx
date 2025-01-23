@@ -37,6 +37,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import Popover from '@core/ui/carbon-menu/popover/popover';
 import { BiDotsVertical } from 'react-icons/bi';
 import Header from './header';
+import MakePost from './makePost';
 
 export default function StyleCard({
   bgColor,
@@ -67,6 +68,8 @@ export default function StyleCard({
   chatbotDescription,
   setChatbotTitle,
   setChatbotDescription,
+  chatbotAlignMent,
+  setChatbotAlignment,
 }: {
   inputRadius: string;
   bgColor: string;
@@ -96,6 +99,8 @@ export default function StyleCard({
   chatbotDescription: string;
   setChatbotTitle: Dispatch<SetStateAction<string>>;
   setChatbotDescription: Dispatch<SetStateAction<string>>;
+  chatbotAlignMent: string;
+  setChatbotAlignment: Dispatch<SetStateAction<string>>;
 }) {
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
 
@@ -297,7 +302,7 @@ export default function StyleCard({
           <div className="flex flex-col items-center gap-8">
             <select
               id="font-picker"
-              className="w-24 rounded-full p-2 text-xs"
+              className="w-32 rounded-full p-2 text-xs"
               value={badgeTop}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                 setBgColor(e.target.value);
@@ -308,61 +313,61 @@ export default function StyleCard({
                 value="bg-gradient-to-r from-blue-400 to-purple-600"
                 className="text-xs"
               >
-                Gradient 1
+                Ocean Breeze
               </option>
               <option
                 value="bg-gradient-to-r from-pink-500 to-yellow-500"
                 className="text-xs"
               >
-                Gradient 2
+                Sunset Glow
               </option>
               <option
                 value="bg-gradient-to-r from-green-400 to-blue-500"
                 className="text-xs"
               >
-                Gradient 3
+                Emerald Sky
               </option>
               <option
                 value="bg-gradient-to-r from-red-500 to-orange-500"
                 className="text-xs"
               >
-                Gradient 4
+                Fiery Sunset
               </option>
               <option
                 value="bg-gradient-to-r from-indigo-500 to-purple-700"
                 className="text-xs"
               >
-                Gradient 5
+                Royal Twilight
               </option>
               <option
                 value="bg-gradient-to-r from-teal-400 to-cyan-500"
                 className="text-xs"
               >
-                Gradient 6
+                Aqua Flow
               </option>
               <option
                 value="bg-gradient-to-r from-yellow-400 to-red-500"
                 className="text-xs"
               >
-                Gradient 7
+                Golden Hour
               </option>
               <option
                 value="bg-gradient-to-r from-lime-500 to-green-500"
                 className="text-xs"
               >
-                Gradient 8
+                Fresh Meadow
               </option>
               <option
                 value="bg-gradient-to-r from-rose-400 to-pink-500"
                 className="text-xs"
               >
-                Gradient 9
+                Rose Petal
               </option>
               <option
                 value="bg-gradient-to-r from-sky-400 to-indigo-500"
                 className="text-xs"
               >
-                Gradient 10
+                Skyline Dusk
               </option>
             </select>
           </div>
@@ -501,6 +506,34 @@ export default function StyleCard({
               className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-gray-700"
             >
               <span className="h-2.5 w-2.5 rounded-full" />
+              Chatbot Alignment
+            </Text>
+            <div className="flex items-center">
+              <select
+                id="font-picker"
+                className="min-w-[100px] rounded-md border p-2 text-xs"
+                value={chatbotAlignMent}
+                onChange={(e) => {
+                  setChatbotAlignment(e.target.value);
+                  setIsToggle(false);
+                }}
+              >
+                <option value="right" className="text-xs">
+                  Right
+                </option>
+                <option value="left" className="text-xs">
+                  Left
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
+            <Text
+              as="span"
+              className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-gray-700"
+            >
+              <span className="h-2.5 w-2.5 rounded-full" />
               Badge
             </Text>
             <Popover>
@@ -628,6 +661,9 @@ export default function StyleCard({
                 </option>
                 <option value="sidebar" className="text-xs">
                   Sidebar
+                </option>
+                <option value="text" className="text-xs">
+                  Text
                 </option>
               </select>
             </div>

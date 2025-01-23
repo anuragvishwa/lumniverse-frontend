@@ -24,6 +24,8 @@ import '@/app/(hydrogen)/customize/chatbot.css';
 import PageHeader from '../../page-header';
 import { Button, Text, Title } from 'rizzui';
 import CardsPage from '@/app/(hydrogen)/widgets/cards/page';
+import { AiOutlineClose } from 'react-icons/ai';
+import { HiOutlinePencil } from 'react-icons/hi2';
 
 export default function Customize() {
   const [isVisible, setIsVisible] = useState(true); // Control visibility
@@ -60,9 +62,11 @@ export default function Customize() {
     'bg-gradient-to-r from-violet-600 to-indigo-600'
   );
   const [badgeBottom, setBadgeBottom] = useState('to-indigo-600');
-  const [height, setHeight] = useState('450');
+  const [height, setHeight] = useState('550');
   const [borderRadius, setBorderRadius] = useState('0.5rem');
   const [inputRadius, setInputRadius] = useState('full');
+
+  const [chatbotAlignMent, setChatbotAlignment] = useState('right');
 
   const fonts = [
     'Arial',
@@ -83,6 +87,28 @@ export default function Customize() {
   const handleFontChange = (event: any) => {
     setSelectedFont(event.target.value);
   };
+
+  const chatbotConfig = {
+    isVisible: isVisible,
+    chatbotTitle: chatbotTitle,
+    chatbotDescription: chatbotDescription,
+    bgColor: bgColor,
+    textColor: textColor,
+    imageSrc: imageSrc,
+    changeContentBgColor: changeContentBgColor,
+    contentTextColor: contentTextColor,
+    buttonShape: buttonShape,
+    isOpen: isOpen,
+    badgeTop: badgeTop,
+    badgeBottom: badgeBottom,
+    height: height,
+    borderRadius: borderRadius,
+    inputRadius: inputRadius,
+    chatbotAlignMent: chatbotAlignMent,
+    selectedFont: selectedFont,
+    fonts: fonts,
+  };
+
   return (
     <>
       <div className="mb-3 flex items-center justify-between">
@@ -112,61 +138,66 @@ export default function Customize() {
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.4 }}
       >
-        <div className="mt-6 grid grid-cols-6 gap-6 @container">
-          <StyleCard
-            className="col-span-full @[59rem]:col-span-4 @[80rem]:col-span-3"
-            bgColor={bgColor}
-            setBgColor={setBgColor}
-            textColor={textColor}
-            setTextColor={setTextColor}
-            imageSrc={imageSrc}
-            setImageSrc={setImageSrc}
-            changeContentBgColor={changeContentBgColor}
-            setChangeContentBgColor={setChangeContentBgColor}
-            buttonShape={buttonShape}
-            setButtonShape={setButtonShape}
-            setIsToggle={setIsOpen}
-            setBadgeBottom={setBadgeBottom}
-            setBadgeTop={setBadgeTop}
-            badgeTop={badgeTop}
-            badgeBottom={badgeBottom}
-            selectedFont={selectedFont}
-            setSelectedFont={setSelectedFont}
-            setHeight={setHeight}
-            height={height}
-            borderRadius={borderRadius}
-            setBorderRadius={setBorderRadius}
-            inputRadius={inputRadius}
-            setInputRadius={setInputRadius}
-            chatbotTitle={chatbotTitle}
-            chatbotDescription={chatbotDescription}
-            setChatbotTitle={setChatbotTitle}
-            setChatbotDescription={setChatbotDescription}
-          />
-          <ChatbotCustomize
-            bgColor={bgColor}
-            setBgColor={setBgColor}
-            textColor={textColor}
-            setTextColor={setTextColor}
-            imageSrc={imageSrc}
-            changeContentBgColor={changeContentBgColor}
-            contentTextColor={contentTextColor}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            selectedFont={selectedFont}
-            height={height}
-            borderRadius={borderRadius}
-            inputRadius={inputRadius}
-            chatbotTitle={chatbotTitle}
-            chatbotDescription={chatbotDescription}
-          />
+        <div className="mt-6 grid grid-cols-10 gap-6 @container">
+          <div className="col-span-6">
+            <StyleCard
+              bgColor={bgColor}
+              setBgColor={setBgColor}
+              textColor={textColor}
+              setTextColor={setTextColor}
+              imageSrc={imageSrc}
+              setImageSrc={setImageSrc}
+              changeContentBgColor={changeContentBgColor}
+              setChangeContentBgColor={setChangeContentBgColor}
+              buttonShape={buttonShape}
+              setButtonShape={setButtonShape}
+              setIsToggle={setIsOpen}
+              setBadgeBottom={setBadgeBottom}
+              setBadgeTop={setBadgeTop}
+              badgeTop={badgeTop}
+              badgeBottom={badgeBottom}
+              selectedFont={selectedFont}
+              setSelectedFont={setSelectedFont}
+              setHeight={setHeight}
+              height={height}
+              borderRadius={borderRadius}
+              setBorderRadius={setBorderRadius}
+              inputRadius={inputRadius}
+              setInputRadius={setInputRadius}
+              chatbotTitle={chatbotTitle}
+              chatbotDescription={chatbotDescription}
+              setChatbotTitle={setChatbotTitle}
+              setChatbotDescription={setChatbotDescription}
+              chatbotAlignMent={chatbotAlignMent}
+              setChatbotAlignment={setChatbotAlignment}
+            />
+          </div>
+          <div className="w-[400px]">
+            <ChatbotCustomize
+              bgColor={bgColor}
+              setBgColor={setBgColor}
+              textColor={textColor}
+              setTextColor={setTextColor}
+              imageSrc={imageSrc}
+              changeContentBgColor={changeContentBgColor}
+              contentTextColor={contentTextColor}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              selectedFont={selectedFont}
+              height={height}
+              borderRadius={borderRadius}
+              inputRadius={inputRadius}
+              chatbotTitle={chatbotTitle}
+              chatbotDescription={chatbotDescription}
+            />
+          </div>
         </div>
       </motion.div>
 
       <AnimatePresence>
         {buttonShape === 'rounded' && !isOpen ? (
-          <div className="fixed bottom-6 right-8">
-            <div className="relative rounded-full p-4">
+          <div className={`fixed bottom-6 ${chatbotAlignMent}-8 z-[9999]`}>
+            <div className="rounded-full p-4">
               {badgeTop === 'bg-black' ? (
                 <div className="animate-rgb-background absolute inset-0 rounded-full blur-lg"></div>
               ) : null}
@@ -176,7 +207,7 @@ export default function Customize() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8, y: 20 }}
                 transition={{ duration: 0.4 }}
-                className={`relative rounded-full ${
+                className={`rounded-full ${
                   badgeTop.startsWith('bg-') ? badgeTop : ''
                 } p-4 text-white shadow-md`}
                 style={{
@@ -192,7 +223,7 @@ export default function Customize() {
             </div>
           </div>
         ) : buttonShape === 'rectangle' ? (
-          <div className="fixed bottom-0 right-8">
+          <div className={`fixed bottom-0 ${chatbotAlignMent}-8 z-[9999]`}>
             <div className="relative rounded-t-md pb-0 pl-4 pr-4 pt-4">
               {/* Animated RGB Background */}
 
@@ -224,7 +255,7 @@ export default function Customize() {
             </div>
           </div>
         ) : buttonShape === 'semiCircle' ? (
-          <div className="fixed bottom-0 right-8">
+          <div className={`fixed bottom-0 ${chatbotAlignMent}-8 z-[9999]`}>
             <div className="relative rounded-t-full pb-0 pl-4 pr-4 pt-4">
               {badgeTop === 'bg-black' ? (
                 <div className="animate-rgb-background absolute inset-0 rounded-t-full blur-lg"></div>
@@ -286,6 +317,41 @@ export default function Customize() {
                   <MdChat className="h-4 w-4" />
                 </motion.button>
               </div>
+            </div>
+          </div>
+        ) : buttonShape === 'text' ? (
+          <div className={`fixed bottom-6 ${chatbotAlignMent}-8 z-[9999]`}>
+            <div className="relative flex items-center justify-center">
+              {isOpen && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute right-[-10px] top-[-10px] flex items-center justify-center rounded-full bg-blue-800 text-white"
+                  onClick={() => setIsOpen(false)}
+                  style={{
+                    height: '24px',
+                    width: '24px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <AiOutlineClose />
+                </motion.div>
+              )}
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.4 }}
+                className={`relative flex items-center gap-2 rounded-full bg-blue-500 px-4 py-2 shadow-lg hover:bg-white hover:text-blue-500 hover:shadow-xl`}
+                onClick={() => setIsOpen((prev) => !prev)}
+              >
+                <HiOutlinePencil className="text-white group-hover:text-blue-500" />
+                <span className="text-sm font-medium text-white hover:text-blue-500">
+                  Need Help?
+                </span>
+              </motion.button>
             </div>
           </div>
         ) : null}

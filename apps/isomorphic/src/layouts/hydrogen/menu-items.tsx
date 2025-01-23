@@ -49,6 +49,7 @@ import {
   PiCardsDuotone,
   PiMagnifyingGlassDuotone,
   PiStar,
+  PiStandardDefinition,
 } from 'react-icons/pi';
 import ProjectWriteIcon from '@core/components/icons/project-write';
 import CrmDashIcon from '@core/components/icons/crm-icon';
@@ -61,10 +62,11 @@ import {
 import { BiCustomize, BiSupport } from 'react-icons/bi';
 import SalesIcon from '@core/components/icons/sales';
 import { SiChatbot } from 'react-icons/si';
-import { BsFunnel, BsPerson } from 'react-icons/bs';
+import { BsController, BsFunnel, BsPerson } from 'react-icons/bs';
 import { RiRobot2Fill } from 'react-icons/ri';
 import TicketIcon from '@core/components/icons/ticket';
 import { FaFilter } from 'react-icons/fa';
+import { IoSearchCircle } from 'react-icons/io5';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -427,14 +429,24 @@ export const menuItems = [
   //   badge: 'NEW',
   // },
   // // label start
-  // {
-  //   name: 'Search & Filters',
-  // },
-  // {
-  //   name: 'Real Estate',
-  //   href: routes.searchAndFilter.realEstate,
-  //   icon: <PiHouseLineDuotone />,
-  // },
+  {
+    name: 'Search & Filters',
+  },
+  {
+    name: 'AI Powered Search',
+    href: '/search/ai-powered-search',
+    icon: <IoSearchCircle />,
+  },
+  {
+    name: 'Search Control',
+    href: '/search/search-control',
+    icon: <BsController />,
+  },
+  {
+    name: 'Standard Search',
+    href: '/search/standard-search',
+    icon: <PiStandardDefinition />,
+  },
   // {
   //   name: 'Flight Booking',
   //   href: routes.searchAndFilter.flight,

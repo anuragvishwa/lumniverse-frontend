@@ -12,8 +12,9 @@ import {
 } from 'rizzui';
 import DraggableProductList from './draggableProductList';
 import { BiArrowToTop, BiQuestionMark } from 'react-icons/bi';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
+import { Collection } from '@/types';
 
 const options = [
   { label: 'Product 1', value: 'product1' },
@@ -28,8 +29,12 @@ const buttonSize = [
 // components/BoostSidebar.tsx
 const DemoteSidebar = ({
   setActiveButton,
+  handlePinProduct,
+  pinnedProducts,
 }: {
   setActiveButton: Dispatch<SetStateAction<null>>;
+  handlePinProduct: (id: number) => void;
+  pinnedProducts: any;
 }) => {
   const [terms, setTerms] = useState<string[]>(['']); // Initialize with one empty term
   const [isError, setIsError] = useState<boolean[]>([false]); // Error state per term
@@ -45,7 +50,39 @@ const DemoteSidebar = ({
     setTerms(newTerms);
     setIsError(newErrors);
   };
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Fetch the collections data
+    const fetchCollections = async () => {
+      try {
+        const response = await fetch('https://giva.co/collections.json');
+        const data: any = await response.json();
+        setCollections(data.collections);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching collections:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchCollections();
+  }, []);
+
+  const handleDemoteProduct = (id: number) => {
+    // Find the product by id and remove it from the current position
+    const productIndex = collections.findIndex((product) => product.id === id);
+    if (productIndex !== -1) {
+      const selectedProduct = collections[productIndex];
+      const updatedCollections = collections.filter(
+        (product) => product.id !== id
+      );
+      // Add the product at the end of the array (demote it)
+      updatedCollections.push(selectedProduct);
+      setCollections(updatedCollections);
+    }
+  };
   return (
     <div className="w-full border-l border-gray-300">
       <div className="flex items-center justify-between border-b border-gray-200 p-5 pb-4">
@@ -80,27 +117,25 @@ const DemoteSidebar = ({
                 <label className="mb-4 block text-xs leading-none text-gray-500">
                   Select up to 3 products to Boost.
                 </label>
-                <Select
-                  size="sm"
-                  className="mb-4 w-full"
-                  options={options}
-                  //  value={product}
-                  //  onChange={(newValue) => onChange(id, newValue)}
-                />{' '}
-                <Select
-                  size="sm"
-                  className="mb-4 w-full"
-                  options={options}
-                  //  value={product}
-                  //  onChange={(newValue) => onChange(id, newValue)}
-                />{' '}
-                <Select
-                  size="sm"
-                  className="w-full"
-                  options={options}
-                  //  value={product}
-                  //  onChange={(newValue) => onChange(id, newValue)}
-                />
+                <select
+                  onChange={(e) => handleDemoteProduct(Number(e.target.value))}
+                  className="mb-4 mt-1 w-full rounded-md border p-2 text-xs"
+                  defaultValue=""
+                >
+                  <option value="" disabled className="text-xs">
+                    Select a product to boost
+                  </option>
+                  {collections.map((product) => (
+                    <option
+                      key={product.id}
+                      value={product.id}
+                      className="text-xs"
+                    >
+                      {product.title}
+                      {pinnedProducts.includes(product.id) && ' (Demoted)'}
+                    </option>
+                  ))}
+                </select>
               </div>
             </Tab.Panel>
 

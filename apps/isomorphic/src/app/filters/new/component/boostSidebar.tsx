@@ -125,7 +125,7 @@ const BoostSidebar = ({
                       className="text-xs"
                     >
                       {product.title}
-                      {pinnedProducts.includes(product.id) && ' (Pinned)'}
+                      {pinnedProducts.includes(product.id) && ' (Boost)'}
                     </option>
                   ))}
                 </select>

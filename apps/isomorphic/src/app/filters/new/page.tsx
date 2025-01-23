@@ -118,6 +118,7 @@ export default function StepTwo() {
   const [pinnedProducts, setPinnedProducts] = useState<number[]>([]);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hiddenProducts, setHiddenProducts] = useState<number[]>([]); // State to keep track of hidden products
 
   // Handle pinning and unpinning of products (max 7)
   const handlePinProduct = (id: number) => {
@@ -129,6 +130,16 @@ export default function StepTwo() {
       setPinnedProducts((prev) => [...prev, id]);
     } else {
       alert('You can only pin up to 7 products.');
+    }
+  };
+
+  const handleHideProduct = (id: number) => {
+    if (!hiddenProducts.includes(id)) {
+      // Add to hidden products if not already hidden
+      setHiddenProducts((prev) => [...prev, id]);
+    } else {
+      // If already hidden, remove it from hidden products (unhide)
+      setHiddenProducts((prev) => prev.filter((productId) => productId !== id));
     }
   };
 
@@ -307,10 +318,18 @@ export default function StepTwo() {
             />
           )}
           {activeButton === 'hide' && (
-            <HideSidebar setActiveButton={setActiveButton} />
+            <HideSidebar
+              setActiveButton={setActiveButton}
+              pinnedProducts={pinnedProducts}
+              handlePinProduct={handlePinProduct}
+            />
           )}
           {activeButton === 'demote' && (
-            <DemoteSidebar setActiveButton={setActiveButton} />
+            <DemoteSidebar
+              setActiveButton={setActiveButton}
+              pinnedProducts={hiddenProducts}
+              handlePinProduct={handlePinProduct}
+            />
           )}
           {activeButton === 'filter' && (
             <FilterSidebar setActiveButton={setActiveButton} />
