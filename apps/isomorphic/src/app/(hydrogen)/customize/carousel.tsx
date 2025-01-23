@@ -10,7 +10,6 @@ import Image from 'next/image';
 import svg from '@public/address.svg';
 import ng from '@public/newsletter-1.svg';
 import { toCurrency } from '@core/utils/to-currency';
-import { useCart } from '@/store/quick-cart/cart.context';
 
 const mockProducts = [
   { id: 1, name: 'Citrus & Sage Candle', price: 295, image: svg },
@@ -22,7 +21,6 @@ const mockProducts = [
 
 const Carousel = ({ message }: { message: any }) => {
   const { direction } = useDirection();
-  const { addItemToCart, isInCart } = useCart();
 
   const prevButtonClassName = `${generateSlug('abc')}-prev-button`;
   const nextButtonClassName = `${generateSlug('abc')}-next-button`;
@@ -32,8 +30,12 @@ const Carousel = ({ message }: { message: any }) => {
   return (
     <div className="flex flex-col gap-4">
       <div
-        className="prose prose-sm prose-ul:pl-5 prose-li:space-y-2 mb-4"
-        dangerouslySetInnerHTML={{ __html: message?.text?.response }}
+        className="prose prose-sm prose-li:space-y-2 mb-4 rounded-md bg-gray-50 p-2"
+        dangerouslySetInnerHTML={{
+          __html: message?.text?.response
+            .replace(/\n\s*\n/g, '<br/><br/>')
+            .replace(/\n/g, '<br/>'),
+        }}
       />
 
       <div className="relative mx-auto w-full">
@@ -67,7 +69,7 @@ const Carousel = ({ message }: { message: any }) => {
           key={`recently-viewed-${direction}`}
           dir={direction}
           slidesPerView={1.5}
-          spaceBetween={10}
+          spaceBetween={60}
           modules={[Navigation]}
           navigation={{
             nextEl: `.${nextButtonClassName}`,
@@ -77,35 +79,9 @@ const Carousel = ({ message }: { message: any }) => {
         >
           {message?.text?.results.map((product: any) => (
             <SwiperSlide key={product.id}>
-              {/* <div className="mx-auto h-80 max-w-xs rounded-lg border p-4 shadow-md">
-                <div className="flex h-40 items-center justify-center overflow-hidden rounded-lg bg-gray-100">
-                  <Image
-                    src={product.image}
-                    alt={product.title}
-                    width={300}
-                    height={200}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-
-                <div className="mt-4 text-center">
-                  <h2 className="text-sm font-semibold">{product.title}</h2>
-                  <p className="text-gray-500">Rs.{product.price}</p>
-                </div>
-
-                <div className="mt-4 flex items-center justify-between">
-                  <Button size="sm" variant="outline" className="flex-1">
-                    View Product
-                  </Button>
-                  <ActionIcon size="sm" variant="outline" className="ml-2">
-                    <FaArrowLeft />
-                  </ActionIcon>
-                </div>
-              </div> */}
-
               <div className={cn('pb-0.5')}>
-                <div className="relative">
-                  <div className="relative mx-auto aspect-square w-full overflow-hidden rounded-lg bg-gray-100">
+                <div className="flex h-full max-h-[300px] min-h-[300px] w-[220px] flex-col rounded-2xl border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800">
+                  <div className="relative aspect-square w-full overflow-hidden">
                     <Image
                       src={product.image}
                       alt={product.title}
@@ -113,46 +89,44 @@ const Carousel = ({ message }: { message: any }) => {
                       priority
                       quality={90}
                       sizes="(max-width: 768px) 100vw"
-                      className="h-full w-full object-cover"
+                      className="h-full w-full rounded-2xl object-cover"
                     />
                   </div>
-                  {/* {discount ? (
-                    <Text
-                      as="span"
-                      className="absolute start-5 top-5 rounded-lg bg-white px-2.5 py-1.5 text-xs font-semibold dark:bg-gray-200 dark:text-gray-700"
-                    >
-                      {discount}% Discount
-                    </Text>
-                  ) : null} */}
-                </div>
 
-                <div className="pt-3">
-                  <Title
-                    as="h6"
-                    className="mb-1 truncate font-inter font-semibold"
-                  >
-                    {product.title}
-                  </Title>
-
-                  <Text as="p" className="truncate">
-                    {product.description}
-                  </Text>
-                  <div className="mt-2 flex items-center font-semibold text-gray-900">
-                    {toCurrency(Number(product.price))}
-                    {/* {price && (
-                      <del className="ps-1.5 text-[13px] font-normal text-gray-500">
-                        {toCurrency(Number(price))}
-                      </del>
-                    )} */}
-                  </div>
-                  <div className="mt-3">
-                    <Button
-                      onClick={() => addItemToCart(product, 1)}
-                      className="w-full"
-                      variant="outline"
-                    >
-                      Add to cart
-                    </Button>
+                  <div className="flex flex-grow flex-col justify-between rounded-b-2xl bg-gray-100 p-3">
+                    <div>
+                      <Text
+                        as="p"
+                        className="mb-1 truncate font-inter text-sm font-semibold text-gray-900"
+                      >
+                        {product.title}
+                      </Text>
+                      <Text
+                        as="p"
+                        className="max-h-12 overflow-hidden text-ellipsis text-xs leading-4"
+                        style={{
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                        }}
+                      >
+                        {product.description}
+                      </Text>
+                    </div>
+                    <div className="mt-3 flex items-center justify-between">
+                      <div className="text-xs font-semibold text-gray-500">
+                        {toCurrency(Number(product.price))}
+                      </div>
+                      <Button
+                        size="sm"
+                        className="w-[96px]"
+                        rounded="pill"
+                        variant="solid"
+                        color="primary"
+                      >
+                        Add to cart
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

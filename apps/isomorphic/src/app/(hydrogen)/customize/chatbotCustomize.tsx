@@ -45,7 +45,7 @@ import ChatSolidIcon from '@core/components/icons/chat-solid';
 import './chatbot.css';
 import SearchTrigger from './search/search-trigger';
 import SearchWidget from './search/search';
-import { FaCommentDots } from 'react-icons/fa';
+import { FaCommentDots, FaTshirt } from 'react-icons/fa';
 import Carousel from './carousel';
 import { recommendationProducts } from '@/data/shop-products';
 import ProductCarousel from './product-carousel';
@@ -464,14 +464,14 @@ const ChatbotCustomize = ({
                           </Button>
 
                           <Button
-                            rounded="pill"
+                            rounded="lg"
                             onMouseEnter={() => {
                               setIsHovered2(true);
                             }}
                             onMouseLeave={() => {
                               setIsHovered2(false);
                             }}
-                            className={`mt-2 px-3 py-1.5 transition-all duration-300 ${
+                            className={`mt-2 flex items-center gap-1 px-3 py-1.5 transition-all duration-300 ${
                               bgColor === 'bg-orange-500' && isHovered2
                                 ? 'btn-hover-orange'
                                 : bgColor === 'bg-green-500' && isHovered2
@@ -492,7 +492,7 @@ const ChatbotCustomize = ({
                             size="sm"
                             onClick={() => handleOffer('Summer Outfits')}
                           >
-                            Summer Outfits
+                            <FaTshirt className="h-5 w-5" /> Summer Outfits
                           </Button>
                           <Button
                             rounded="pill"
@@ -590,7 +590,7 @@ const ChatbotCustomize = ({
                           </Button>
                         </div>
 
-                        <div>
+                        <div className="mb-4">
                           {showMore && (
                             <div className="ml-8 mt-2 flex flex-col gap-2">
                               {' '}
@@ -667,6 +667,17 @@ const ChatbotCustomize = ({
                               key={index}
                               className={`chat-message ${msg.sender === 'user' ? 'self-end text-white' : ''} max-w-xs rounded-lg`}
                             >
+                              {msg.sender === 'bot' && !isAccordionTitle && (
+                                <div className="flex items-start gap-2">
+                                  <img
+                                    src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp"
+                                    className="h-7 w-7 rounded-full bg-white p-1 text-gray-900"
+                                  />
+                                  <div className="mt-2 bg-white text-xs text-gray-500">
+                                    {msg.time}
+                                  </div>
+                                </div>
+                              )}
                               {!isAccordionTitle && (
                                 <div>
                                   <div
@@ -678,7 +689,7 @@ const ChatbotCustomize = ({
                                               : 'bg-indigo-600' // Fallback Tailwind class for when bgColor is a hex code
                                           } text-white`
                                         : ''
-                                    } ml-6 rounded-lg px-3 py-1.5 text-sm`}
+                                    } rounded-lg px-3 py-1.5 text-sm`}
                                     style={{
                                       backgroundColor:
                                         msg.sender === 'user' &&
@@ -706,18 +717,6 @@ const ChatbotCustomize = ({
                                   >
                                     {msg.subData}
                                   </Button>
-                                </div>
-                              )}
-
-                              {msg.sender === 'bot' && !isAccordionTitle && (
-                                <div className="flex items-start gap-2">
-                                  <img
-                                    src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp"
-                                    className="h-7 w-7 rounded-full bg-white p-1 text-gray-900"
-                                  />
-                                  <div className="mt-2 bg-white text-xs text-gray-500">
-                                    {msg.time}
-                                  </div>
                                 </div>
                               )}
                             </div>
