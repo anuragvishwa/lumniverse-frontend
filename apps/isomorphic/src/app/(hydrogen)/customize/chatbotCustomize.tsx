@@ -7,8 +7,11 @@ import {
   BiSend,
 } from 'react-icons/bi';
 import {
+  BsArrowRight,
   BsArrowUpCircleFill,
   BsArrowUpShort,
+  BsCaretUpSquare,
+  BsForward,
   BsQuestion,
   BsSendArrowUp,
   BsX,
@@ -18,12 +21,14 @@ import {
   MdCancel,
   MdChat,
   MdOutlineCancel,
+  MdOutlineNewLabel,
   MdOutlineSearch,
 } from 'react-icons/md';
-import { SiChatbot, SiHelpdesk } from 'react-icons/si';
+import { SiChatbot, SiHelpdesk, SiNewjapanprowrestling } from 'react-icons/si';
 import axios from 'axios';
 import { PiFinnTheHuman, PiFinnTheHumanBold } from 'react-icons/pi';
 import Image from 'next/image';
+import { FaGift, FaTag } from 'react-icons/fa';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Accordion, ActionIcon, Button, Input, Text } from 'rizzui';
 import {
@@ -49,6 +54,7 @@ import { FaCommentDots, FaTshirt } from 'react-icons/fa';
 import Carousel from './carousel';
 import { recommendationProducts } from '@/data/shop-products';
 import ProductCarousel from './product-carousel';
+import { FcSalesPerformance } from 'react-icons/fc';
 
 // Define a type for the products
 interface Product {
@@ -145,6 +151,7 @@ const ChatbotCustomize = ({
   const toggleColorPicker = () => {
     setShowColorPicker((prev) => !prev);
   };
+
   const [input, setInput] = useState('');
   const [products, setProducts] = useState<Product[]>([]); // State for products
   const [selectedOffer, setSelectedOffer] = useState<string | null>(null); // Track selected offer
@@ -230,7 +237,7 @@ const ChatbotCustomize = ({
       { text: offerType, sender: 'user', time: offerTimestamp, subData: '' }, // Corrected sender to 'user'
     ]);
 
-    const botResponse = `Sure, what are you interested in?`;
+    const botResponse = `Kindly provide your email address and order ID to track your order`;
     const botTimestamp = new Date().toLocaleTimeString();
 
     // Add bot response with subData (empty string if not relevant)
@@ -247,23 +254,23 @@ const ChatbotCustomize = ({
       text: string;
     }[] = [
       {
-        subData: "Men's Fashions",
+        subData: 'Order Id',
         sender: 'bot',
         time: botTimestamp,
         text: '',
       },
       {
-        subData: "Women's Special Fashions",
+        subData: 'Email',
         sender: 'bot',
         time: botTimestamp,
         text: '',
       },
-      {
-        subData: 'Summer Special',
-        sender: 'bot',
-        time: botTimestamp,
-        text: '',
-      },
+      // {
+      //   subData: 'Summer Special',
+      //   sender: 'bot',
+      //   time: botTimestamp,
+      //   text: '',
+      // },
     ];
 
     // Append accordion messages
@@ -271,6 +278,9 @@ const ChatbotCustomize = ({
 
     setSelectedOffer(offerType);
   };
+
+  console.log(messages, 'offer');
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -302,23 +312,16 @@ const ChatbotCustomize = ({
     setHoverStates((prev) => ({ ...prev, [index]: false }));
   };
 
-  const [showMore, setShowMore] = useState(false); // State to track the visibility of the button group
-  // const [hoverStates, setHoverStates] = useState(
-  //   new Array(buttonData.length).fill(false)
-  // );
+  const [showMore, setShowMore] = useState(false);
 
-  // Handle mouse enter and leave for hover effect
-  // const handleMouseEnter = (index) => {
-  //   const newHoverStates = [...hoverStates];
-  //   newHoverStates[index] = true;
-  //   setHoverStates(newHoverStates);
-  // };
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  // const handleMouseLeave = (index) => {
-  //   const newHoverStates = [...hoverStates];
-  //   newHoverStates[index] = false;
-  //   setHoverStates(newHoverStates);
-  // };
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   return (
     <div style={{ fontFamily: selectedFont }} className={`col-span-2.5 w-full`}>
@@ -414,7 +417,10 @@ const ChatbotCustomize = ({
                       className={`flex flex-col rounded-md`}
                       style={{ height: `${height}px` }}
                     >
-                      <div className="flex flex-1 flex-col space-y-2 overflow-y-auto p-3">
+                      <div
+                        ref={chatContainerRef}
+                        className="flex flex-1 flex-col space-y-2 overflow-y-auto p-3"
+                      >
                         <div
                           className={`chat-message flex max-w-xs items-end gap-2 self-start rounded-lg`}
                         >
@@ -430,17 +436,14 @@ const ChatbotCustomize = ({
                             Hello! How can I help you?
                           </div>
                         </div>
-                        <div className="flex-row-2 ml-8 mt-4 flex flex-wrap gap-2">
+
+                        <div className="ml-0 mt-4 grid grid-cols-2 gap-2">
                           <Button
-                            rounded="pill"
+                            rounded="lg"
                             size="sm"
-                            onMouseEnter={() => {
-                              setIsHovered(true);
-                            }}
-                            onMouseLeave={() => {
-                              setIsHovered(false);
-                            }}
-                            className={`mt-2 px-3 py-1.5 transition-all duration-300 ${
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
+                            className={`mt-2 flex items-center gap-1 px-3 py-1.5 transition-all duration-300 ${
                               bgColor === 'bg-orange-500' && isHovered
                                 ? 'btn-hover-orange'
                                 : bgColor === 'bg-green-500' && isHovered
@@ -458,19 +461,24 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
-                            onClick={() => handleOffer('Special Offers')}
+                            onClick={() => handleSend('Special Offers')}
                           >
+                            <ActionIcon
+                              variant="text"
+                              className={`transition-all duration-300 ${
+                                isHovered ? 'text-white' : 'text-purple-600'
+                              }`}
+                            >
+                              <FaTag className={`h-5 w-5`} />
+                            </ActionIcon>{' '}
                             Special Offer
                           </Button>
 
                           <Button
                             rounded="lg"
-                            onMouseEnter={() => {
-                              setIsHovered2(true);
-                            }}
-                            onMouseLeave={() => {
-                              setIsHovered2(false);
-                            }}
+                            size="sm"
+                            onMouseEnter={() => setIsHovered2(true)}
+                            onMouseLeave={() => setIsHovered2(false)}
                             className={`mt-2 flex items-center gap-1 px-3 py-1.5 transition-all duration-300 ${
                               bgColor === 'bg-orange-500' && isHovered2
                                 ? 'btn-hover-orange'
@@ -489,20 +497,25 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
-                            size="sm"
-                            onClick={() => handleOffer('Summer Outfits')}
+                            onClick={() => handleSend('Summer Outfits')}
                           >
-                            <FaTshirt className="h-5 w-5" /> Summer Outfits
+                            <ActionIcon
+                              variant="text"
+                              className={`transition-all duration-300 ${
+                                isHovered2 ? 'text-white' : 'text-purple-600'
+                              }`}
+                            >
+                              <FaTshirt className="h-5 w-5" />
+                            </ActionIcon>
+                            Summer Outfits
                           </Button>
+
                           <Button
-                            rounded="pill"
-                            onMouseEnter={() => {
-                              setIsHovered3(true);
-                            }}
-                            onMouseLeave={() => {
-                              setIsHovered3(false);
-                            }}
-                            className={`mt-2 px-3 py-1.5 transition-all duration-300 ${
+                            rounded="lg"
+                            size="sm"
+                            onMouseEnter={() => setIsHovered3(true)}
+                            onMouseLeave={() => setIsHovered3(false)}
+                            className={`mt-2 flex items-center gap-1 px-3 py-1.5 transition-all duration-300 ${
                               bgColor === 'bg-orange-500' && isHovered3
                                 ? 'btn-hover-orange'
                                 : bgColor === 'bg-green-500' && isHovered3
@@ -520,20 +533,28 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
-                            size="sm"
-                            onClick={() => handleOffer('Buy a Giftcard')}
+                            onClick={() =>
+                              handleSend('could you suggest me best sellers')
+                            }
                           >
-                            Buy a Giftcard
+                            <ActionIcon
+                              variant="text"
+                              className={`transition-all duration-300 ${
+                                isHovered3 ? 'text-white' : 'text-purple-600'
+                              }`}
+                            >
+                              {' '}
+                              <FcSalesPerformance className={`h-5 w-5`} />
+                            </ActionIcon>{' '}
+                            Best Sellers
                           </Button>
+
                           <Button
-                            rounded="pill"
-                            onMouseEnter={() => {
-                              setIsHovered4(true);
-                            }}
-                            onMouseLeave={() => {
-                              setIsHovered4(false);
-                            }}
-                            className={`mt-2 px-3 py-1.5 transition-all duration-300 ${
+                            rounded="lg"
+                            size="sm"
+                            onMouseEnter={() => setIsHovered4(true)}
+                            onMouseLeave={() => setIsHovered4(false)}
+                            className={`mt-2 flex items-center gap-1 px-3 py-1.5 transition-all duration-300 ${
                               bgColor === 'bg-orange-500' && isHovered4
                                 ? 'btn-hover-orange'
                                 : bgColor === 'bg-green-500' && isHovered4
@@ -551,23 +572,27 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
-                            onClick={() => handleOffer('New Collection')}
-                            size="sm"
+                            onClick={() =>
+                              handleSend('could you suggest me new arrivals')
+                            }
                           >
-                            New Collection
+                            <ActionIcon
+                              variant="text"
+                              className={`transition-all duration-300 ${
+                                isHovered4 ? 'text-white' : 'text-purple-600'
+                              }`}
+                            >
+                              <MdOutlineNewLabel className={`h-5 w-5`} />
+                            </ActionIcon>
+                            New Arrival
                           </Button>
-
+                          {/* 
                           <Button
-                            rounded="pill"
+                            rounded="lg"
                             size="sm"
-                            onClick={() => setShowMore(!showMore)}
-                            onMouseEnter={() => {
-                              setIsHovered5(true);
-                            }}
-                            onMouseLeave={() => {
-                              setIsHovered5(false);
-                            }}
-                            className={`mt-2 px-3 py-1.5 transition-all duration-300 ${
+                            onMouseEnter={() => setIsHovered5(true)}
+                            onMouseLeave={() => setIsHovered5(false)}
+                            className={`mt-2 flex items-center gap-1 px-3 py-1.5 transition-all duration-300 ${
                               bgColor === 'bg-orange-500' && isHovered5
                                 ? 'btn-hover-orange'
                                 : bgColor === 'bg-green-500' && isHovered5
@@ -585,20 +610,21 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
+                            onClick={() => setShowMore(!showMore)}
                           >
                             {showMore ? 'Show Less' : 'Show More'}
-                          </Button>
+                          </Button> */}
                         </div>
 
                         <div className="mb-4">
                           {showMore && (
-                            <div className="ml-8 mt-2 flex flex-col gap-2">
+                            <div className="ml-0 mt-2 flex flex-col gap-2">
                               {' '}
                               {/* Use flex-col for vertical stacking */}
                               {buttonData.map((button, index) => (
                                 <Button
                                   key={index}
-                                  rounded="pill"
+                                  rounded="lg"
                                   size="sm"
                                   onMouseEnter={() => handleMouseEnter(index)}
                                   onMouseLeave={() => handleMouseLeave(index)}
@@ -629,7 +655,7 @@ const ChatbotCustomize = ({
                                       : '',
                                     width: 'auto', // Ensure button width is auto (adjust based on content)
                                   }}
-                                  onClick={() => handleOffer(button.value)}
+                                  onClick={() => handleOffer(button.label)}
                                 >
                                   {button.label}
                                 </Button>
@@ -638,29 +664,10 @@ const ChatbotCustomize = ({
                           )}
                         </div>
 
-                        {/* <ProductCarousel
-                          title={''}
-                          data={recommendationProducts}
-                          bgColor={bgColor}
-                          setBgColor={setBgColor}
-                          textColor={textColor}
-                          setTextColor={setTextColor}
-                          imageSrc={imageSrc}
-                          changeContentBgColor={changeContentBgColor}
-                          contentTextColor={contentTextColor}
-                          isOpen={isOpen}
-                          setIsOpen={setIsOpen}
-                          selectedFont={selectedFont}
-                          height={height}
-                          borderRadius={borderRadius}
-                          inputRadius={inputRadius}
-                        /> */}
-
                         {messages.map((msg: any, index: number) => {
                           const isAccordionTitle = [
-                            "Men's Fashions",
-                            "Women's Special Fashions",
-                            'Summer Special',
+                            'Order Id',
+                            'Email',
                           ].includes(msg.subData);
                           return (
                             <div
@@ -708,21 +715,50 @@ const ChatbotCustomize = ({
                               )}
 
                               {isAccordionTitle && (
-                                <div className="mx-8 border-b-2 border-gray-300 last:border-b-0">
-                                  <Button
+                                <div className="border-b-2 border-gray-300 last:border-b-0">
+                                  {/* <Button
                                     rounded="pill"
                                     className="mt-2 border-2 border-blue-200 bg-white bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text px-3 py-1.5 text-transparent"
                                     size="sm"
-                                    onClick={() => handleSend(msg.subData)}
                                   >
                                     {msg.subData}
-                                  </Button>
+                                  </Button> */}
+
+                                  <Input
+                                    size="sm"
+                                    placeholder={msg.subData}
+                                    suffix={
+                                      <BsArrowRight
+                                        className="w-4"
+                                        onClick={() => handleSend(msg.subData)}
+                                      />
+                                    }
+                                  />
                                 </div>
                               )}
                             </div>
                           );
                         })}
 
+                        {/* <div className="mt-4">
+                                  <span className="mb-4">
+                                    Kindly provide your email address and order
+                                    ID to track your order
+                                  </span>
+                                  {msg.formFields.map(
+                                    (field: any, idx: number) => (
+                                      <div key={idx} className="mb-4">
+                                        <Input
+                                          label={field.label}
+                                          type={field.type}
+                                          placeholder={field.placeholder}
+                                          value={field.value}
+                                          size="sm"
+                                        />
+                                      </div>
+                                    )
+                                  )}
+                                </div> */}
                         {/* {messages.map((msg: any, index: number) => {
                           const isAccordionTitle = [
                             "Men's Fashions",
@@ -833,7 +869,6 @@ const ChatbotCustomize = ({
                             </div>
                           </div>
                         )}
-
                         <div className="relative mt-4">
                           <div className="scrollbar-hide flex overflow-x-auto">
                             {products.length > 0 &&

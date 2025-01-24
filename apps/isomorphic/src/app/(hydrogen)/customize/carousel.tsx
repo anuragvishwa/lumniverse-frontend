@@ -69,7 +69,7 @@ const Carousel = ({ message }: { message: any }) => {
           key={`recently-viewed-${direction}`}
           dir={direction}
           slidesPerView={1.5}
-          spaceBetween={60}
+          spaceBetween={10}
           modules={[Navigation]}
           navigation={{
             nextEl: `.${nextButtonClassName}`,
@@ -80,7 +80,7 @@ const Carousel = ({ message }: { message: any }) => {
           {message?.text?.results.map((product: any) => (
             <SwiperSlide key={product.id}>
               <div className={cn('pb-0.5')}>
-                <div className="flex h-full max-h-[300px] min-h-[300px] w-[220px] flex-col rounded-2xl border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800">
+                <div className="flex h-full max-h-[300px] min-h-[300px] flex-col rounded-2xl border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800">
                   <div className="relative aspect-square w-full overflow-hidden">
                     <Image
                       src={product.image}
