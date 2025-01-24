@@ -15,11 +15,11 @@ import TotalStatistics from '@/app/shared/financial/dashboard/total-statistics';
 import TransactionHistoryTable from '@/app/shared/financial/dashboard/transaction-history-table';
 import IncomeStatement from '@/app/shared/financial/dashboard/income-statement';
 import Chatbot from '@/app/(hydrogen)/integrations/[id]/chatbot';
-import ChatbotCustomize from '@/app/(hydrogen)/customize/chatbotCustomize';
+import ChatbotCustomize from '../customize/chatbotCustomize';
 import { AnimatePresence, motion } from 'framer-motion';
 import { HexColorPicker } from 'react-colorful';
 import SocialFollowers from '@/app/shared/executive/social-followers';
-import StyleCard from '@/app/(hydrogen)/customize/styleCard';
+import StyleCard from '../customize/styleCard';
 import { MdChat, MdKeyboardArrowUp } from 'react-icons/md';
 import '@/app/(hydrogen)/customize/chatbot.css';
 import { Button, Text, Title } from 'rizzui';
@@ -144,7 +144,7 @@ const CompanyDetailsPage = ({ params }: { params: { id: string } }) => {
   console.log(company, 'name');
 
   return (
-    <>
+    <div className="p-8">
       <div className="mb-3 flex items-center justify-between">
         <Title as="h4" className="capitalize">
           {params.id.charAt(0).toUpperCase() + params.id.slice(1).toLowerCase()}
@@ -160,8 +160,8 @@ const CompanyDetailsPage = ({ params }: { params: { id: string } }) => {
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.4 }}
       >
-        <div className="mt-6 grid grid-cols-10 gap-6 @container">
-          <div className="col-span-6">
+        <div className="mt-6 flex gap-6">
+          <div className="flex-1">
             <StyleCard
               bgColor={bgColor}
               setBgColor={setBgColor}
@@ -378,7 +378,7 @@ const CompanyDetailsPage = ({ params }: { params: { id: string } }) => {
           </div>
         ) : null}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 

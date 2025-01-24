@@ -44,7 +44,7 @@ import {
   IoSearchCircleOutline,
 } from 'react-icons/io5';
 import cn from '@core/utils/class-names';
-import '../integrations/[id]/chatbot.css';
+import '../../(hydrogen)/integrations/[id]/chatbot.css';
 import { HexColorPicker } from 'react-colorful';
 import ChatSolidIcon from '@core/components/icons/chat-solid';
 import './chatbot.css';
@@ -279,6 +279,60 @@ const ChatbotCustomize = ({
     setSelectedOffer(offerType);
   };
 
+  const handleButton = async (message: string) => {
+    // If message is not provided, use the current input state
+    const finalMessage = message || input;
+
+    if (finalMessage.trim() === '') return;
+
+    setInput(''); // Clear input if using direct message
+    setLoading(true); // Set loading state to true
+
+    try {
+      const response = await axios.post('/api/query', {
+        query: finalMessage,
+        user_id: '66096695',
+      });
+
+      if (response.status === 200 && response.data) {
+        const botResponse = response.data; // Assuming response.data contains the bot's response
+        const botTimestamp = new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+
+        // Add the bot's response to the state
+        setMessages((prev) => [
+          ...prev,
+          {
+            text: botResponse,
+            sender: 'bot',
+            subData: '', // Can be filled with relevant bot data
+            time: botTimestamp,
+          },
+        ]);
+      } else {
+        throw new Error('Unexpected response structure');
+      }
+    } catch (error) {
+      console.error(error); // Log the error for debugging
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: 'Error: Could not get a response from the bot. Please try again later.',
+          sender: 'bot',
+          subData: '', // Add subData for error message
+          time: new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          }),
+        },
+      ]);
+    } finally {
+      setLoading(false); // Reset loading state
+    }
+  };
+
   console.log(messages, 'offer');
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -351,7 +405,7 @@ const ChatbotCustomize = ({
                     style={{ color: textColor }}
                   >
                     <img
-                      src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp"
+                      src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-04.webp"
                       className="h-9 w-9 rounded-full bg-white p-1 text-gray-900"
                       alt="Bot Avatar"
                     />
@@ -426,7 +480,7 @@ const ChatbotCustomize = ({
                         >
                           <div className="flex-shrink-0">
                             <img
-                              src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp"
+                              src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-04.webp"
                               className="h-7 w-7 rounded-full bg-white p-1 text-gray-900"
                             />{' '}
                           </div>
@@ -461,7 +515,7 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
-                            onClick={() => handleSend('Special Offers')}
+                            onClick={() => handleButton('Special Offers')}
                           >
                             <ActionIcon
                               variant="text"
@@ -497,7 +551,7 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
-                            onClick={() => handleSend('Summer Outfits')}
+                            onClick={() => handleButton('Top Rated')}
                           >
                             <ActionIcon
                               variant="text"
@@ -507,7 +561,7 @@ const ChatbotCustomize = ({
                             >
                               <FaTshirt className="h-5 w-5" />
                             </ActionIcon>
-                            Summer Outfits
+                            Top Rated
                           </Button>
 
                           <Button
@@ -534,7 +588,7 @@ const ChatbotCustomize = ({
                                 : '',
                             }}
                             onClick={() =>
-                              handleSend('could you suggest me best sellers')
+                              handleButton('could you suggest me best sellers')
                             }
                           >
                             <ActionIcon
@@ -573,7 +627,7 @@ const ChatbotCustomize = ({
                                 : '',
                             }}
                             onClick={() =>
-                              handleSend('could you suggest me new arrivals')
+                              handleButton('could you suggest me new arrivals')
                             }
                           >
                             <ActionIcon
@@ -677,7 +731,7 @@ const ChatbotCustomize = ({
                               {msg.sender === 'bot' && !isAccordionTitle && (
                                 <div className="flex items-start gap-2">
                                   <img
-                                    src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-07.webp"
+                                    src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-04.webp"
                                     className="h-7 w-7 rounded-full bg-white p-1 text-gray-900"
                                   />
                                   <div className="mt-2 bg-white text-xs text-gray-500">
