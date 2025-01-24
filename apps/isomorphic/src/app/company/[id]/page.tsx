@@ -137,13 +137,7 @@ const CompanyDetailsPage = ({ params }: { params: { id: string } }) => {
     fetchCompanies();
   }, [params.id]);
 
-  if (!isValidCompany) {
-    return <NotFound />;
-  }
-
-  console.log(company, 'name');
-
-  return (
+  return isValidCompany ? (
     <div className="p-8">
       <div className="mb-3 flex items-center justify-between">
         <Title as="h4" className="capitalize">
@@ -379,7 +373,7 @@ const CompanyDetailsPage = ({ params }: { params: { id: string } }) => {
         ) : null}
       </AnimatePresence>
     </div>
-  );
+  ) : null;
 };
 
 export default CompanyDetailsPage;
