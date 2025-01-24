@@ -279,60 +279,6 @@ const ChatbotCustomize = ({
     setSelectedOffer(offerType);
   };
 
-  const handleButton = async (message: string) => {
-    // If message is not provided, use the current input state
-    const finalMessage = message || input;
-
-    if (finalMessage.trim() === '') return;
-
-    setInput(''); // Clear input if using direct message
-    setLoading(true); // Set loading state to true
-
-    try {
-      const response = await axios.post('/api/query', {
-        query: finalMessage,
-        user_id: '66096695',
-      });
-
-      if (response.status === 200 && response.data) {
-        const botResponse = response.data; // Assuming response.data contains the bot's response
-        const botTimestamp = new Date().toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        });
-
-        // Add the bot's response to the state
-        setMessages((prev) => [
-          ...prev,
-          {
-            text: botResponse,
-            sender: 'bot',
-            subData: '', // Can be filled with relevant bot data
-            time: botTimestamp,
-          },
-        ]);
-      } else {
-        throw new Error('Unexpected response structure');
-      }
-    } catch (error) {
-      console.error(error); // Log the error for debugging
-      setMessages((prev) => [
-        ...prev,
-        {
-          text: 'Error: Could not get a response from the bot. Please try again later.',
-          sender: 'bot',
-          subData: '', // Add subData for error message
-          time: new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          }),
-        },
-      ]);
-    } finally {
-      setLoading(false); // Reset loading state
-    }
-  };
-
   console.log(messages, 'offer');
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -515,7 +461,7 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
-                            onClick={() => handleButton('Special Offers')}
+                            onClick={() => handleSend('Special Offers')}
                           >
                             <ActionIcon
                               variant="text"
@@ -551,7 +497,7 @@ const ChatbotCustomize = ({
                                 ? bgColor
                                 : '',
                             }}
-                            onClick={() => handleButton('Summer Outfits')}
+                            onClick={() => handleSend('Summer Outfits')}
                           >
                             <ActionIcon
                               variant="text"
@@ -588,7 +534,7 @@ const ChatbotCustomize = ({
                                 : '',
                             }}
                             onClick={() =>
-                              handleButton('could you suggest me best sellers')
+                              handleSend('could you suggest me best sellers')
                             }
                           >
                             <ActionIcon
@@ -627,7 +573,7 @@ const ChatbotCustomize = ({
                                 : '',
                             }}
                             onClick={() =>
-                              handleButton('could you suggest me new arrivals')
+                              handleSend('could you suggest me new arrivals')
                             }
                           >
                             <ActionIcon

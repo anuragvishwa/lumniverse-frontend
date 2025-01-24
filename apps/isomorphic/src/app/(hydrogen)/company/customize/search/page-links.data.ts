@@ -1,84 +1,16 @@
 import { routes } from '@/config/routes';
 import { DUMMY_ID } from '@/config/constants';
-import {
-  PiShoppingCartDuotone,
-  PiHeadsetDuotone,
-  PiPackageDuotone,
-  PiChartBarDuotone,
-  PiCurrencyDollarDuotone,
-  PiSquaresFourDuotone,
-  PiGridFourDuotone,
-  PiFeatherDuotone,
-  PiChartLineUpDuotone,
-  PiMapPinLineDuotone,
-  PiUserGearDuotone,
-  PiBellSimpleRingingDuotone,
-  PiUserDuotone,
-  PiEnvelopeSimpleOpenDuotone,
-  PiStepsDuotone,
-  PiCreditCardDuotone,
-  PiTableDuotone,
-  PiBrowserDuotone,
-  PiHourglassSimpleDuotone,
-  PiUserCircleDuotone,
-  PiShootingStarDuotone,
-  PiRocketLaunchDuotone,
-  PiFolderLockDuotone,
-  PiBinocularsDuotone,
-  PiHammerDuotone,
-  PiNoteBlankDuotone,
-  PiUserPlusDuotone,
-  PiShieldCheckDuotone,
-  PiLockKeyDuotone,
-  PiChatCenteredDotsDuotone,
-  PiCalendarPlusDuotone,
-  PiEnvelopeDuotone,
-  PiCurrencyCircleDollarDuotone,
-  PiBriefcaseDuotone,
-  PiHouseLineDuotone,
-  PiAirplaneTiltDuotone,
-  PiFolder,
-  PiCaretCircleUpDownDuotone,
-  PiListNumbersDuotone,
-  PiCoinDuotone,
-  PiCalendarDuotone,
-  PiShapesDuotone,
-  PiNewspaperClippingDuotone,
-  PiCodesandboxLogoDuotone,
-  PiSparkleDuotone,
-  PiCardsDuotone,
-  PiMagnifyingGlassDuotone,
-  PiStar,
-  PiStandardDefinition,
-} from 'react-icons/pi';
-import ProjectWriteIcon from '@core/components/icons/project-write';
-import CrmDashIcon from '@core/components/icons/crm-icon';
-import CogSolidIcon from '@core/components/icons/cog-solid';
-import {
-  MdFilter,
-  MdIntegrationInstructions,
-  MdRecommend,
-} from 'react-icons/md';
-import { BiCustomize, BiSupport } from 'react-icons/bi';
-import SalesIcon from '@core/components/icons/sales';
-import { SiChatbot } from 'react-icons/si';
-import { BsController, BsFunnel, BsPerson } from 'react-icons/bs';
-import { RiRobot2Fill } from 'react-icons/ri';
-import TicketIcon from '@core/components/icons/ticket';
-import { FaFilter } from 'react-icons/fa';
-import { IoSearchCircle } from 'react-icons/io5';
 
 // Note: do not add href in the label object, it is rendering as label
-export const menuItems = [
+export const pageLinks = [
   // label start
   {
     name: 'Overview',
   },
   // label end
   {
-    name: 'Appearance',
+    name: 'Customize',
     href: '/',
-    icon: <BiCustomize />,
   },
   // {
   //   name: 'Settings',
@@ -88,14 +20,7 @@ export const menuItems = [
   {
     name: 'Integrations',
     href: '/integrations',
-    icon: <MdIntegrationInstructions />,
   },
-  {
-    name: 'Playground',
-    href: '/playground',
-    icon: <RiRobot2Fill />,
-  },
-
   // {
   //   name: 'Customize',
   //   href: '/customize',
@@ -104,104 +29,10 @@ export const menuItems = [
   {
     name: 'Sales',
     href: '/sales',
-    icon: <SalesIcon />,
-  },
-  {
-    name: 'Leads',
-    href: '/leads',
-    icon: <BsPerson />,
   },
   {
     name: 'Support',
     href: '/support',
-    icon: <BiSupport />,
-  },
-  {
-    name: 'Personalize Cards',
-    href: '/personalize-cards',
-    icon: <PiShoppingCartDuotone />,
-  },
-  {
-    name: 'Recent Cards',
-    href: '/recent-cards',
-    icon: <PiCardsDuotone />,
-  },
-  {
-    name: 'Search Cards',
-    href: '/search-cards',
-    icon: <PiMagnifyingGlassDuotone />,
-  },
-  {
-    name: 'Funnel',
-    href: '/funnel',
-    icon: <BsFunnel />,
-  },
-  {
-    name: 'Filters',
-    href: '/fickets',
-    icon: <FaFilter />,
-    dropdownItems: [
-      {
-        name: 'Merchandising',
-        href: '/filters/merchandising',
-        badge: '',
-      },
-      {
-        name: 'Manage Filters',
-        href: '/filters/manage-filters',
-        badge: '',
-      },
-      // {
-      //   name: 'Leads',
-      //   href: '/tickets/leads',
-      //   badge: '',
-      // },
-    ],
-  },
-  {
-    name: 'Tickets',
-    href: '/tickets',
-    icon: <TicketIcon />,
-    dropdownItems: [
-      {
-        name: 'Tickets',
-        href: '/tickets/tickets',
-        badge: '',
-      },
-      {
-        name: 'Sales',
-        href: '/tickets/sales',
-        badge: '',
-      },
-      {
-        name: 'Leads',
-        href: '/tickets/leads',
-        badge: '',
-      },
-    ],
-  },
-
-  {
-    name: 'Recommendation',
-    href: '/recommendation',
-    icon: <MdRecommend />,
-    dropdownItems: [
-      {
-        name: 'Recommendation Widget',
-        href: '/recommendation/recommendation-widgets',
-        badge: '',
-      },
-      {
-        name: 'Predictive Bundle',
-        href: '/recommendation/predictive-bundle',
-        badge: '',
-      },
-      {
-        name: 'General Settings',
-        href: '/recommendation/recommendation-general',
-        badge: '',
-      },
-    ],
   },
   // {
   //   name: 'Appointment',
@@ -244,11 +75,20 @@ export const menuItems = [
   //   href: routes.logistics.dashboard,
   //   icon: <PiPackageDuotone />,
   // },
+  // {
+  //   name: 'E-Commerce',
+  //   href: routes.eCommerce.dashboard,
+  //   icon: <PiShoppingCartDuotone />,
+  // },
+  {
+    name: 'Funnel',
+    href: '/funnel',
+  },
 
   {
     name: 'Analytics',
     href: '/analytics/sales',
-    icon: <PiChartBarDuotone />,
+
     dropdownItems: [
       {
         name: 'Support',
@@ -276,7 +116,7 @@ export const menuItems = [
   {
     name: 'AI Train',
     href: '/ai-training/train',
-    icon: <SiChatbot />,
+
     dropdownItems: [
       {
         name: 'Test & Training',
@@ -425,24 +265,14 @@ export const menuItems = [
   //   badge: 'NEW',
   // },
   // // label start
-  {
-    name: 'Search & Filters',
-  },
-  {
-    name: 'AI Powered Search',
-    href: '/search/ai-powered-search',
-    icon: <IoSearchCircle />,
-  },
-  {
-    name: 'Search Control',
-    href: '/search/search-control',
-    icon: <BsController />,
-  },
-  {
-    name: 'Standard Search',
-    href: '/search/standard-search',
-    icon: <PiStandardDefinition />,
-  },
+  // {
+  //   name: 'Search & Filters',
+  // },
+  // {
+  //   name: 'Real Estate',
+  //   href: routes.searchAndFilter.realEstate,
+  //   icon: <PiHouseLineDuotone />,
+  // },
   // {
   //   name: 'Flight Booking',
   //   href: routes.searchAndFilter.flight,
