@@ -138,8 +138,8 @@ export default function Customize() {
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.4 }}
       >
-        <div className="mt-6 grid grid-cols-10 gap-6 @container">
-          <div className="col-span-6">
+        <div className="mt-6 grid grid-cols-1 gap-6 @container sm:grid-cols-6 lg:grid-cols-10">
+          <div className="sm:col-span-6 lg:col-span-6">
             <StyleCard
               bgColor={bgColor}
               setBgColor={setBgColor}
@@ -172,7 +172,7 @@ export default function Customize() {
               setChatbotAlignment={setChatbotAlignment}
             />
           </div>
-          <div className="w-[400px]">
+          <div className="w-full sm:w-[400px] lg:w-[400px]">
             <ChatbotCustomize
               bgColor={bgColor}
               setBgColor={setBgColor}

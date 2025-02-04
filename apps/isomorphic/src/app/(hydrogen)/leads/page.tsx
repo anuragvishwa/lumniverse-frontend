@@ -31,6 +31,10 @@ import { PiHandHeartBold, PiSquareBold, PiTextColumns } from 'react-icons/pi';
 import { MdBorderAll, MdHighQuality } from 'react-icons/md';
 import Popover from '@core/ui/carbon-menu/popover/popover';
 import EcommerceDashboard from '@/app/shared/ecommerce/dashboard';
+import POSProductsFeed from '@/app/shared/point-of-sale/pos-product-feed';
+import POSPageView from './posPageView';
+import { CartProvider } from '@/store/quick-cart/cart.context';
+import { POS_CART_KEY } from '@/config/constants';
 
 const pageHeader = {
   title: 'Leads Flow',
@@ -194,8 +198,9 @@ export default function SearchTablePage() {
         </div>
       </PageHeader>
 
-      <div className="mb-6 flex items-center justify-between">
-        <div className="flex justify-center space-x-4">
+      <div className="mb-6 flex flex-col items-start justify-start space-y-4 md:flex-row md:space-y-0">
+        {/* Category Buttons */}
+        <div className="flex flex-wrap justify-start gap-4">
           {[
             { name: 'All', icon: <MdBorderAll /> },
             { name: 'Gather', icon: <BsPersonBadgeFill /> },
@@ -217,44 +222,6 @@ export default function SearchTablePage() {
             </Button>
           ))}
         </div>
-        <Popover>
-          <Popover.Trigger>
-            <ActionIcon
-              variant="outline"
-              title={'Toggle Columns'}
-              className="h-auto w-auto p-1"
-            >
-              <PiTextColumns strokeWidth={3} className="size-6" />
-            </ActionIcon>
-          </Popover.Trigger>
-          <Popover.Content className="z-0">
-            <div className="p-2 text-left rtl:text-right">
-              <Title as="h6" className="mb-6 px-0.5 text-sm font-semibold">
-                Toggle Columns
-              </Title>
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { name: 'All', icon: <MdBorderAll /> },
-                  { name: 'Gather', icon: <BsPersonBadgeFill /> },
-                  { name: 'Nurture', icon: <PiHandHeartBold /> },
-                  { name: 'Qualify', icon: <MdHighQuality /> },
-                ].map((category) => (
-                  <Checkbox
-                    key={category.name}
-                    label={
-                      <div className="flex items-center space-x-2">
-                        {category.icon && <span>{category.icon}</span>}
-                        <span>{category.name}</span>
-                      </div>
-                    }
-                    checked={filter === category.name}
-                    onChange={() => setFilter(category.name)}
-                  />
-                ))}
-              </div>
-            </div>
-          </Popover.Content>
-        </Popover>
       </div>
 
       {/* <div className="dynamic-card mb-6">
@@ -282,20 +249,32 @@ export default function SearchTablePage() {
           Learn More
         </button>
       </div> */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
+      {/* <div className="flex flex-grow flex-col px-4 pb-6 pt-2 md:px-5 lg:px-6 lg:pb-8 3xl:px-8 3xl:pt-4 4xl:px-10 4xl:pb-9">
+        <div>
+          <CartProvider cartKey={POS_CART_KEY}>
+            <div>
+              <POSPageView filteredData={filteredData} />
+            </div>
+          </CartProvider>
+        </div>
+      </div> */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {filteredData.map((card) => (
-          <div className="card" key={card.id}>
-            <div className="card-details">
+          <div
+            className="card col-span-full rounded-md border p-4 sm:col-span-1"
+            key={card.id}
+          >
+            <div className="card-details relative mb-4">
               <p className="absolute left-6 top-4">
                 <span className="text-body flex items-center gap-1">
                   {card.icon} {card.category}
                 </span>
               </p>
-              <p className="text-title">{card.title}</p>
-              <p className="text-body">{card.description}</p>
+              <p className="text-title mt-10">{card.title}</p>
+              <p className="text-body mt-2">{card.description}</p>
             </div>
             <button
-              className="card-button"
+              className="card-button rounded bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
               onClick={() => {
                 openModal({
                   view: <CreateCategoryModalView />,
@@ -308,6 +287,7 @@ export default function SearchTablePage() {
           </div>
         ))}
       </div>
+
       {/* 
       <BasicTableWidget
         variant="minimal"

@@ -62,7 +62,7 @@ const nextConfig = {
     return [
       {
         source: '/api/query', // The new proxy route
-        destination: 'https://api.lumniverse.com/query', // Actual endpoint to forward to
+        destination: 'https://ai.lumniverse.com/query', // Actual endpoint to forward to
       },
     ];
   },

@@ -216,8 +216,9 @@ export default function SearchTablePage() {
         </div>
       </PageHeader>
 
-      <div className="mb-6 flex items-center justify-between">
-        <div className="flex justify-center space-x-4">
+      <div className="mb-6 flex flex-col items-start justify-start space-y-4 md:flex-row md:space-y-0">
+        {/* Category Buttons */}
+        <div className="flex flex-wrap justify-start gap-4">
           {[
             { name: 'All', icon: <MdBorderAll /> },
             { name: 'Upskills', icon: <BiDollarCircle /> },
@@ -240,46 +241,10 @@ export default function SearchTablePage() {
             </Button>
           ))}
         </div>
-        <Popover>
-          <Popover.Trigger>
-            <ActionIcon
-              variant="outline"
-              title={'Toggle Columns'}
-              className="h-auto w-auto p-1"
-            >
-              <PiTextColumns strokeWidth={3} className="size-6" />
-            </ActionIcon>
-          </Popover.Trigger>
-          <Popover.Content className="z-0">
-            <div className="p-2 text-left rtl:text-right">
-              <Title as="h6" className="mb-6 px-0.5 text-sm font-semibold">
-                Toggle Columns
-              </Title>
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { name: 'All', icon: <MdBorderAll /> },
-                  { name: 'Upskills', icon: <BiDollarCircle /> },
-                  { name: 'Close Deals', icon: <BiCart /> },
-                  { name: 'Win Back', icon: <BsBack /> },
-                  { name: 'Rearrange', icon: <BsTree /> },
-                ].map((category) => (
-                  <Checkbox
-                    key={category.name}
-                    label={
-                      <div className="flex items-center space-x-2">
-                        {category.icon && <span>{category.icon}</span>}
-                        <span>{category.name}</span>
-                      </div>
-                    }
-                    checked={filter === category.name}
-                    onChange={() => setFilter(category.name)}
-                  />
-                ))}
-              </div>
-            </div>
-          </Popover.Content>
-        </Popover>
+
+        {/* Popover for Toggle Columns */}
       </div>
+
       <div className="mb-6">
         <EcommerceDashboard />
       </div>
@@ -308,20 +273,21 @@ export default function SearchTablePage() {
           Learn More
         </button>
       </div> */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {filteredData.map((card) => (
-          <div className="card" key={card.id}>
-            <div className="card-details">
-              <p className="absolute left-6 top-4">
+          <div className="card relative rounded-md border p-4" key={card.id}>
+            {/* Optionally adjust absolute positioning if needed for responsiveness */}
+            <div className="card-details mb-4">
+              <p className="absolute left-4 top-4">
                 <span className="text-body flex items-center gap-1">
                   {card.icon} {card.category}
                 </span>
               </p>
-              <p className="text-title">{card.title}</p>
-              <p className="text-body">{card.description}</p>
+              <p className="text-title mt-10">{card.title}</p>
+              <p className="text-body mt-2">{card.description}</p>
             </div>
             <button
-              className="card-button"
+              className="card-button rounded bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
               onClick={() => {
                 openModal({
                   view: <CreateCategoryModalView />,
@@ -334,6 +300,7 @@ export default function SearchTablePage() {
           </div>
         ))}
       </div>
+
       {/* 
       <BasicTableWidget
         variant="minimal"
