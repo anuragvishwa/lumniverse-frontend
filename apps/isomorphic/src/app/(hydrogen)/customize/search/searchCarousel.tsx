@@ -12,19 +12,46 @@ import { IoArrowUndoOutline } from 'react-icons/io5';
 import { BsX } from 'react-icons/bs';
 import { Dispatch } from '@reduxjs/toolkit';
 
-const Carousel = ({
-  message,
-  selectedProduct,
-  setSelectedProduct,
-  showChat,
-  setShowChat,
-}: {
-  message: any;
-  showChat: boolean;
-  setShowChat: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedProduct: any;
-  setSelectedProduct: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+const message = {
+  text: {
+    response: 'Here are some recommended products',
+    results: [
+      {
+        id: 1,
+        image: '/images/product1.jpg',
+        title: 'Product One',
+        description:
+          "This is a description for product one. It's a great product.",
+        price: '29.99',
+      },
+      {
+        id: 2,
+        image: '/images/product2.jpg',
+        title: 'Product Two',
+        description: "This is a description for product two. It's even better.",
+        price: '39.99',
+      },
+      {
+        id: 3,
+        image: '/images/product3.jpg',
+        title: 'Product Three',
+        description:
+          'This is a description for product three. You will love it.',
+        price: '49.99',
+      },
+      {
+        id: 4,
+        image: '/images/product4.jpg',
+        title: 'Product Four',
+        description:
+          'This is a description for product four. The best one yet.',
+        price: '59.99',
+      },
+    ],
+  },
+};
+
+const Carousel = () => {
   const { direction } = useDirection();
 
   const prevButtonClassName = `${generateSlug('abc')}-prev-button`;
@@ -32,14 +59,14 @@ const Carousel = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <div
+      {/* <div
         className="prose prose-sm prose-li:space-y-2 mb-4 rounded-md bg-gray-50 p-2"
         dangerouslySetInnerHTML={{
           __html: message?.text?.response
             .replace(/\n\s*\n/g, '<br/><br/>')
             .replace(/\n/g, '<br/>'),
         }}
-      />
+      /> */}
 
       <div className="relative mx-auto w-full">
         <div className="absolute left-2 top-1/2 z-[9999] -translate-y-1/2">
@@ -123,15 +150,7 @@ const Carousel = ({
                         <ActionIcon size="sm" variant="solid" color="primary">
                           <FaShoppingCart />
                         </ActionIcon>
-                        <ActionIcon
-                          size="sm"
-                          variant="solid"
-                          color="primary"
-                          onClick={() => {
-                            setSelectedProduct(product);
-                            setShowChat(true); // Show chat when a product is clicked
-                          }}
-                        >
+                        <ActionIcon size="sm" variant="solid" color="primary">
                           <IoArrowUndoOutline />
                         </ActionIcon>
                       </div>

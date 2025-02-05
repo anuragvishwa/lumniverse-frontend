@@ -372,7 +372,7 @@ export default function StyleCard({
             </select>
           </div>
         </div>
-        <div className="mb-4 mt-4 grid grid-cols-2 items-center justify-between gap-6 border-b border-muted pb-4 last:mb-0 last:border-0 last:pb-0">
+        <div className="mb-4 mt-4 grid grid-cols-1 items-center justify-between gap-6 border-b border-muted pb-4 last:mb-0 last:border-0 last:pb-0 md:grid-cols-2">
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
@@ -385,9 +385,7 @@ export default function StyleCard({
               <Popover.Trigger>
                 <Button
                   variant="outline"
-                  className={`h-7 w-16 ${
-                    bgColor.startsWith('bg-') ? bgColor : ''
-                  }`}
+                  className={`h-7 w-16 ${bgColor.startsWith('bg-') ? bgColor : ''}`}
                   style={{
                     backgroundColor: !bgColor.startsWith('bg-') ? bgColor : '',
                   }}
@@ -420,6 +418,7 @@ export default function StyleCard({
               </Popover.Content>
             </Popover>
           </div>
+
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
@@ -437,6 +436,7 @@ export default function StyleCard({
               />
             </div>
           </div>
+
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
@@ -449,8 +449,7 @@ export default function StyleCard({
               <Popover.Trigger>
                 <Button
                   variant="outline"
-                  // className="h-7 w-16 bg-white"
-                  className={`h-7 w-16`}
+                  className="h-7 w-16"
                   style={{ background: textColor }}
                 ></Button>
               </Popover.Trigger>
@@ -463,7 +462,6 @@ export default function StyleCard({
                       applyCustomTextColor();
                     }}
                   />
-
                   <div className="mt-4 flex items-center">
                     <Input
                       size="sm"
@@ -478,6 +476,7 @@ export default function StyleCard({
               </Popover.Content>
             </Popover>
           </div>
+
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
@@ -489,8 +488,8 @@ export default function StyleCard({
             <div className="flex items-center">
               <select
                 id="font-picker"
-                className="rounded rounded-md border p-2 text-xs"
-                onChange={(e) => setSelectedFont(e.target.value)} // Add your font change handler here
+                className="rounded-md border p-2 text-xs"
+                onChange={(e) => setSelectedFont(e.target.value)}
               >
                 {fonts.map((font, index) => (
                   <option key={index} value={font} className="text-xs">
@@ -500,6 +499,7 @@ export default function StyleCard({
               </select>
             </div>
           </div>
+
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
@@ -510,7 +510,7 @@ export default function StyleCard({
             </Text>
             <div className="flex items-center">
               <select
-                id="font-picker"
+                id="chatbot-alignment-picker"
                 className="min-w-[100px] rounded-md border p-2 text-xs"
                 value={chatbotAlignMent}
                 onChange={(e) => {
@@ -564,6 +564,7 @@ export default function StyleCard({
               </Popover.Content>
             </Popover>
           </div>
+
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
@@ -574,8 +575,8 @@ export default function StyleCard({
             </Text>
             <div className="flex items-center">
               <select
-                id="font-picker"
-                className="w-24 rounded rounded-md border p-2 text-xs"
+                id="height-picker"
+                className="w-24 rounded-md border p-2 text-xs"
                 value={height}
                 onChange={(e) => setHeight(e.target.value)}
               >
@@ -597,6 +598,7 @@ export default function StyleCard({
               </select>
             </div>
           </div>
+
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
@@ -607,8 +609,8 @@ export default function StyleCard({
             </Text>
             <div className="flex items-center">
               <select
-                id="font-picker"
-                className="w-24 rounded rounded-md border p-2 text-xs"
+                id="border-radius-picker"
+                className="w-24 rounded-md border p-2 text-xs"
                 value={borderRadius}
                 onChange={(e) => setBorderRadius(e.target.value)}
               >
@@ -633,6 +635,7 @@ export default function StyleCard({
               </select>
             </div>
           </div>
+
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
@@ -643,8 +646,8 @@ export default function StyleCard({
             </Text>
             <div className="flex flex-col items-center gap-8">
               <select
-                id="font-picker"
-                className="w-24 rounded rounded-md border p-2 text-xs"
+                id="chat-shape-picker"
+                className="w-24 rounded-md border p-2 text-xs"
                 value={buttonShape}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   toggleButtonShape(e.target.value)
@@ -667,14 +670,8 @@ export default function StyleCard({
                 </option>
               </select>
             </div>
-            {/* <Button
-              size="sm"
-              variant="outline"
-              className={`ml-2 ${buttonShape === 'rounded' ? 'rounded-md' : 'rounded-full'}`}
-            >
-              {buttonShape === 'rounded' ? 'Rectangle' : 'Rounded'}
-            </Button> */}
           </div>
+
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
@@ -685,8 +682,8 @@ export default function StyleCard({
             </Text>
             <div className="flex items-center">
               <select
-                id="font-picker"
-                className="w-24 rounded rounded-md border p-2 text-xs"
+                id="input-radius-picker"
+                className="w-24 rounded-md border p-2 text-xs"
                 value={inputRadius}
                 onChange={(e) => setInputRadius(e.target.value)}
               >
@@ -702,16 +699,11 @@ export default function StyleCard({
                 <option value="full" className="text-xs">
                   Rounded
                 </option>
-                {/* <option value="1.5rem" className="text-xs">
-                  2XL
-                </option>
-                <option value="2rem" className="text-xs">
-                  3XL
-                </option> */}
               </select>
             </div>
           </div>
         </div>
+
         <div className="flex flex-col gap-6">
           <div className="flex items-start gap-6">
             <Text className="mt-2 w-32 flex-shrink-0 font-semibold">

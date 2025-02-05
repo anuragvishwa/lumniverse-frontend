@@ -26,6 +26,7 @@ import { Button, Text, Title } from 'rizzui';
 import CardsPage from '@/app/(hydrogen)/widgets/cards/page';
 import { AiOutlineClose } from 'react-icons/ai';
 import { HiOutlinePencil } from 'react-icons/hi2';
+import ProductPointer from './ProductPointer';
 
 export default function Customize() {
   const [isVisible, setIsVisible] = useState(true); // Control visibility
@@ -131,7 +132,7 @@ export default function Customize() {
       <Text as="span" className="font-semibold text-gray-400">
         Easily personalize your chatbot&apos;s look in just a few clicks.
       </Text>
-
+      {/* <ProductPointer /> */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -139,7 +140,29 @@ export default function Customize() {
         transition={{ duration: 0.4 }}
       >
         <div className="mt-6 grid grid-cols-1 gap-6 @container sm:grid-cols-6 lg:grid-cols-10">
-          <div className="sm:col-span-6 lg:col-span-6">
+          {/* Chatbot on top in mobile view, changes to default order on larger screens */}
+          <div className="order-1 w-full sm:order-2 sm:w-[400px] lg:w-[400px]">
+            <ChatbotCustomize
+              bgColor={bgColor}
+              setBgColor={setBgColor}
+              textColor={textColor}
+              setTextColor={setTextColor}
+              imageSrc={imageSrc}
+              changeContentBgColor={changeContentBgColor}
+              contentTextColor={contentTextColor}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              selectedFont={selectedFont}
+              height={height}
+              borderRadius={borderRadius}
+              inputRadius={inputRadius}
+              chatbotTitle={chatbotTitle}
+              chatbotDescription={chatbotDescription}
+            />
+          </div>
+
+          {/* Style card comes after the chatbot on mobile but before it on larger screens */}
+          <div className="order-2 sm:order-1 sm:col-span-6 lg:col-span-6">
             <StyleCard
               bgColor={bgColor}
               setBgColor={setBgColor}
@@ -170,25 +193,6 @@ export default function Customize() {
               setChatbotDescription={setChatbotDescription}
               chatbotAlignMent={chatbotAlignMent}
               setChatbotAlignment={setChatbotAlignment}
-            />
-          </div>
-          <div className="w-full sm:w-[400px] lg:w-[400px]">
-            <ChatbotCustomize
-              bgColor={bgColor}
-              setBgColor={setBgColor}
-              textColor={textColor}
-              setTextColor={setTextColor}
-              imageSrc={imageSrc}
-              changeContentBgColor={changeContentBgColor}
-              contentTextColor={contentTextColor}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              selectedFont={selectedFont}
-              height={height}
-              borderRadius={borderRadius}
-              inputRadius={inputRadius}
-              chatbotTitle={chatbotTitle}
-              chatbotDescription={chatbotDescription}
             />
           </div>
         </div>

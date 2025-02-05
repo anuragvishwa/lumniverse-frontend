@@ -37,6 +37,7 @@ import {
 } from '@/app/shared/ecommerce/shop/shop-filters/filter-utils';
 import FilterWithSearch from '@core/components/filter-with-search';
 import hasSearchedParams from '@core/utils/has-searched-params';
+import Carousel from './searchCarousel';
 
 export default function SearchList({ onClose }: { onClose?: () => void }) {
   const inputRef = useRef(null);
@@ -341,17 +342,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
                   How May I help you?
                 </Text>
               </div>
-              <div className="mt-4 flex w-full flex-col gap-4 px-3">
-                <Text className="text-sm font-bold text-gray-900">
-                  Generated Answer
-                </Text>
-                <Text className="text-xs text-gray-500">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Inventore nisi minima corrupti at? Nesciunt obcaecati eaque
-                  excepturi molestias magnam. Adipisci quasi unde corporis autem
-                  commodi voluptatum voluptates necessitatibus, eum doloribus.
-                </Text>
-              </div>
+              <Carousel />
             </div>
           ) : (
             <>

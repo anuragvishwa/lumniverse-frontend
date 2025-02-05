@@ -55,6 +55,8 @@ import Carousel from './carousel';
 import { recommendationProducts } from '@/data/shop-products';
 import ProductCarousel from './product-carousel';
 import { FcSalesPerformance } from 'react-icons/fc';
+import { FiMessageCircle } from 'react-icons/fi';
+import { HiSparkles } from 'react-icons/hi2';
 
 // Define a type for the products
 interface Product {
@@ -372,10 +374,15 @@ const ChatbotCustomize = ({
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }, [messages]);
+
+  const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+  const [showChat, setShowChat] = useState(false);
 
   return (
     <div style={{ fontFamily: selectedFont }} className={`col-span-2.5 w-full`}>
@@ -762,7 +769,13 @@ const ChatbotCustomize = ({
                                     {typeof msg.text === 'string' ? (
                                       msg.text
                                     ) : (
-                                      <Carousel message={msg} />
+                                      <Carousel
+                                        message={msg}
+                                        showChat={showChat}
+                                        setShowChat={setShowChat}
+                                        selectedProduct={selectedProduct}
+                                        setSelectedProduct={setSelectedProduct}
+                                      />
                                     )}
                                   </div>
                                 </div>
@@ -855,39 +868,52 @@ const ChatbotCustomize = ({
                         {loading && (
                           <div className="chat-message flex items-center gap-2 rounded-lg">
                             <div className="flex-shrink-0">
-                              <div className="icon rounded-md bg-gradient-to-r from-violet-600 to-indigo-600 p-2 text-white">
+                              <div className="icon rounded-md bg-black p-2 text-white">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   fill="none"
                                   viewBox="0 0 24 24"
                                   strokeWidth={1.5}
                                   stroke="currentColor"
-                                  className="h-6 w-6 animate-pulse"
+                                  className="h-6 w-6"
                                 >
                                   <rect
                                     x="5"
-                                    y="5"
+                                    y="10"
                                     width="3"
-                                    height="10"
+                                    height="5"
                                     className="fill-current"
                                   >
                                     <animate
+                                      attributeName="y"
+                                      values="10; 5; 10"
+                                      dur="1s"
+                                      repeatCount="indefinite"
+                                    />
+                                    <animate
                                       attributeName="height"
-                                      values="10; 15; 10"
+                                      values="5; 10; 5"
                                       dur="1s"
                                       repeatCount="indefinite"
                                     />
                                   </rect>
                                   <rect
                                     x="10"
-                                    y="5"
+                                    y="10"
                                     width="3"
-                                    height="10"
+                                    height="5"
                                     className="fill-current"
                                   >
                                     <animate
+                                      attributeName="y"
+                                      values="10; 5; 10"
+                                      dur="1s"
+                                      repeatCount="indefinite"
+                                      begin="0.2s"
+                                    />
+                                    <animate
                                       attributeName="height"
-                                      values="10; 15; 10"
+                                      values="5; 10; 5"
                                       dur="1s"
                                       repeatCount="indefinite"
                                       begin="0.2s"
@@ -895,14 +921,21 @@ const ChatbotCustomize = ({
                                   </rect>
                                   <rect
                                     x="15"
-                                    y="5"
+                                    y="10"
                                     width="3"
-                                    height="10"
+                                    height="5"
                                     className="fill-current"
                                   >
                                     <animate
+                                      attributeName="y"
+                                      values="10; 5; 10"
+                                      dur="1s"
+                                      repeatCount="indefinite"
+                                      begin="0.4s"
+                                    />
+                                    <animate
                                       attributeName="height"
-                                      values="10; 15; 10"
+                                      values="5; 10; 5"
                                       dur="1s"
                                       repeatCount="indefinite"
                                       begin="0.4s"
@@ -911,6 +944,7 @@ const ChatbotCustomize = ({
                                 </svg>
                               </div>
                             </div>
+
                             <div className="flex items-center space-x-1 text-gray-500">
                               <span>Thinking</span>
                               <span className="dot1 animate-bounce">.</span>
@@ -923,6 +957,7 @@ const ChatbotCustomize = ({
                             </div>
                           </div>
                         )}
+
                         <div className="relative mt-4">
                           <div className="scrollbar-hide flex overflow-x-auto">
                             {products.length > 0 &&
@@ -945,44 +980,68 @@ const ChatbotCustomize = ({
                           </div>
                         </div>
                       </div>
-                      <div
-                        className={`mt-2 rounded-${inputRadius} border-2 ${bgColor.startsWith('bg-') ? bgColor.replace('bg-', 'border-') : 'border-blue-200'} bg-gray-200 bg-clip-text px-3 py-1 text-transparent`}
-                      >
-                        <div className="flex gap-2">
-                          <input
-                            onKeyDown={handleKeyDown}
-                            placeholder="Type your message..."
-                            className={`flex-1 rounded-full border-none text-xs text-gray-500 outline-none focus:ring-0`}
-                            type="text"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                          />
+                      <div>
+                        {' '}
+                        <div
+                          className={`mt-2 rounded-md border-2 p-2 ${bgColor.startsWith('bg-') ? bgColor.replace('bg-', 'border-') : 'border-blue-200'} bg-gray-200 bg-clip-text px-3 py-1 text-transparent`}
+                        >
+                          {showChat && selectedProduct && (
+                            <div className="relative mb-4 flex items-center justify-between">
+                              <div className="mt-2 flex items-center space-x-2">
+                                <img
+                                  src={selectedProduct.image}
+                                  alt={selectedProduct.title}
+                                  className="h-10 w-10 rounded-lg"
+                                />
+                                <span className="text-sm font-medium text-gray-900">
+                                  Ask about {selectedProduct.title}
+                                </span>
+                              </div>
+                              <button
+                                className="absolute right-0 top-0 text-gray-500 hover:text-red-600"
+                                onClick={() => setShowChat(false)}
+                              >
+                                <BsX className="h-5 w-5" />
+                              </button>
+                            </div>
+                          )}
+                          <div className={`flex gap-2 rounded-${borderRadius}`}>
+                            <input
+                              onKeyDown={handleKeyDown}
+                              placeholder="Type your message..."
+                              className={`flex-1 rounded-full border-none text-xs text-gray-500 outline-none focus:ring-0`}
+                              type="text"
+                              value={input}
+                              onChange={(e) => setInput(e.target.value)}
+                            />
 
-                          <button
-                            className={`${
-                              bgColor.startsWith('bg-') ? bgColor : ''
-                            } rounded-full px-2 py-1.5 text-sm font-bold text-white transition duration-300 ease-in-out`}
-                            style={{
-                              backgroundColor: !bgColor.startsWith('bg-')
-                                ? bgColor
-                                : '',
-                            }}
-                            onClick={() => handleSend(input)}
-                          >
-                            {/* <BsArrowUpShort className="h-5 w-5" /> */}
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="white"
-                              className="bi bi-arrow-up-circle-fill"
-                              viewBox="0 0 16 16"
+                            <button
+                              className={`${
+                                bgColor.startsWith('bg-') ? bgColor : ''
+                              } rounded-full px-2 py-1.5 text-sm font-bold text-white transition duration-300 ease-in-out`}
+                              style={{
+                                backgroundColor: !bgColor.startsWith('bg-')
+                                  ? bgColor
+                                  : '',
+                              }}
+                              onClick={() => handleSend(input)}
                             >
-                              <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
-                            </svg>
-                          </button>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="white"
+                                className="bi bi-arrow-up-circle-fill"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
+                                  
                       </div>
+
                       <Text className="flex items-center justify-center py-2 text-center text-sm font-medium text-gray-400">
                         <span className="text-[0.6rem]">Powered by</span>{' '}
                         <span className="ml-2 flex items-center justify-center gap-2">

@@ -265,7 +265,7 @@ export default function StyleCard({
           </Button>
         </div>
 
-        <div className="mb-4 mt-4 grid grid-cols-2 items-center justify-between gap-6 border-b border-muted pb-4 last:mb-0 last:border-0 last:pb-0">
+        <div className="mb-4 mt-4 grid grid-cols-1 items-center justify-between gap-6 border-b border-muted pb-4 last:mb-0 last:border-0 last:pb-0 md:grid-cols-2">
           <div className="flex items-center justify-between gap-6 rounded-lg border-2 border-gray-200 p-2">
             <Text
               as="span"
